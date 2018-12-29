@@ -4,6 +4,7 @@ module.exports = {
   gameOn: false,
   playerCount: 0,
   snitch: "",
+  maxTries: 3,
   start: function(channelName){
     if(this.playerCount)
       this.clear;
@@ -18,10 +19,10 @@ module.exports = {
       };
       ++this.playerCount;
     }
-    if(this.users[name].tries < 3){
+    if(this.users[name].tries < this.maxTries){
       ++this.users[name].tries
-      let shot = Math.floor(Math.random() * 10);
-      if(shot > 4){
+      let shot = Math.floor(Math.random() * 2);
+      if(shot){
         this.users[name].points += 10;
         return 10;
       }

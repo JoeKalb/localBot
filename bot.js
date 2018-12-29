@@ -130,12 +130,12 @@ function onMessageHandler (target, context, msg, self) {
         let play = quidditch.play(context['display-name'])
         if(play == 10){
           client.say(quidditch.channel, `${context['display-name']} threw the Quaffle and scored! That's 10 points buttOMG 
-            ${(quidditch.users[context['display-name']].tries < 3)? 3-quidditch.users[context['display-name']].tries : "No"} 
-            ${(quidditch.users[context['display-name']].tries == 2) ? "try" : "tries"} left`)
+            ${(quidditch.users[context['display-name']].tries < quidditch.maxTries)? quidditch.maxTries-quidditch.users[context['display-name']].tries : "No"} 
+            ${(quidditch.users[context['display-name']].tries == quidditch.maxTries-1) ? "try" : "tries"} left.`)
         } else if(play == 0){
           client.say(quidditch.channel, `${context['display-name']} threw the Quaffle and missed! buttThump 
-            ${(quidditch.users[context['display-name']].tries < 3)? 3-quidditch.users[context['display-name']].tries : "No"}
-            ${(quidditch.users[context['display-name']].tries == 2) ? "try" : "tries"} left`)
+            ${(quidditch.users[context['display-name']].tries < quidditch.maxTries)? quidditch.maxTries-quidditch.users[context['display-name']].tries : "No"}
+            ${(quidditch.users[context['display-name']].tries == quidditch.maxTries-1) ? "try" : "tries"} left.`)
         }else{
           console.log(`${context['display-name']} has hit the max tries of ${quidditch.users[context['display-name']].tries}`)
         }
@@ -145,10 +145,12 @@ function onMessageHandler (target, context, msg, self) {
       if(!quidditch.gameOn && quidditch.playerCount){
         client.say(quidditch.channel, quidditch.finalPayouts())
       }
+      break;
     case 'snitch':
       if(!quidditch.gameOn && quidditch.playerCount){
         client.say(quidditch.channel, `${quidditch.snitch} caught the snitch!`)
       }
+      break;
     default:
       console.log(`* Unknown command ${commandName}`)
   }
