@@ -71,6 +71,7 @@ clearBtn.addEventListener('click', clearAll)
 function clearAll(){
   hangmanInput.value = "";
   wordP.innerText = "";
+  randNumInput.value = "";
   clearBackend();
 }
 async function clearBackend(){
@@ -131,7 +132,55 @@ async function startRandNum(){
 randomStopBtn.addEventListener('click', stopRandNum)
 
 async function stopRandNum(){
-  let response = await fetch(window.location + "randNum/clear")
+  let response = await fetch(window.location + "randNum/game/clear")
   let json = await response.json();
   console.log(json)
+}
+
+const quidditchStartBtn = document.getElementById("quidditchStartBtn")
+const quidditchStopBtn = document.getElementById("quidditchStopBtn")
+const quidditchClearBtn = document.getElementById("quidditchClearBtn")
+const quidditchPayoutsBtn = document.getElementById("quidditchPayoutsBtn")
+
+quidditchStartBtn.addEventListener('click', startQuidditch)
+
+async function startQuidditch(){
+  let response = await fetch(window.location + "quidditch/" + dropDown.value);
+  let json = await response.json();
+  console.log(json);
+}
+
+quidditchStopBtn.addEventListener('click', stopQuidditch)
+
+async function stopQuidditch(){
+  let response = await fetch(window.location + "quidditch/game/over");
+  let json = await response.json();
+  console.log(json);
+}
+
+quidditchClearBtn.addEventListener('click', clearQuidditch);
+
+async function clearQuidditch(){
+  let response = await fetch(window.location + "quidditch/game/clear");
+  let json = await response.json();
+  console.log(json);
+}
+
+quidditchPayoutsBtn.addEventListener('click', quidditchPayout);
+
+async function quidditchPayout(){
+  let response = await fetch(window.location + "quidditch/game/payout");
+  let json = await response.json();
+  console.log(json);
+}
+
+const clearAllBtn = document.getElementById("clearAllBtn")
+
+clearAllBtn.addEventListener('click', clearAllGames)
+
+async function clearAllGames(){
+  clearAll();
+  let response = await fetch(window.location + "clear/all");
+  let json = await response.json();
+  console.log(json);
 }

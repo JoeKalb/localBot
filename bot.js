@@ -2,6 +2,7 @@ const tmi = require('tmi.js')
 let hangman = require('./Hangman.js')
 let giveaway = require('./Giveaway.js') 
 let randNum = require('./RandNumber.js')
+let quidditch = require('./Quidditch.js')
 let CONFIG; 
 
 if(process.env.OAUTH === undefined) {
@@ -18,9 +19,9 @@ let opts = {
       password: CONFIG.OAUTH
    },
    channels: [
+      'thabuttress',
       'joefish5',
       'oooskittles',
-      'thabuttress',
       'thethingssheplays'
    ]
 }
@@ -123,6 +124,31 @@ function onMessageHandler (target, context, msg, self) {
       client.say(giveaway.channel, 
         `${context['display-name']} is${(giveaway.check(context['display-name']) 
         ? " ": " not ")}in the giveaway. There's current ${giveaway.count} enteries.`)
+      break;
+    case 'play':
+      if(quidditch.gameOn){
+        let play = quidditch.play(context['display-name'])
+        if(play == 10){
+          client.say(quidditch.channel, `${context['display-name']} threw the Quaffle and scored! That's 10 points buttOMG 
+            ${(quidditch.users[context['display-name']].tries < 3)? 3-quidditch.users[context['display-name']].tries : "No"} 
+            ${(quidditch.users[context['display-name']].tries == 2) ? "try" : "tries"} left`)
+        } else if(play == 0){
+          client.say(quidditch.channel, `${context['display-name']} threw the Quaffle and missed! buttThump 
+            ${(quidditch.users[context['display-name']].tries < 3)? 3-quidditch.users[context['display-name']].tries : "No"}
+            ${(quidditch.users[context['display-name']].tries == 2) ? "try" : "tries"} left`)
+        }else{
+          console.log(`${context['display-name']} has hit the max tries of ${quidditch.users[context['display-name']].tries}`)
+        }
+      }
+      break;
+    case 'results':
+      if(!quidditch.gameOn && quidditch.playerCount){
+        client.say(quidditch.channel, quidditch.finalPayouts())
+      }
+    case 'snitch':
+      if(!quidditch.gameOn && quidditch.playerCount){
+        client.say(quidditch.channel, `${quidditch.snitch} caught the snitch!`)
+      }
     default:
       console.log(`* Unknown command ${commandName}`)
   }
@@ -240,9 +266,49 @@ app.get('/randNum/:info', (req, res) => {
   res.status(200).json(`The correct number is ${randNum.number}`)
 })
 
-app.get('/randNum/clear', (req, res) => {
+app.get('/randNum/game/clear', (req, res) => {
   randNum.clear()
+  console.log("RANDOM NUMBER WAS CLEARED!!!")
   res.status(200).json("Clear Random Number")
+})
+
+// quidditch endpoints
+app.get('/quidditch/:channel', (req, res) => {
+  quidditch.start(req.params.channel)
+  client.say(req.params.channel, "Want to play some Quidditch! Do !play to join the game!!!")
+  res.status(200).json("Quidditch Game Started")
+})
+
+app.get('/quidditch/game/over', (req, res) => {
+  let snitch = quidditch.snitchCaught();
+  client.say(quidditch.channel, `${snitch} caught the Golden Snitch and ended the game!`);
+  client.say(quidditch.channel, quidditch.finalPayouts())
+  res.status(200).json(`${snitch} caught the snitch!`)
+})
+
+app.get('/quidditch/game/clear', (req, res) => {
+  quidditch.clear();
+  res.status(200).json("Quidditch Game Reset");
+})
+
+app.get('/quidditch/game/payout', (req, res) => {
+  if(quidditch.channel == 'thabuttress'){
+    let allPlays = Object.keys(quidditch.users);
+    for(let i = 0; i < quidditch.playerCount; ++i){
+      if(quidditch.users[allPlays[i]].points)
+        client.say(quidditch.channel, `!buttcoins add ${allPlays[i]} ${quidditch.users[allPlays[i]].points}`)
+    }
+  }
+  res.status(200).json("Payouts done!")
+})
+
+// clear all info
+app.get('/clear/all', (req, res) => {
+  giveaway.clear();
+  hangman.clear();
+  quidditch.clear();
+  randNum.clear();
+  res.status(200).json("All Games Cleared!")
 })
 
 http.listen(webPort, () => {
