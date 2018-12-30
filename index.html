@@ -14,36 +14,41 @@
       <select name="channels" id="channelsDropDown">
 
       </select>
-      <button id="testBtn">TEST</button>
-      <button id="clearAllBtn">CLEAR ALL</button>
+      <button id="testBtn" value="testBtn/">TEST</button>
+      <button id="clearAllBtn" value="clear/all/">CLEAR ALL</button>
     </div>
     <div id="hangmanDiv">
-      <h5>Hangman</h5>
+      <h5>Hangman</h5><p id="wordDisplay"></p>
       <input type="text" id="hangmanInput" placeholder="Enter A Word or Phrase">
-      <button id="startBtn">START</button>
-      <button id="pauseBtn">PAUSE</button>
-      <button id="clearBtn">STOP</button>
-      <p id="wordDisplay"></p>
+      <button id="startBtn" value="hangman/">START</button>
+      <button id="pauseBtn" value="hangman/pause/">PAUSE</button>
+      <button id="clearBtn" value="hangman/clear/">STOP</button>
     </div>
     <div id="randomNumDiv">
       <h5>Random Number</h5>
       <input type="number" id="randomNumInput" placeholder="Enter this upper limit">
-      <button id="randomStartBtn">START</button>
-      <button id="randomStopBtn">STOP</button>
+      <button id="randomStartBtn" value="randNum/">START</button>
+      <button id="randomStopBtn" value="randNum/game/clear">STOP</button>
     </div>
     <div id="quidditchDiv">
       <h5>Quidditch Game</h5>
-      <button id="quidditchStartBtn">START</button>
-      <button id="quidditchStopBtn">STOP</button>
-      <button id="quidditchPayoutsBtn">PAYOUTS</button>
-      <button id="quidditchClearBtn">CLEAR</button>
+      <button id="quidditchStartBtn" value="quidditch/">START</button>
+      <button id="quidditchStopBtn" value="quidditch/game/over">STOP</button>
+      <button id="quidditchResultsBtn" value="quidditch/game/results">RESULTS</button>
+      <button id="quidditchPayoutsBtn" value="quidditch/game/payout">PAYOUTS</button>
+      <button id="quidditchClearBtn" value="quidditch/game/clear">CLEAR</button>
+    </div>
+    <div id="duelDiv">
+      <h5>Wizard Duel</h5>
+      <button id="startDuelBtn" value="duel/">START</button>
+      <button id="pickDuelBtn" value="duel/game/pick">PICK DUELISTS</button>
     </div>
     <div id="giveawayDiv">
       <h5>Giveaway!</h5>
-      <button id="giveawayStartBtn">START</button>
-      <button id="giveawayStopBtn">STOP</button>
-      <button id="giveawayDrawBtn">DRAW</button>
-      <button id="giveawayClearBtn">CLEAR</button>
+      <button id="giveawayStartBtn" value="giveaway/">START</button>
+      <button id="giveawayStopBtn" value="giveaway/game/stop">STOP</button>
+      <button id="giveawayDrawBtn" value="giveaway/game/draw">DRAW</button>
+      <button id="giveawayClearBtn" value="giveaway/game/clear">CLEAR</button>
     </div>
   </div>
   <script src="main.js"></script>

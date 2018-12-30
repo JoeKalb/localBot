@@ -1,28 +1,49 @@
 const tmi = require('tmi.js')
-let hangman = require('./Hangman.js')
-let giveaway = require('./Giveaway.js') 
-let randNum = require('./RandNumber.js')
-let quidditch = require('./Quidditch.js')
+let hangman = require('./Hangman')
+let giveaway = require('./Giveaway') 
+let randNum = require('./RandNumber')
+let quidditch = require('./Quidditch')
+let wizardDuel = require('./WizardDuel')
+const fs = require('fs');
+const houses = require('./Houses')
 let CONFIG; 
 
 if(process.env.OAUTH === undefined) {
   let localConfig = require('./config.js')
   CONFIG = localConfig.CONFIG;
 }
+
+// create file for logging
+let today = new Date();
+let fileName = `logs/${today.getUTCMonth()+1}-${today.getUTCDate()}.txt`;
+
+function recordPayouts(message){
+  fs.appendFile(fileName, `\n${message}`, (err) => {
+    if(err) throw err;
+    console.log(`Saved message: ${message}`)
+  })
+}
+function recordHousePoints(message){
+  fs.appendFile(fileName, ` | ${message}`, (err) => {
+    if(err) throw err;
+    console.log(`Saved message: ${message}`)
+  })
+}
+
 // Valid commands start with:
 let commandPrefix = '!'
 
 // Define configuration options:
 let opts = {
    identity: {
-      username: 'JoeFish5',
-      password: CONFIG.OAUTH
+    username: 'JoeFish5',
+    password: CONFIG.OAUTH
    },
    channels: [
-      'thabuttress',
-      'joefish5',
-      'oooskittles',
-      'thethingssheplays'
+    'joefish5',
+    'thabuttress',
+    'oooskittles',
+    'thethingssheplays'
    ]
 }
 
@@ -52,6 +73,7 @@ function onMessageHandler (target, context, msg, self) {
   if(!hangman.getPause() && target == '#' + hangman.channel){
     if (hangman.isAnswer(msg)) {
       hangman.winner = context['display-name']
+      recordPayouts(`The winner is ${hangman.winner}! ${hangman.answer}`)
       client.say(target, `The winner is ${hangman.winner}! ${hangman.answer}`)
     }
     else if (msg.length == 1){
@@ -62,11 +84,18 @@ function onMessageHandler (target, context, msg, self) {
         hangman.updateDisplay(letter)
         if(hangman.isDisplayAnswer()){
           hangman.winner = context['display-name']
+          recordPayouts(`The winner is ${hangman.winner}! ${hangman.answer}`)
           client.say(target, `The winner is ${hangman.winner}! ${hangman.answer}`)
         }
         else client.say(target, `${hangman.display}`)
       }else if(numCount == 0)
         client.say(target, `no ${letter}`)
+    }
+
+    // display winner points if they are enrolled
+    if (hangman.found && houses.isEnrolled(context.username)){
+      client.say(target, `100 points to ${houses.houseNames[houses.students[context.username]]}!`)
+      recordHousePoints(`100 points to ${houses.houseNames[houses.students[context.username]]}!`)
     }
   }
 
@@ -79,20 +108,76 @@ function onMessageHandler (target, context, msg, self) {
   // randNum logic
   if(randNum.allowGuesses && target == "#" + randNum.channel){
     if(randNum.guess(msg)){
+      recordPayouts(`${context['display-name']} wins! The correct number was ${randNum.number}`)
       client.say(target, `${context['display-name']} wins! The correct number was ${randNum.number}`)
+      if(houses.isEnrolled(context.username)){
+        client.say(target, `100 points to ${houses.houseNames[houses.students[context.username]]}!`)
+        recordHousePoints(`100 points to ${houses.houseNames[houses.students[context.username]]}!`)
+      }
     }
   }
 
   // all commands go under here!
   if (msg.substr(0, 1) !== commandPrefix) {
-    console.log(`[${target} (${context['message-type']})] ${context['display-name']}: ${msg}`)
+    // this shows all of chat
+    //console.log(`[${target} (${context['message-type']})] ${context['display-name']}: ${msg}`)
     return
   }
   // Split the message into individual words:
   const parse = msg.slice(1).split(' ')
   // The command name is the first (0th) one:
   const commandName = parse[0]
+  
 
+  // switch cases for wizardDual only
+  if(wizardDuel.beginDuel || wizardDuel.allowBets 
+    || wizardDuel.allowEntries || wizardDuel.studentCount){
+    switch(commandName){
+      case 'duel':
+      // joining the dual will be here
+      if(wizardDuel.allowEntries
+        && target == "#" + wizardDuel.channel
+        && houses.isEnrolled(context['display-name'])
+        && !wizardDuel.checkIfInDuel(context['display-name'])){
+        wizardDuel.enter(context['display-name'], houses.students[context.username]);
+        client.say(target, `${context['display-name']} entered the Dueling Club!`)
+      }
+        break;
+      case 'pickDuelists':
+        if(target == "#" + wizardDuel.channel
+        && (context.username == "joefish5" || context.username == "thabuttress")){
+          client.say(target, wizardDuel.pickDuelists())
+        }
+        break;
+      case 'bet':
+        if(target == "#" + wizardDuel.channel
+          && wizardDuel.allowBets
+          && wizardDuel.checkIfInDuel(context['display-name'])){
+          let arrMsg = mgs.split(' ');
+          let readyToDuel = placeBet(context['display-name'], arrMsg[1])
+          if(readyToDuel)
+            client.say(target, wizardDuel.readyToDuel())
+        }
+        break;
+      case 'duelHouses':
+        if(target == "#" + wizardDuel.channel)
+          client.say(target, wizardDuel.showEntries())
+        break;
+      case 'duelResults':
+        if(target == "#" + wizardDuel.channel
+          && (context.username == "thabuttress" || context.username == "joefish5")
+          && !wizardDuel.allowEntries && !wizardDuel.allowBets){
+            let result = wizardDuel.timeToDual()
+            client.say(target, `${result.dual1.name} and ${result.dual2.name} 
+            take center stage. They bow towards, sharply turn around, to opposite 
+            ends of the platform.`);
+          }
+          dualStory(result)
+        break;
+      default:
+        console.log(`Wizard Dual Switch Case Default: ${commandName}`)
+    }
+  }
   // If the command is known, let's execute it:
   switch(commandName){
     case 'dice':
@@ -104,29 +189,30 @@ function onMessageHandler (target, context, msg, self) {
       console.log(`* Executed ${commandName} command`)
       break;
     case 'hangman':
-      if(!hangman.getPause())
-        client.say(target, `${hangman.display}`)
-      else
-        client.say(target, "Hangman is currently paused!")
+      if(target == "#" + hangman.channel){
+        (!hangman.getPause()) 
+          ? client.say(target, `${hangman.display}`) 
+          : client.say(target, "Hangman is currently paused!")
+      }
       break;
     case 'guessed':
-      if(!hangman.getPause())
+      if(!hangman.getPause() && target == "#" + hangman.channel)
         client.say(target, `Letters already guessed: ${hangman.alreadyGuessed()}`)
       break;
     case 'start':
-      if(context['display-name'] == "JoeFish5"){
+      if(context['display-name'] == "JoeFish5" && target == "#" + giveaway.channel){
         giveaway.start(target.replace("#", ""))
         client.say(giveaway.channel, "GIVEAWAY HAS STARTED! Talk in chat to enter!")
       }
       break;
     case 'me':
-      if(giveaway.allowEntries)
+      if(giveaway.allowEntries && target == "#" + giveaway.channel)
       client.say(giveaway.channel, 
         `${context['display-name']} is${(giveaway.check(context['display-name']) 
         ? " ": " not ")}in the giveaway. There's current ${giveaway.count} enteries.`)
       break;
     case 'play':
-      if(quidditch.gameOn){
+      if(quidditch.gameOn && target == "#" + quidditch.channel){
         let play = quidditch.play(context['display-name'])
         if(play == 10){
           client.say(quidditch.channel, `${context['display-name']} threw the Quaffle and scored! That's 10 points buttOMG 
@@ -142,18 +228,47 @@ function onMessageHandler (target, context, msg, self) {
       }
       break;
     case 'results':
-      if(!quidditch.gameOn && quidditch.playerCount){
+      if(!quidditch.gameOn && quidditch.playerCount && target == "#" + quidditch.channel){
         client.say(quidditch.channel, quidditch.finalPayouts())
       }
       break;
     case 'snitch':
-      if(!quidditch.gameOn && quidditch.playerCount){
+      if(!quidditch.gameOn && quidditch.playerCount 
+        && target == "#"+quidditch.channel){
         client.say(quidditch.channel, `${quidditch.snitch} caught the snitch!`)
       }
       break;
+    case 'mypoints':
+      if(target == "#" + quidditch.channel
+        && quidditch.users[context['display-name']])
+        client.say(target, quidditch.myPoints(context['display-name']))
+
+      break;
+    case 'whathouse':
+      if(target == "#thabuttress" || target == "#joefish5"){
+        let tryName = msg.split(' ')[1];
+        (!tryName) ? client.say(target, houses.getHouse(context['display-name']))
+          : client.say(target, houses.getHouse(tryName))
+      }
+      break;
+    case 'houses':
+      if(target == "#thabuttress" || target =="#joefish5"){
+        client.say(target, houses.classSizes())
+      }
+      break;
+    case 'myhouse':
+      if(target == "#thabuttress" || target == "#joefish5"){
+        client.say(target, houses.myHouse(context['display-name']))
+      }
+      break;
     default:
-      console.log(`* Unknown command ${commandName}`)
+      // this shows unknows commands
+      //console.log(`* Unknown command ${commandName}`)
   }
+}
+
+function dualStory(result){
+  console.log("The actual dual will happen here!")
 }
 
 function test(target){
@@ -282,15 +397,26 @@ app.get('/quidditch/:channel', (req, res) => {
 })
 
 app.get('/quidditch/game/over', (req, res) => {
-  let snitch = quidditch.snitchCaught();
-  client.say(quidditch.channel, `${snitch} caught the Golden Snitch and ended the game!`);
-  client.say(quidditch.channel, quidditch.finalPayouts())
-  res.status(200).json(`${snitch} caught the snitch!`)
+  if(quidditch.playerCount){
+    let snitch = quidditch.snitchCaught();
+    client.say(quidditch.channel, `${snitch} caught the Golden Snitch and ended the game!`);
+    recordPayouts(quidditch.finalPayouts())
+    client.say(quidditch.channel, quidditch.finalPayouts())
+    res.status(200).json(`${snitch} caught the snitch!`)
+  } 
+  else res.status(200).json("No one played")
 })
 
 app.get('/quidditch/game/clear', (req, res) => {
   quidditch.clear();
   res.status(200).json("Quidditch Game Reset");
+})
+
+app.get('/quidditch/game/results', (req, res) => {
+  if(!quidditch.gameOn && quidditch.playerCount){
+    client.say(quidditch.channel, quidditch.finalPayouts())
+  }
+  res.status(200).json("Quidditch Results Posted")
 })
 
 app.get('/quidditch/game/payout', (req, res) => {
@@ -302,6 +428,21 @@ app.get('/quidditch/game/payout', (req, res) => {
     }
   }
   res.status(200).json("Payouts done!")
+})
+
+// wizard duel calls
+app.get('/duel/:channel', (req, res) => {
+  wizardDuel.start(req.params.channel);
+  client.say(req.params.channel, "Want to join the duel club? Type !duel and you might get a chance to prove yourself to your peers!")
+  res.status(200).json("The Dueling Club is open!")
+})
+
+app.get('/duel/game/pick', (req, res) =>{
+  if(wizardDuel.studentCount > 2){
+    client("#" + wizardDuel.channel, wizardDuel.pickDuelists());
+    res.status(200).json(`${wizardDuel.duelists[1]} VS ${wizardDuel.duelists[2]}`)
+  }else
+  res.status(200).json("Not enough students")
 })
 
 // clear all info

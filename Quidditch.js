@@ -1,3 +1,5 @@
+const houses = require('./Houses')
+
 module.exports = {
   users: {},
   channel: "",
@@ -38,14 +40,30 @@ module.exports = {
     return result;
   },
   finalPayouts: function(){
-    let result = "Final Results: ";
+    let result = "Quidditch Results: ";
     let allPlayers = Object.keys(this.users);
 
+    //gryf = 0, huff = 1, syl = 2, raven = 3
+    let houseTotals = [0,0,0,0]
+
     for(let i = 0; i < this.playerCount; ++i){
-      result += `[ ${allPlayers[i]}: ${this.users[allPlayers[i]].points} ]`
+      // swap results to only show house payouts
+      //result += `[ ${allPlayers[i]}: ${this.users[allPlayers[i]].points} ]`;
+      // add points to house value
+      if(houses.isEnrolled(allPlayers[i]))
+        houseTotals[houses.students[allPlayers[i].toLowerCase()]] += this.users[allPlayers[i]].points    
     }
 
+    for(let i = 0; i < 4; ++i)
+      result += ` ${houses.houseNames[i]}: ${houseTotals[i]} |`
+
     return result;
+  },
+  myPoints: function(name){
+    return `${name} scored ${this.users[name].points} points
+      ${(houses.isEnrolled(name)) 
+        ? ` for ${houses.houseNames[houses.students[name.toLowerCase()]]}!` 
+        : `! Too bad they don't have a house yet buttThump`}`
   },
   clear: function(){
     this.users = {}
