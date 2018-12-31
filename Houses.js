@@ -67,7 +67,24 @@ module.exports = {
     duskguard:3,
     aleistercrowwley:3,
     viperstrikelol:3,
-    taxikab86:0
+    taxikab86:0,
+    chrisofbodom:0,
+    silverstray:2,
+    bobert_r:3,
+    chrissmith147:0,
+    alchahest:0,
+    lolghostface:0,
+    dtricks42:3,
+    twask3v1n:1,
+    thatzigygirl:3,
+    fortheshire:1,
+    vfx10viper:3,
+    cinerdella:2,
+    krzykorean87:2,
+    datfazbear:1,
+    aardvarkpepper:3,
+    edgeblade31:0,
+    halfwingseen:2
     //gryf = 0, huff = 1, syl = 2, raven = 3
   },
   getHouse: function(name){

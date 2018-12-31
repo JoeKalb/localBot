@@ -133,11 +133,24 @@ clickBtnBind(quidditchClearBtn)
 const quidditchResultsBtn = document.getElementById("quidditchResultsBtn")
 clickBtnBind(quidditchResultsBtn)
 
+// duel controls
 const startDuelBtn = document.getElementById("startDuelBtn")
 clickBtnBindChannel(startDuelBtn)
 
 const pickDuelBtn = document.getElementById("pickDuelBtn")
 clickBtnBind(pickDuelBtn)
+
+const duelBtn = document.getElementById("duelBtn")
+clickBtnBind(duelBtn)
+
+const resetDuelBtn = document.getElementById("resetDuelBtn")
+clickBtnBind(resetDuelBtn)
+
+const testDuelBtn = document.getElementById("testDuelBtn")
+clickBtnBindChannel(testDuelBtn)
+
+const testDuelBetsBtn = document.getElementById("testDuelBetsBtn")
+clickBtnBind(testDuelBetsBtn)
 
 // giveaway controls
 const giveStartBtn = document.getElementById("giveawayStartBtn")
