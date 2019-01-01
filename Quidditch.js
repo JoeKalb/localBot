@@ -36,7 +36,7 @@ module.exports = {
     this.gameOn = false;
     let allPlayers = Object.keys(this.users);
     let result = this.snitch = allPlayers[Math.floor(Math.random() * this.playerCount)]
-    while(this.snitch == "thaButtress")
+    while(result.toLowerCase() == "thabuttress")
       result = this.snitch = allPlayers[Math.floor(Math.random() * this.playerCount)]
     this.users[this.snitch].points += 100;
     return result;

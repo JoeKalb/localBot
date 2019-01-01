@@ -139,12 +139,12 @@ function onMessageHandler (target, context, msg, self) {
   const commandName = parse[0]
   
 
-  // switch cases for wizardDual only
+  // switch cases for wizardDuel only
   if(wizardDuel.beginDuel || wizardDuel.allowBets 
     || wizardDuel.allowEntries || wizardDuel.studentCount){
     switch(commandName){ // 
       case 'duel':
-      // joining the dual will be here
+      // joining the duel will be here
       if(wizardDuel.allowEntries
         && target == "#" + wizardDuel.channel){
         if(!houses.isEnrolled(context.username))
@@ -198,7 +198,7 @@ function onMessageHandler (target, context, msg, self) {
         break;
       default:
         // commands during wizard duel that do not apply
-        //console.log(`Wizard Dual Switch Case Default: ${commandName}`)
+        //console.log(`Wizard Duel Switch Case Default: ${commandName}`)
     }
   }
   // If the command is known, let's execute it:
@@ -480,7 +480,7 @@ app.get('/duel/game/pick', (req, res) =>{
 app.get('/duel/game/start', (req, res) => {
   if(wizardDuel.allowBets){
     client.say("#"+wizardDuel.channel, wizardDuel.readyToDuel());
-    wizardDuel.timeToDual();
+    wizardDuel.timeToDuel();
     wizardDuel.finalHousePayouts();
 
     let actions = []

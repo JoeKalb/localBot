@@ -173,12 +173,12 @@ module.exports = {
     if(picks == 5){
       this.allowEntries = true;
       this.duelists[1] = this.duelists[2] = ""
-      return "There weren't enough entries to start the dual. Reopening the club!"
+      return "There weren't enough entries to start the duel. Reopening the club!"
     }
 
     this.allowBets = true;
 
-    return `The Dualists have been chosen! 
+    return `The Duelists have been chosen! 
       ${this.duelists[1]} from ${houses.houseNames[this.students[this.duelists[1]].houseNum]} 
       VS ${this.duelists[2]} from ${houses.houseNames[this.students[this.duelists[2]].houseNum]}!!! 
       DO !bet 1 [${this.duelists[1]}] or !bet 2 [${this.duelists[2]}]`
@@ -209,7 +209,7 @@ module.exports = {
   readyToDuel: function(){
     this.beginDuel = true;
     this.allowBets = false;
-    return `The bets are in and the dual is about to begin! 
+    return `The bets are in and the duel is about to begin! 
     ${this.duelists[1]} has ${this.betsPlaced[1]} students on their side
     while ${this.duelists[2]} comes in with a crew of ${this.betsPlaced[2]}
     strong!`
@@ -229,28 +229,28 @@ module.exports = {
     if(this.winnerFound){
       let actions = [];
 
-      let spellName1 = Object.keys(this.spells[this.duelInfo.dual1.spellChoice])[0];
-      let duel1SpellStrength = this.duelInfo.dual1.strength;
+      let spellName1 = Object.keys(this.spells[this.duelInfo.duel1.spellChoice])[0];
+      let duel1SpellStrength = this.duelInfo.duel1.strength;
       duel1SpellStrength = this.spellStrengthOption(duel1SpellStrength)
-      let duel1Attack = this.spells[this.duelInfo.dual1.spellChoice][spellName1][duel1SpellStrength]
+      let duel1Attack = this.spells[this.duelInfo.duel1.spellChoice][spellName1][duel1SpellStrength]
 
 
-      let spellName2 = Object.keys(this.spells[this.duelInfo.dual2.spellChoice])[0];
-      let duel2SpellStrength = this.duelInfo.dual2.strength;
+      let spellName2 = Object.keys(this.spells[this.duelInfo.duel2.spellChoice])[0];
+      let duel2SpellStrength = this.duelInfo.duel2.strength;
       duel2SpellStrength = this.spellStrengthOption(duel2SpellStrength)
-      let duel2Attack = this.spells[this.duelInfo.dual2.spellChoice][spellName2][duel2SpellStrength]
+      let duel2Attack = this.spells[this.duelInfo.duel2.spellChoice][spellName2][duel2SpellStrength]
       
       // do win spell for winning ability
       if(this.duelists[0] != ""){
-        if (this.duelists[0] == this.duelInfo.dual1.name){
-          actions.push(`${this.duelInfo.dual1.name} casts ${spellName1}!`)
-          actions.push(replaceNamesAction(duel1Attack, this.duelInfo.dual1.name, this.duelInfo.dual2.name))
-          //actions.push(replaceNamesAction(this.spells[this.duelInfo.dual1.spellChoice][spellName1].win, this.duelInfo.dual1.name, this.duelInfo.dual2.name))
+        if (this.duelists[0] == this.duelInfo.duel1.name){
+          actions.push(`${this.duelInfo.duel1.name} casts ${spellName1}!`)
+          actions.push(replaceNamesAction(duel1Attack, this.duelInfo.duel1.name, this.duelInfo.duel2.name))
+          //actions.push(replaceNamesAction(this.spells[this.duelInfo.duel1.spellChoice][spellName1].win, this.duelInfo.duel1.name, this.duelInfo.duel2.name))
         }
         else{
-          actions.push(`${this.duelInfo.dual2.name} casts ${spellName2}!`)
-          actions.push(replaceNamesAction(duel2Attack, this.duelInfo.dual2.name, this.duelInfo.dual1.name))
-          //actions.push(replaceNamesAction(this.spells[this.duelInfo.dual2.spellChoice][spellName2].win, this.duelInfo.dual2.name, this.duelInfo.dual1.name))
+          actions.push(`${this.duelInfo.duel2.name} casts ${spellName2}!`)
+          actions.push(replaceNamesAction(duel2Attack, this.duelInfo.duel2.name, this.duelInfo.duel1.name))
+          //actions.push(replaceNamesAction(this.spells[this.duelInfo.duel2.spellChoice][spellName2].win, this.duelInfo.duel2.name, this.duelInfo.duel1.name))
         }
       }
 
@@ -258,26 +258,26 @@ module.exports = {
       return actions
     }
   },
-  timeToDual: function(){
+  timeToDuel: function(){
     if(this.beginDuel){
       this.duelInfo = {
-        dual1:{
+        duel1:{
           name:this.duelists[1],
           strength:Math.floor(Math.random()*100)+1,
           spellChoice: this.pickRandomSpell()
         },
-        dual2:{
+        duel2:{
           name:this.duelists[2],
           strength:Math.floor(Math.random()*100)+1,
           spellChoice: this.pickRandomSpell()
         }
       }
-      if(this.duelInfo.dual1.strength > this.duelInfo.dual2.strength){
+      if(this.duelInfo.duel1.strength > this.duelInfo.duel2.strength){
         this.betsPlaced[0] = 1;
-        this.duelists[0] = this.duelInfo.dual1.name;
-      }else if(this.duelInfo.dual1.strength < this.duelInfo.dual2.strength){
+        this.duelists[0] = this.duelInfo.duel1.name;
+      }else if(this.duelInfo.duel1.strength < this.duelInfo.duel2.strength){
         this.betsPlaced[0] = 2;
-        this.duelists[0] = this.duelInfo.dual2.name;
+        this.duelists[0] = this.duelInfo.duel2.name;
       }
       
       this.beginDuel = false;
@@ -325,7 +325,7 @@ module.exports = {
     let result;
     
     if(name == this.duelists[0]){
-      result = `${name} won the dual against ${(name == this.duelists[1]) 
+      result = `${name} won the duel against ${(name == this.duelists[1]) 
         ? ` ${this.duelists[2]}` : ` ${this.duelists[1]}`}! ${this.students[name].payout} POINTS TO ${houses.houseNames[this.students[name].houseNum].toUpperCase()}!!!` 
     }else if(this.students[name].payout > 0){
       result = `${name} added ${this.students[name].payout} points to ${houses.houseNames[this.students[name].houseNum]}`
