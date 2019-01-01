@@ -48,11 +48,16 @@ function tryThis(){
   actions.push(wizardDuel.champ())
   actions.push(wizardDuel.houseResults())
 
+  for(let i in actions)
+    console.log(actions[i])
+
+  /*
   for(let i in actions){
     setTimeout(function(){ 
       console.log("#"+wizardDuel.channel, actions[i])   
     }, 5000 + i*3000)
   }
+  */
 }
 
 tryThis()

@@ -17,13 +17,14 @@ module.exports = {
   allowEntries: false,
   allowBets: false,
   winnerFound: false,
+  betAmount: 10,
   students: {},
   spells: [
     {
       Aguamenti:{
         define: "Shoots water from wand.",
         0:"Water starts coming out of <self>'s wand, but it doesn't even reach the other end of the stage.",
-        1:"Water comes shooting out of <self>'s wand, <other> tries to dodge but can't in time! Now <other>'s are all wet buttStink",
+        1:"Water comes shooting out of <self>'s wand, <other> tries to dodge but can't in time! Now <other> is soaking wet!",
         2:"A torrent of water explodes out of <self>'s wand! <other> gets pushed to the ground from the sheer pressure!",
         win:"<other> slips on the water and drops their wand!"
       } 
@@ -61,7 +62,7 @@ module.exports = {
         0:"<other>'s wand shakes a little.",
         1:"A ball of light comes out of <self>'s wand and hits <other>, they fall onto their back.",
         2:"A ball of light comes out of <self>'s wand and knocks <other> into the air. <other> lands on the ground face first the a violent thud.",
-        win:"<other> drop's their wand!"
+        win:"<other>'s wand goes flything accress the room!"
       }
     },
     {
@@ -85,7 +86,7 @@ module.exports = {
       Rictusempra: {
         define:"Tickles opponent",
         0:"<other> isn't ticklish...",
-        1:"<other> squirms around a bit. They're only ticklish in certain places.",
+        1:"<other> is ticklish and can't say a spell without laughing!",
         2:"<other> can't stop laughing! They're rolling on the ground and can barely speak.",
         win:"<other> yields. Tickle torture should also be an unforgivable curse."
       }
@@ -172,7 +173,7 @@ module.exports = {
     if(picks == 5){
       this.allowEntries = true;
       this.duelists[1] = this.duelists[2] = ""
-      return "There weren't enough entries to start the dual. Do !duel to join."
+      return "There weren't enough entries to start the dual. Reopening the club!"
     }
 
     this.allowBets = true;
@@ -180,10 +181,10 @@ module.exports = {
     return `The Dualists have been chosen! 
       ${this.duelists[1]} from ${houses.houseNames[this.students[this.duelists[1]].houseNum]} 
       VS ${this.duelists[2]} from ${houses.houseNames[this.students[this.duelists[2]].houseNum]}!!! 
-      DO !bet 1 for ${this.duelists[1]} or !bet 2 for ${this.duelists[2]}`
+      DO !bet 1 [${this.duelists[1]}] or !bet 2 [${this.duelists[2]}]`
   },
   placeBet: function(name, bet){
-    if(!this.students[name].bet){
+    if(this.allowBets && !this.students[name].bet){
       let reg1 = new RegExp(this.duelists[1], 'i');
       let reg2 = new RegExp(this.duelists[2], 'i');
       if(name != this.duelists[1] && name != this.duelists[2]){
@@ -239,17 +240,17 @@ module.exports = {
       duel2SpellStrength = this.spellStrengthOption(duel2SpellStrength)
       let duel2Attack = this.spells[this.duelInfo.dual2.spellChoice][spellName2][duel2SpellStrength]
       
-      actions.push(`${this.duelInfo.dual1.name} casts ${spellName1}!`)
-      actions.push(duel1Attack.replace("<self>", this.duelInfo.dual1.name).replace("<other>", this.duelInfo.dual2.name))
-      actions.push(`${this.duelInfo.dual2.name} casts ${spellName2}!`)
-      actions.push(duel2Attack.replace("<self>", this.duelInfo.dual2.name).replace("<other>", this.duelInfo.dual1.name))
       // do win spell for winning ability
       if(this.duelists[0] != ""){
         if (this.duelists[0] == this.duelInfo.dual1.name){
-          actions.push(this.spells[this.duelInfo.dual1.spellChoice][spellName1].win.replace("<self>", this.duelInfo.dual1.name).replace("<other>", this.duelInfo.dual2.name))
+          actions.push(`${this.duelInfo.dual1.name} casts ${spellName1}!`)
+          actions.push(replaceNamesAction(duel1Attack, this.duelInfo.dual1.name, this.duelInfo.dual2.name))
+          //actions.push(replaceNamesAction(this.spells[this.duelInfo.dual1.spellChoice][spellName1].win, this.duelInfo.dual1.name, this.duelInfo.dual2.name))
         }
         else{
-          actions.push(this.spells[this.duelInfo.dual2.spellChoice][spellName2].win.replace("<self>", this.duelInfo.dual2.name).replace("<other>", this.duelInfo.dual1.name))
+          actions.push(`${this.duelInfo.dual2.name} casts ${spellName2}!`)
+          actions.push(replaceNamesAction(duel2Attack, this.duelInfo.dual2.name, this.duelInfo.dual1.name))
+          //actions.push(replaceNamesAction(this.spells[this.duelInfo.dual2.spellChoice][spellName2].win, this.duelInfo.dual2.name, this.duelInfo.dual1.name))
         }
       }
 
@@ -288,7 +289,7 @@ module.exports = {
   },
   finalHousePayouts: function(){
     let names = Object.keys(this.students);
-    let totalBets = this.studentCount * 10;
+    let totalBets = this.studentCount * this.betAmount;
     let champsTake = Math.ceil(totalBets/2);
     let winningBetsTotal = totalBets - champsTake;
     let winnerPortion = Math.floor(winningBetsTotal / this.betsPlaced[[this.betsPlaced[0]]])
@@ -300,7 +301,7 @@ module.exports = {
       }else if(this.students[names[i]].betOn == this.betsPlaced[0]){
         this.students[names[i]].payout = winnerPortion;
       }else
-        this.students[names[i]].payout = -10;
+        this.students[names[i]].payout = -1 * this.betAmount;
 
       this.finalPayouts[this.students[names[i]].houseNum] 
         += this.students[names[i]].payout
@@ -327,16 +328,16 @@ module.exports = {
       result = `${name} won the dual against ${(name == this.duelists[1]) 
         ? ` ${this.duelists[2]}` : ` ${this.duelists[1]}`}! ${this.students[name].payout} POINTS TO ${houses.houseNames[this.students[name].houseNum].toUpperCase()}!!!` 
     }else if(this.students[name].payout > 0){
-      result = `${name} contributed ${this.students[name].payout} points to ${houses.houseNames[this.students[name].houseNum]}`
+      result = `${name} added ${this.students[name].payout} points to ${houses.houseNames[this.students[name].houseNum]}`
     }else{
-      result = `${name} lost ${this.students[name].payout} points from ${houses.houseNames[this.students[name].houseNum]}`
+      result = `${name} lost ${this.students[name].payout*-1} of ${houses.houseNames[this.students[name].houseNum]}'s points buttThump`
     }
 
     return result;
   },
   champ: function(){
     if (this.duelists[0] != "") 
-      return `${this.duelists[0]} HAS EMERGED VICTORIOUS! They gained ${this.students[this.duelists[0]].payout} points for ${houses.houseNames[this.students[this.duelists[0]].houseNum]}!!!`;
+      return `${this.duelists[0]} won the duel! ${this.students[this.duelists[0]].payout} POINTS TO ${houses.houseNames[this.students[this.duelists[0]].houseNum].toUpperCase()}!!!`;
     return `${this.duelists[1]} and ${this.duelists[2]} were equaly matched. They had a good duel though so they split the winnings!`
   },
   clear: function(){
@@ -352,4 +353,9 @@ module.exports = {
     this.finalPayouts = [0,0,0,0]
     this.betsPlaced = [0,0,0]
   }
+}
+
+// helper functions
+function replaceNamesAction(action, self, other){
+  return action.replace(/<self>/g, self).replace(/<other>/g, other)
 }

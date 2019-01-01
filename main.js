@@ -146,12 +146,6 @@ clickBtnBind(duelBtn)
 const resetDuelBtn = document.getElementById("resetDuelBtn")
 clickBtnBind(resetDuelBtn)
 
-const testDuelBtn = document.getElementById("testDuelBtn")
-clickBtnBindChannel(testDuelBtn)
-
-const testDuelBetsBtn = document.getElementById("testDuelBetsBtn")
-clickBtnBind(testDuelBetsBtn)
-
 // giveaway controls
 const giveStartBtn = document.getElementById("giveawayStartBtn")
 clickBtnBindChannel(giveStartBtn)

@@ -40,8 +40,8 @@ let opts = {
     password: CONFIG.OAUTH
    },
    channels: [
-    'joefish5',
     'thabuttress',
+    'joefish5',
     'oooskittles',
     'thethingssheplays'
    ]
@@ -117,6 +117,16 @@ function onMessageHandler (target, context, msg, self) {
     }
   }
 
+  
+  // wizard duel logic
+  if(wizardDuel.allowEntries 
+    && target == "#" + wizardDuel.channel
+    && houses.isEnrolled(context.username)
+    && !wizardDuel.checkIfInDuel(context['display-name'])){
+      wizardDuel.enter(context['display-name'], houses.students[context.username])
+      console.log(`${context['display-name']} entered the Dueling Club`)
+  }
+
   // all commands go under here!
   if (msg.substr(0, 1) !== commandPrefix) {
     // this shows all of chat
@@ -132,16 +142,26 @@ function onMessageHandler (target, context, msg, self) {
   // switch cases for wizardDual only
   if(wizardDuel.beginDuel || wizardDuel.allowBets 
     || wizardDuel.allowEntries || wizardDuel.studentCount){
-    switch(commandName){
+    switch(commandName){ // 
       case 'duel':
       // joining the dual will be here
       if(wizardDuel.allowEntries
-        && target == "#" + wizardDuel.channel
-        && houses.isEnrolled(context['display-name'])
-        && !wizardDuel.checkIfInDuel(context['display-name'])){
-        wizardDuel.enter(context['display-name'], houses.students[context.username]);
-        client.say(target, `${context['display-name']} entered the Dueling Club!`)
+        && target == "#" + wizardDuel.channel){
+        if(!houses.isEnrolled(context.username))
+          client.say(target, `Sorry ${context['display-name']}, you don't have a !house yet.`)
+        else{
+          if(wizardDuel.checkIfInDuel(context['display-name']))
+            client.say(target, `${context['display-name']} is in the Dueling Club!`)
+          else{
+            wizardDuel.enter(context['display-name'], houses.students[context.username])
+            client.say(target, `Welcome to the dueling club ${context['display-name']}!`)
+          }
+        }
       }
+      if(wizardDuel.winnerFound
+        && target == "#" + wizardDuel.channel
+        && wizardDuel.checkIfInDuel(context['display-name']))
+        client.say(target, wizardDuel.myResults(context['display-name']))
         break;
       case 'pickDuelists':
         if(target == "#" + wizardDuel.channel
@@ -154,28 +174,31 @@ function onMessageHandler (target, context, msg, self) {
           && wizardDuel.allowBets
           && wizardDuel.checkIfInDuel(context['display-name'])){
           let arrMsg = msg.split(' ');
-          let readyToDuel = wizardDuel.placeBet(context['display-name'], arrMsg[1])
+          let readyToDuel = false 
+          if(arrMsg[1])
+            readyToDuel = wizardDuel.placeBet(context['display-name'], arrMsg[1])
+          else
+            client.say(target, `Sorry ${context['display-name']}, need to do !bet 1 or !bet 2`)
           if(readyToDuel)
-            client.say(target, "/me "+wizardDuel.readyToDuel())
+            client.say(target, "All bets have been placed!")
         }
+        else if(target == "#" + wizardDuel.channel
+          && wizardDuel.winnerFound
+          && wizardDuel.checkIfInDuel(context['display-name'])){
+            client.say(target, wizardDuel.myResults(context['display-name']))
+          }
+        else if(target == "#" + wizardDuel.channel
+          && !wizardDuel.allowBets){
+            client.say(target, `Sorry ${context['display-name']}. There's no one to !bet on yet.`)
+          }
         break;
       case 'duelHouses':
         if(target == "#" + wizardDuel.channel)
           client.say(target, wizardDuel.showEntries())
         break;
-      case 'duelResults':
-        if(target == "#" + wizardDuel.channel
-          && (context.username == "thabuttress" || context.username == "joefish5")
-          && !wizardDuel.allowEntries && !wizardDuel.allowBets){
-            let result = wizardDuel.timeToDual()
-            client.say(target, `${result.dual1.name} and ${result.dual2.name} 
-            take center stage. They bow towards, sharply turn around, to opposite 
-            ends of the platform.`);
-          }
-          dualStory(result)
-        break;
       default:
-        console.log(`Wizard Dual Switch Case Default: ${commandName}`)
+        // commands during wizard duel that do not apply
+        //console.log(`Wizard Dual Switch Case Default: ${commandName}`)
     }
   }
   // If the command is known, let's execute it:
@@ -268,10 +291,6 @@ function onMessageHandler (target, context, msg, self) {
   }
 }
 
-function dualStory(result){
-  console.log("The actual dual will happen here!")
-}
-
 function test(target){
   console.log(`Testing in channel: ${target}`)
   client.say(target, "This is a test!")
@@ -327,6 +346,16 @@ app.get('/testBtn/:channel', (req, res) => {
     res.status(404).send(err)
   }
 })
+
+
+function delayedWinnings(target, messages){
+  for(let i in messages){
+    setTimeout(() => {
+      client.action(target, messages[i])   
+    }, 3000 + i*3000)
+  }
+}
+
 // hangman
 app.post('/hangman', (req, res) => {
   try{
@@ -346,7 +375,6 @@ app.get('/hangman/pause', (req, res) => {
   
   res.status(200).json(hangman.getPause())
 })
-
 
 app.get('/hangman/clear', (req, res) => {
   hangman.clear();
@@ -401,9 +429,10 @@ app.get('/quidditch/:channel', (req, res) => {
 app.get('/quidditch/game/over', (req, res) => {
   if(quidditch.playerCount){
     let snitch = quidditch.snitchCaught();
-    client.say(quidditch.channel, `${snitch} caught the Golden Snitch and ended the game!`);
-    recordPayouts(quidditch.finalPayouts())
-    client.say(quidditch.channel, quidditch.finalPayouts())
+    let winnings = quidditch.finalPayouts();
+    let messages = [`${snitch} caught the Golden Snitch and ended the game!`, winnings]
+    delayedWinnings(quidditch.channel, messages)
+    recordPayouts(`${winnings} | ${snitch} caught the snitch!`)
     res.status(200).json(`${snitch} caught the snitch!`)
   } 
   else res.status(200).json("No one played")
@@ -435,7 +464,8 @@ app.get('/quidditch/game/payout', (req, res) => {
 // wizard duel calls
 app.get('/duel/:channel', (req, res) => {
   wizardDuel.start(req.params.channel);
-  client.say(req.params.channel, "Want to join the duel club? Type !duel and you might get a chance to prove yourself to your peers!")
+  client.say(req.params.channel, `Want to join the duel club? Just keep talking in chat and as long as you're in a 
+    !house you might get a chance to prove yourself to your peers! [!wizard !duel]`)
   res.status(200).json("The Dueling Club is open!")
 })
 
@@ -447,34 +477,20 @@ app.get('/duel/game/pick', (req, res) =>{
     res.status(200).json("Not enough students")
 })
 
-function tryThis(){
-  let actions = []
-  actions = wizardDuel.duelArray();
-  actions.push(wizardDuel.champ())
-  actions.push(wizardDuel.houseResults())
-
-  for(let i in actions){
-    setTimeout(() => { 
-      client.action("#"+wizardDuel.channel, actions[i])   
-    }, 5000 + i*3000)
-  }
-}
 app.get('/duel/game/start', (req, res) => {
   if(wizardDuel.allowBets){
     client.say("#"+wizardDuel.channel, wizardDuel.readyToDuel());
+    wizardDuel.timeToDual();
+    wizardDuel.finalHousePayouts();
 
     let actions = []
+    let results = wizardDuel.houseResults();
     actions = wizardDuel.duelArray();
-    console.log(wizardDuel.champ())
-    let results = wizardDuel.houseResults()
+    actions.push(wizardDuel.champ());
+    actions.push(results);
 
-    client.action("#"+wizardDuel.channel, results) 
-    for(let i in actions){
-      setTimeout(() => { 
-        client.action("#"+wizardDuel.channel, actions[i])   
-      }, 5000 + i*3000)
-    }
-    
+    delayedWinnings(wizardDuel.channel, actions)
+   
     recordPayouts(results)
     res.status(200).json(wizardDuel.champ())
   }
@@ -484,35 +500,6 @@ app.get('/duel/game/start', (req, res) => {
 app.get('/duel/game/clear', (req, res) => {
   wizardDuel.clear();
   res.status(200).json("clearing the duel")
-})
-
-
-function frontEndTestEnter(){
-  let testStudents = Object.keys(houses.students)
-
-  for(let i in testStudents){
-    wizardDuel.enter(testStudents[i],
-      houses.students[testStudents[i]])
-  }
-}
-
-function frontEndTestBets(){
-  let testStudents = Object.keys(houses.students)
-
-  for(let i in testStudents){
-    wizardDuel.placeBet(testStudents[i], Math.floor(Math.random() * 2) + 1)
-  }
-}
-
-app.get('/duel/game/test/:channel', (req, res) => {
-  wizardDuel.start(req.params.channel)
-  frontEndTestEnter()
-  res.status(200).json("Starting test wizard duel")
-})
-
-app.get('/duel/game/test/bets/test', (req, res) => {
-  frontEndTestBets()
-  res.status(200).json("Starting test wizard bets")
 })
 
 // clear all info

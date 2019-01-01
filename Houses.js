@@ -84,7 +84,17 @@ module.exports = {
     datfazbear:1,
     aardvarkpepper:3,
     edgeblade31:0,
-    halfwingseen:2
+    halfwingseen:2,
+    monthis:2,
+    unitymind:3,
+    deven9484:3,
+    thepaintmonkey:0,
+    lostfoxman:1,
+    krivas95:1,
+    inquisitorburnzy:3,
+    lumberjackdann:0,
+    ekkonexus:1,
+    nzstephenf:1
     //gryf = 0, huff = 1, syl = 2, raven = 3
   },
   getHouse: function(name){
@@ -92,7 +102,7 @@ module.exports = {
     let result = name;
     (this.students.hasOwnProperty(check)) ?
       result += ` is in ${this.houseNames[this.students[check]]}!`:
-      result += " has no house yet!"
+      result += " has no !house yet!"
     return result
   },
   classSizes: function(){
