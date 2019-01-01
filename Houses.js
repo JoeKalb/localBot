@@ -94,7 +94,9 @@ module.exports = {
     inquisitorburnzy:3,
     lumberjackdann:0,
     ekkonexus:1,
-    nzstephenf:1
+    nzstephenf:1,
+    captaindaikyo:3,
+    tsmax17:0
     //gryf = 0, huff = 1, syl = 2, raven = 3
   },
   getHouse: function(name){
