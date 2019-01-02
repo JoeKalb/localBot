@@ -127,7 +127,7 @@ module.exports = {
     let lowName = name.toLowerCase()
     if(this.students.hasOwnProperty(lowName)){
       let result = `Here's the current students in 
-        ${this.houseNames[this.students[lowName]]} with you ${name}! `
+        ${this.houseNames[this.students[lowName]]} with ${name}! `
       let house = this.students[lowName]
       let allNames = Object.keys(this.students);
       let totalStudents = allNames.length;
@@ -139,6 +139,6 @@ module.exports = {
       }
       return result;
     }
-    return `Sorry ${name} you don't have a house yet, do !house to find yours!`;
+    return `Sorry ${name} doesn't have a house yet, do !house to find yours!`;
   }
 }

@@ -286,8 +286,18 @@ function onMessageHandler (target, context, msg, self) {
       break;
     case 'myhouse':
       if(target == "#thabuttress" || target == "#joefish5"){
-        client.say(target, houses.myHouse(context['display-name']))
+        let tryName = msg.split(' ')[1];
+        (!tryName) ? client.say(target, houses.myHouse(context['display-name']))
+          : client.say(target, houses.myHouse(tryName))
       }
+      break;
+    case 'commands':
+      let commands = "Current list of all Harry Potter commands:";
+      commands += " House info[!house !houses !whathouse !myhouse]";
+      commands += " Quidditch[!play !results !myresults !snitch]";
+      commands += " Wizard duel[!wizard !duel !bet (1 or 2)]";
+      commands += " Hangman[!hangman !guessed]";
+      client.say(target, commands)
       break;
     default:
       // this shows unknows commands

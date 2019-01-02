@@ -160,11 +160,15 @@ module.exports = {
 
     let student1 = Math.floor(Math.random() * this.studentCount)
     this.duelists[1] = names[student1]
+    while(this.duelists[1].toLowerCase() == "thabuttress"){
+      student1 = Math.floor(Math.random() * this.studentCount)
+      this.duelists[1] = names[student1]
+    }
 
     let student2 = Math.floor(Math.random() * this.studentCount)
     while(this.students[names[student1]].houseNum == 
       this.students[names[student2]].houseNum
-      && picks < 5){
+      && picks < 5 && this.students[names[student2]].toLowerCase() == "thabuttress" ){
       student2 = Math.floor(Math.random() * this.studentCount)
       ++picks;
     }
