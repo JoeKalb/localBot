@@ -98,7 +98,12 @@ module.exports = {
     captaindaikyo:3,
     tsmax17:0,
     jimmytheguz:0,
-    neumie92:2
+    neumie92:2,
+    mal5305:1,
+    truedarkdogg:2,
+    arkaynan:1,
+    reiner72:0,
+    itszenoox:3
     //gryf = 0, huff = 1, syl = 2, raven = 3
   },
   getHouse: function(name){
@@ -118,7 +123,8 @@ module.exports = {
     for(let i in this.houseNames)
       result += ` ${this.houseNames[i]}: ${classCount[i]} |`
 
-    result += ` ${classCount[0] + classCount[1] + classCount[2] + classCount[3]} Total Students buttOMG`
+    result += ` ${classCount[0] + classCount[1] 
+      + classCount[2] + classCount[3]} Total Students buttOMG`
     return result
   },
   isEnrolled: function(name){
