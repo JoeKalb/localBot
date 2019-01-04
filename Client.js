@@ -114,6 +114,8 @@ function onMessageHandler (target, context, msg, self) {
     if(randNum.guess(msg)){
       recordPayouts(`${context['display-name']} wins! The correct number was ${randNum.number}`)
       client.say(target, `${context['display-name']} wins! The correct number was ${randNum.number}`)
+      client.say(target, `${context['display-name']} wins! The correct number was ${randNum.number}`)
+      client.say(target, `${context['display-name']} wins! The correct number was ${randNum.number}`)
       if(houses.isEnrolled(context.username)){
         client.say(target, `100 points to ${houses.houseNames[houses.students[context.username]]}!`)
         recordHousePoints(`100 points to ${houses.houseNames[houses.students[context.username]]}!`)
@@ -176,15 +178,12 @@ function onMessageHandler (target, context, msg, self) {
       case 'bet':
         if(target == "#" + wizardDuel.channel
           && wizardDuel.allowBets
-          && wizardDuel.checkIfInDuel(context['display-name'])){
+          && houses.isEnrolled(context.username)){
           let arrMsg = msg.split(' ');
-          let readyToDuel = false 
           if(arrMsg[1])
-            readyToDuel = wizardDuel.placeBet(context['display-name'], arrMsg[1])
+            wizardDuel.placeBet(context['display-name'], arrMsg[1])
           else
             client.say(target, `Sorry ${context['display-name']}, need to do !bet 1 or !bet 2`)
-          if(readyToDuel)
-            client.say(target, "All bets have been placed!")
         }
         else if(target == "#" + wizardDuel.channel
           && wizardDuel.winnerFound
@@ -195,6 +194,9 @@ function onMessageHandler (target, context, msg, self) {
           && !wizardDuel.allowBets){
             client.say(target, `Sorry ${context['display-name']}. There's no one to !bet on yet.`)
           }
+        break;
+      case 'duelists':
+        client.say(target, wizardDuel.options())
         break;
       case 'duelHouses':
         if(target == "#" + wizardDuel.channel)

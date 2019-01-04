@@ -187,23 +187,72 @@ module.exports = {
       VS ${this.duelists[2]} from ${houses.houseNames[this.students[this.duelists[2]].houseNum]}!!! 
       DO !bet 1 [${this.duelists[1]}] or !bet 2 [${this.duelists[2]}]`
   },
+  options: function(){
+    if(this.allowBets){
+      return `!bet 1 [${this.duelists[1]} from 
+      ${houses.houseNames[this.students[this.duelists[1]].houseNum]}] 
+      or !bet 2 [${this.duelists[2]} from ${houses.houseNames[this.students[this.duelists[1]].houseNum]}]`
+    }
+    else{
+      return "This Duelists haven't been selected yet!"
+    }
+  },
   placeBet: function(name, bet){
-    if(this.allowBets && !this.students[name].bet){
-      let reg1 = new RegExp(this.duelists[1], 'i');
-      let reg2 = new RegExp(this.duelists[2], 'i');
-      if(name != this.duelists[1] && name != this.duelists[2]){
-        console.log(`${name} has bet ${bet}`)
-        if(bet == 1 || reg1.test(bet)){
-          this.students[name].betOn = 1;
-          ++this.betsPlaced[1];
-        }
-        else if(bet == 2 || reg2.test(bet)){
-          this.students[name].betOn = 2;
-          ++this.betsPlaced[2];
+    if(this.allowBets){
+      if(!this.students[name]){
+        this.allowEntries = true;
+        this.enter(name, houses.students[name.toLowerCase()])
+        this.allowEntries = false;
+      }
+
+      if(!this.students[name].bet){
+        let reg1 = new RegExp(this.duelists[1], 'i');
+        let reg2 = new RegExp(this.duelists[2], 'i');
+        if(name != this.duelists[1] && name != this.duelists[2]){
+          console.log(`${name} has bet ${bet}`)
+          if(bet == 1 || reg1.test(bet)){
+            this.students[name].betOn = 1;
+            ++this.betsPlaced[1];
+          }
+          else if(bet == 2 || reg2.test(bet)){
+            this.students[name].betOn = 2;
+            ++this.betsPlaced[2];
+          }
         }
       }
     }
-    return (this.betsPlaced[1] + this.betsPlaced[2]) == (this.studentCount-2)
+
+    // old logic
+    // if(this.allowBets && !this.students[name]){
+    //   this.allowEntries = true;
+    //   this.enter(name, houses.students[name.toLowerCase()])
+    //   this.allowEntries = false;
+    //   console.log(`${name} has bet ${bet}`)
+    //     if(bet == 1 || reg1.test(bet)){
+    //       this.students[name].betOn = 1;
+    //       ++this.betsPlaced[1];
+    //     }
+    //     else if(bet == 2 || reg2.test(bet)){
+    //       this.students[name].betOn = 2;
+    //       ++this.betsPlaced[2];
+    //     }
+    // }
+    // else if(this.allowBets && !this.students[name].bet){
+    //   let reg1 = new RegExp(this.duelists[1], 'i');
+    //   let reg2 = new RegExp(this.duelists[2], 'i');
+    //   if(name != this.duelists[1] && name != this.duelists[2]){
+    //     console.log(`${name} has bet ${bet}`)
+    //     if(bet == 1 || reg1.test(bet)){
+    //       this.students[name].betOn = 1;
+    //       ++this.betsPlaced[1];
+    //     }
+    //     else if(bet == 2 || reg2.test(bet)){
+    //       this.students[name].betOn = 2;
+    //       ++this.betsPlaced[2];
+    //     }
+    //   }
+    // }
+    //return (this.betsPlaced[1] + this.betsPlaced[2]) == (this.studentCount-2)
   },
   checkIfInDuel: function(name){
     if(this.students[name]) 
@@ -293,7 +342,7 @@ module.exports = {
   },
   finalHousePayouts: function(){
     let names = Object.keys(this.students);
-    let totalBets = this.studentCount * this.betAmount;
+    let totalBets = (this.betsPlaced[1] + this.betsPlaced[2]) * this.betAmount;
     let champsTake = Math.ceil(totalBets/2);
     let winningBetsTotal = totalBets - champsTake;
     let winnerPortion = Math.floor(winningBetsTotal / this.betsPlaced[[this.betsPlaced[0]]])
@@ -304,8 +353,11 @@ module.exports = {
         this.students[this.duelists[0]].payout = champsTake;
       }else if(this.students[names[i]].betOn == this.betsPlaced[0]){
         this.students[names[i]].payout = winnerPortion;
-      }else
+      }else if(this.students[names[i]].betOn != 0){
         this.students[names[i]].payout = -1 * this.betAmount;
+      }else{
+        console.log(`${names[i]} didn't bet`)
+      }
 
       this.finalPayouts[this.students[names[i]].houseNum] 
         += this.students[names[i]].payout
@@ -313,8 +365,7 @@ module.exports = {
    
     //it was a tie
     if(!this.betsPlaced[0]){
-      this.students[this.duelists[1]].payout = Math.floor(champsTake/2);
-      this.students[this.duelists[2]].payout = champsTake - this.students[this.duelists[1]].payout;
+      this.students[this.duelists[1]].payout = this.students[this.duelists[2]].payout = Math.floor(champsTake/2);
     }
   },
   houseResults: function(){
