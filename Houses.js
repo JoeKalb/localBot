@@ -97,7 +97,8 @@ module.exports = {
     nzstephenf:1,
     captaindaikyo:3,
     tsmax17:0,
-    jimmytheguz:0
+    jimmytheguz:0,
+    neumie92:2
     //gryf = 0, huff = 1, syl = 2, raven = 3
   },
   getHouse: function(name){
