@@ -13,7 +13,8 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "node tests/testsDuel.js"
+    "test": "node tests/testsDuel.js",
+    "dev": "nodemon bot.js"
   },
   "repository": {
     "type": "git",
