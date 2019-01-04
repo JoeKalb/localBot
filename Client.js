@@ -154,7 +154,8 @@ function onMessageHandler (target, context, msg, self) {
       if(wizardDuel.allowEntries
         && target == "#" + wizardDuel.channel){
         if(!houses.isEnrolled(context.username))
-          client.say(target, `Sorry ${context['display-name']}, you don't have a !house yet.`)
+          client.say(target, 
+            `Sorry ${context['display-name']}, you don't have a !house yet.`)
         else{
           if(wizardDuel.checkIfInDuel(context['display-name']))
             client.say(target, `${context['display-name']} is in the Dueling Club!`)
@@ -183,7 +184,8 @@ function onMessageHandler (target, context, msg, self) {
           if(arrMsg[1])
             wizardDuel.placeBet(context['display-name'], arrMsg[1])
           else
-            client.say(target, `Sorry ${context['display-name']}, need to do !bet 1 or !bet 2`)
+            client.say(target, 
+              `Sorry ${context['display-name']}, need to do !bet 1 or !bet 2`)
         }
         else if(target == "#" + wizardDuel.channel
           && wizardDuel.winnerFound
@@ -192,7 +194,8 @@ function onMessageHandler (target, context, msg, self) {
           }
         else if(target == "#" + wizardDuel.channel
           && !wizardDuel.allowBets){
-            client.say(target, `Sorry ${context['display-name']}. There's no one to !bet on yet.`)
+            client.say(target, 
+              `Sorry ${context['display-name']}. There's no one to !bet on yet.`)
           }
         break;
       case 'duelists':

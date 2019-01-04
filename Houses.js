@@ -123,7 +123,8 @@ module.exports = {
     for(let i in this.houseNames)
       result += ` ${this.houseNames[i]}: ${classCount[i]} |`
 
-    result += ` ${classCount[0] + classCount[1] + classCount[2] + classCount[3]} Total Students buttOMG`
+    result += ` ${classCount[0] + classCount[1] 
+      + classCount[2] + classCount[3]} Total Students buttOMG`
     return result
   },
   isEnrolled: function(name){
