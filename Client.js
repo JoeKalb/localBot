@@ -299,8 +299,8 @@ function onMessageHandler (target, context, msg, self) {
     case 'commands':
       let commands = "Current list of all Harry Potter commands:";
       commands += " House info[!house !houses !whathouse !myhouse]";
-      commands += " Quidditch[!play !results !myresults !snitch]";
-      commands += " Wizard duel[!wizard !duel !bet (1 or 2)]";
+      commands += " Quidditch[!play !results !mypoints !snitch]";
+      commands += " Wizard duel[!wizard !duel !duelists !bet (1 or 2)]";
       commands += " Hangman[!hangman !guessed]";
       client.say(target, commands)
       break;

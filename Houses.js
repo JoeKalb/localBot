@@ -146,6 +146,6 @@ module.exports = {
       }
       return result;
     }
-    return `Sorry ${name} doesn't have a house yet, do !house to find yours!`;
+    return `Sorry ${name} doesn't have a !house yet!`;
   }
 }
