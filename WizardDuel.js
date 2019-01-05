@@ -347,25 +347,30 @@ module.exports = {
     let winningBetsTotal = totalBets - champsTake;
     let winnerPortion = Math.floor(winningBetsTotal / this.betsPlaced[[this.betsPlaced[0]]])
     
-    
-    for(let i = 0; i < this.studentCount; ++i){
-      if(names[i] == this.duelists[0]){
-        this.students[this.duelists[0]].payout = champsTake;
-      }else if(this.students[names[i]].betOn == this.betsPlaced[0]){
-        this.students[names[i]].payout = winnerPortion;
-      }else if(this.students[names[i]].betOn != 0){
-        this.students[names[i]].payout = -1 * this.betAmount;
-      }else{
-        console.log(`${names[i]} didn't bet`)
+    if(this.betsPlaced[0]){ // winner found
+      for(let i = 0; i < this.studentCount; ++i){
+        if(names[i] == this.duelists[0]){
+          this.students[this.duelists[0]].payout = champsTake;
+        }else if(this.students[names[i]].betOn == this.betsPlaced[0]){
+          this.students[names[i]].payout = winnerPortion;
+        }else if(this.students[names[i]].betOn != 0){
+          this.students[names[i]].payout = -1 * this.betAmount;
+        }else{
+          console.log(`${names[i]} didn't bet`)
+        }
+  
+        this.finalPayouts[this.students[names[i]].houseNum] 
+          += this.students[names[i]].payout
       }
-
-      this.finalPayouts[this.students[names[i]].houseNum] 
-        += this.students[names[i]].payout
     }
-   
-    //it was a tie
-    if(!this.betsPlaced[0]){
+    else { //it was a tie
       this.students[this.duelists[1]].payout = this.students[this.duelists[2]].payout = Math.floor(champsTake/2);
+      for(let i = 0; i < this.studentCount; ++i){
+        if(names[i] != this.duelists[1] || names[i] != this.duelists[2]){ // not a duelist
+          if(this.students[names[i]].betOn)
+            this.students[names[i]].payout = -1 * this.betAmount;
+        }
+      }
     }
   },
   houseResults: function(){
