@@ -77,7 +77,7 @@ module.exports = {
     dtricks42:3,
     twask3v1n:1,
     thatzigygirl:3,
-    fortheshire:1,
+    mac_drachma:1,
     vfx10viper:3,
     cinerdella:2,
     krzykorean87:2,
@@ -103,7 +103,13 @@ module.exports = {
     truedarkdogg:2,
     arkaynan:1,
     reiner72:0,
-    itszenoox:3
+    itszenoox:3,
+    carmillawoo:2,
+    chadthachillest:0,
+    henrynighthawk:1,
+    admisan:2,
+    reynte:3,
+    deem518:0
     //gryf = 0, huff = 1, syl = 2, raven = 3
   },
   getHouse: function(name){

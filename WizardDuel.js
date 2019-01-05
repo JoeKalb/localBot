@@ -191,7 +191,8 @@ module.exports = {
     if(this.allowBets){
       return `!bet 1 [${this.duelists[1]} from 
       ${houses.houseNames[this.students[this.duelists[1]].houseNum]}] 
-      or !bet 2 [${this.duelists[2]} from ${houses.houseNames[this.students[this.duelists[1]].houseNum]}]`
+      or !bet 2 [${this.duelists[2]} from 
+      ${houses.houseNames[this.students[this.duelists[2]].houseNum]}]`
     }
     else{
       return "This Duelists haven't been selected yet!"

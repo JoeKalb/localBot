@@ -199,7 +199,7 @@ function onMessageHandler (target, context, msg, self) {
           }
         break;
       case 'duelists':
-        client.say(target, wizardDuel.options())
+        client.action(target, wizardDuel.options())
         break;
       case 'duelHouses':
         if(target == "#" + wizardDuel.channel)
@@ -298,7 +298,7 @@ function onMessageHandler (target, context, msg, self) {
       break;
     case 'commands':
       let commands = "Current list of all Harry Potter commands:";
-      commands += " House info[!house !houses !whathouse !myhouse]";
+      commands += " House info[!house !houses !whathouse !myhouse !earn]";
       commands += " Quidditch[!play !results !mypoints !snitch]";
       commands += " Wizard duel[!wizard !duel !duelists !bet (1 or 2)]";
       commands += " Hangman[!hangman !guessed]";
