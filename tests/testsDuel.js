@@ -12,7 +12,7 @@ for(let i in allNames){
   let newName = {displayName: allNames[i]}
   testsStudents.push(newName)
 }
-for(let i in testsStudents){ //!duel
+for(let i = 0; i < 8; ++i){ //!duel
   wizardDuel.enter(testsStudents[i].displayName, 
     houses.students[testsStudents[i].displayName.toLowerCase()])
 }
@@ -20,7 +20,7 @@ console.log(`There are ${wizardDuel.studentCount} in the duel club!`)
 console.log(wizardDuel.pickDuelists()) //button click or !pickDuelists (butt and i)
 console.log(wizardDuel.showEntries()) // show how many people per house
 
-for(let i in testsStudents){
+for(let i = 20; i < 30; ++i){
   wizardDuel.placeBet(testsStudents[i].displayName, 
     Math.floor(Math.random() * 2) + 1) // !bet 1 or !bet 2
 }
@@ -29,18 +29,6 @@ console.log(wizardDuel.readyToDuel()) //button click or !letsDuel
 wizardDuel.timeToDual()
 wizardDuel.finalHousePayouts()
 
-/* show how you did
-for(let i in testsStudents){
-  console.log(wizardDuel.myResults(
-    testsStudents[i].displayName))
-}
-*/
-
-/*
-console.log(wizardDuel.duelArray()) // array of actions
-console.log(wizardDuel.champ()) // shows the winner
-console.log(wizardDuel.houseResults()) // show payouts 
-*/
 
 function tryThis(){
   let actions = []
@@ -50,14 +38,11 @@ function tryThis(){
 
   for(let i in actions)
     console.log(actions[i])
-
-  /*
-  for(let i in actions){
-    setTimeout(function(){ 
-      console.log("#"+wizardDuel.channel, actions[i])   
-    }, 5000 + i*3000)
-  }
-  */
 }
 
 tryThis()
+
+console.log(wizardDuel.myResults(wizardDuel.duelists[1])
+  + ` - Power Level: ${wizardDuel.duelInfo.duel1.strength}`)
+console.log(wizardDuel.myResults(wizardDuel.duelists[2])
+  + ` - Power Level: ${wizardDuel.duelInfo.duel2.strength}`)

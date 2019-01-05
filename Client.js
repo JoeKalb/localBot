@@ -40,8 +40,8 @@ let opts = {
     password: CONFIG.OAUTH
    },
    channels: [
-    'thabuttress',
     'joefish5',
+    'thabuttress',
     'oooskittles',
     'thethingssheplays'
    ]
@@ -296,9 +296,22 @@ function onMessageHandler (target, context, msg, self) {
           : client.say(target, houses.myHouse(tryName))
       }
       break;
+    case 'cheer':
+      if(houses.isEnrolled(context.username)){
+        let houseNum = houses.students[context.username]
+        if(houseNum == 0)
+          client.action(target, `GO GO ${houses.houseNames[houseNum].toUpperCase()}`)
+        else if(houseNum == 1)
+          client.action(target, `HOT STUFF ${houses.houseNames[houseNum].toUpperCase()}`)
+        else if(houseNum == 2)
+          client.action(target, `WIN WIN ${houses.houseNames[houseNum].toUpperCase()}`)
+        else // houseNum == 3
+          client.action(target, `RA RA ${houses.houseNames[houseNum].toUpperCase()}`)
+      }
+      break;
     case 'commands':
       let commands = "Current list of all Harry Potter commands:";
-      commands += " House info[!house !houses !whathouse !myhouse !earn]";
+      commands += " House info[!house !houses !whathouse !myhouse !earn !cheer]";
       commands += " Quidditch[!play !results !mypoints !snitch]";
       commands += " Wizard duel[!wizard !duel !duelists !bet (1 or 2)]";
       commands += " Hangman[!hangman !guessed]";

@@ -61,7 +61,7 @@ module.exports = {
         define:"Disarms your opponent",
         0:"<other>'s wand shakes a little.",
         1:"A ball of light comes out of <self>'s wand and hits <other>, they fall onto their back.",
-        2:"A ball of light comes out of <self>'s wand and knocks <other> into the air. <other> lands on the ground face first the a violent thud.",
+        2:"A ball of light comes out of <self>'s wand and knocks <other> into the air. <other> lands on the ground face first with a violent thud.",
         win:"<other>'s wand goes flything accress the room!"
       }
     },
@@ -79,7 +79,7 @@ module.exports = {
         0:"A few daisies sprout from <self>'s wand!",
         1:"A full bouquet comes out of <self>'s wand!",
         2:"Roses start bursting out of <self>'s wand! There are so many that they cover the stage, each student could take a dozen and their would still be more left over.",
-        win:"<other> surrenders! They received flowers before and they're too happy to fight."
+        win:"<other> never received flowers before and is too happy to fight."
       }
     },
     {
@@ -105,7 +105,7 @@ module.exports = {
         define:"Knocks out opponent",
         0:"<other> feels like they just got slapped in the face.",
         1:"<other> gets pushed back, they stumble around trying to stay conscious.",
-        2:"<other> is flung backwards! After twirling in the air a few times they land back on the stage and roll to the end. <other> is able to get on their knees but everything starts going dark.",
+        2:"<other> is flung backwards! After twirling in the air a few times <other> lands back on the stage and rolls to the end. <other> is able to get on their knees but everything starts going dark.",
         win: "<other> passes out."
       }
     },
@@ -160,19 +160,22 @@ module.exports = {
 
     let student1 = Math.floor(Math.random() * this.studentCount)
     this.duelists[1] = names[student1]
-    while(this.duelists[1].toLowerCase() == "thabuttress"){
+    while(isButt(this.duelists[1])){
       student1 = Math.floor(Math.random() * this.studentCount)
       this.duelists[1] = names[student1]
     }
 
     let student2 = Math.floor(Math.random() * this.studentCount)
+    this.duelists[2] = names[student2]
     while(this.students[names[student1]].houseNum == 
       this.students[names[student2]].houseNum
-      && picks < 5 && this.students[names[student2]].toLowerCase() == "thabuttress" ){
+      && picks < 5 
+      && isButt(this.duelists[2])){
       student2 = Math.floor(Math.random() * this.studentCount)
+      this.duelists[2] = names[student2]
       ++picks;
     }
-    this.duelists[2] = names[student2]
+    
 
     if(picks == 5){
       this.allowEntries = true;
@@ -210,7 +213,7 @@ module.exports = {
         let reg1 = new RegExp(this.duelists[1], 'i');
         let reg2 = new RegExp(this.duelists[2], 'i');
         if(name != this.duelists[1] && name != this.duelists[2]){
-          console.log(`${name} has bet ${bet}`)
+          //console.log(`${name} !bet ${bet} \t| ${houses.houseNames[this.students[name].houseNum]}`)
           if(bet == 1 || reg1.test(bet)){
             this.students[name].betOn = 1;
             ++this.betsPlaced[1];
@@ -299,12 +302,12 @@ module.exports = {
         if (this.duelists[0] == this.duelInfo.duel1.name){
           actions.push(`${this.duelInfo.duel1.name} casts ${spellName1}!`)
           actions.push(replaceNamesAction(duel1Attack, this.duelInfo.duel1.name, this.duelInfo.duel2.name))
-          //actions.push(replaceNamesAction(this.spells[this.duelInfo.duel1.spellChoice][spellName1].win, this.duelInfo.duel1.name, this.duelInfo.duel2.name))
+          actions.push(replaceNamesAction(this.spells[this.duelInfo.duel1.spellChoice][spellName1].win, this.duelInfo.duel1.name, this.duelInfo.duel2.name))
         }
         else{
           actions.push(`${this.duelInfo.duel2.name} casts ${spellName2}!`)
           actions.push(replaceNamesAction(duel2Attack, this.duelInfo.duel2.name, this.duelInfo.duel1.name))
-          //actions.push(replaceNamesAction(this.spells[this.duelInfo.duel2.spellChoice][spellName2].win, this.duelInfo.duel2.name, this.duelInfo.duel1.name))
+          actions.push(replaceNamesAction(this.spells[this.duelInfo.duel2.spellChoice][spellName2].win, this.duelInfo.duel2.name, this.duelInfo.duel1.name))
         }
       }
 
@@ -312,7 +315,7 @@ module.exports = {
       return actions
     }
   },
-  timeToDuel: function(){
+  timeToDual: function(){
     if(this.beginDuel){
       this.duelInfo = {
         duel1:{
@@ -347,7 +350,7 @@ module.exports = {
     let champsTake = Math.ceil(totalBets/2);
     let winningBetsTotal = totalBets - champsTake;
     let winnerPortion = Math.floor(winningBetsTotal / this.betsPlaced[[this.betsPlaced[0]]])
-    
+    console.log(`Winning bet payout: ${winnerPortion}`)
     if(this.betsPlaced[0]){ // winner found
       for(let i = 0; i < this.studentCount; ++i){
         if(names[i] == this.duelists[0]){
@@ -357,7 +360,7 @@ module.exports = {
         }else if(this.students[names[i]].betOn != 0){
           this.students[names[i]].payout = -1 * this.betAmount;
         }else{
-          console.log(`${names[i]} didn't bet`)
+          //console.log(`${names[i]} didn't bet`)
         }
   
         this.finalPayouts[this.students[names[i]].houseNum] 
@@ -419,4 +422,8 @@ module.exports = {
 // helper functions
 function replaceNamesAction(action, self, other){
   return action.replace(/<self>/g, self).replace(/<other>/g, other)
+}
+
+function isButt(name){
+  return name.toLowerCase() == "thabuttress"
 }
