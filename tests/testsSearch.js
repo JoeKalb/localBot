@@ -16,10 +16,13 @@ console.log(search.startGameDisplay())
 let sneak = search.getSneakyName()
 
 for(let i in names){
-  if(sneak == names[i])
-    search.vote(sneak, 2)
-  else 
-    search.vote(names[i], 1)
+  setTimeout(() => {
+    search.vote(names[i], Math.floor(Math.random() *2) + 1)
+  }, i * 1000)
 }
 
-console.log(search.showVotes())
+
+
+setTimeout(() => {
+  console.log(search.showVotes())
+}, 60001) // 60 seconds for checking

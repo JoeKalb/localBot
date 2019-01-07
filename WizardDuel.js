@@ -160,7 +160,7 @@ module.exports = {
 
     let student1 = Math.floor(Math.random() * this.studentCount)
     this.duelists[1] = names[student1]
-    while(isButt(this.duelists[1])){
+    while(isButt(this.duelists[1]) || isJoe(this.duelists[1])){
       student1 = Math.floor(Math.random() * this.studentCount)
       this.duelists[1] = names[student1]
     }
@@ -170,7 +170,7 @@ module.exports = {
     while(this.students[names[student1]].houseNum == 
       this.students[names[student2]].houseNum
       && picks < 5 
-      && isButt(this.duelists[2])){
+      && (isButt(this.duelists[2]) || isJoe(this.duelists[2]))){
       student2 = Math.floor(Math.random() * this.studentCount)
       this.duelists[2] = names[student2]
       ++picks;
@@ -213,7 +213,7 @@ module.exports = {
         let reg1 = new RegExp(this.duelists[1], 'i');
         let reg2 = new RegExp(this.duelists[2], 'i');
         if(name != this.duelists[1] && name != this.duelists[2]){
-          //console.log(`${name} !bet ${bet} \t| ${houses.houseNames[this.students[name].houseNum]}`)
+          console.log(`${name} !bet ${bet} \t| ${houses.houseNames[this.students[name].houseNum]}`)
           if(bet == 1 || reg1.test(bet)){
             this.students[name].betOn = 1;
             ++this.betsPlaced[1];
@@ -225,38 +225,6 @@ module.exports = {
         }
       }
     }
-
-    // old logic
-    // if(this.allowBets && !this.students[name]){
-    //   this.allowEntries = true;
-    //   this.enter(name, houses.students[name.toLowerCase()])
-    //   this.allowEntries = false;
-    //   console.log(`${name} has bet ${bet}`)
-    //     if(bet == 1 || reg1.test(bet)){
-    //       this.students[name].betOn = 1;
-    //       ++this.betsPlaced[1];
-    //     }
-    //     else if(bet == 2 || reg2.test(bet)){
-    //       this.students[name].betOn = 2;
-    //       ++this.betsPlaced[2];
-    //     }
-    // }
-    // else if(this.allowBets && !this.students[name].bet){
-    //   let reg1 = new RegExp(this.duelists[1], 'i');
-    //   let reg2 = new RegExp(this.duelists[2], 'i');
-    //   if(name != this.duelists[1] && name != this.duelists[2]){
-    //     console.log(`${name} has bet ${bet}`)
-    //     if(bet == 1 || reg1.test(bet)){
-    //       this.students[name].betOn = 1;
-    //       ++this.betsPlaced[1];
-    //     }
-    //     else if(bet == 2 || reg2.test(bet)){
-    //       this.students[name].betOn = 2;
-    //       ++this.betsPlaced[2];
-    //     }
-    //   }
-    // }
-    //return (this.betsPlaced[1] + this.betsPlaced[2]) == (this.studentCount-2)
   },
   checkIfInDuel: function(name){
     if(this.students[name]) 
@@ -265,6 +233,7 @@ module.exports = {
   },
   readyToDuel: function(){
     this.beginDuel = true;
+    console.log(`beginDuel readyToDuel(): ${this.beginDuel}`)
     this.allowBets = false;
     return `The bets are in and the duel is about to begin! 
     ${this.duelists[1]} has ${this.betsPlaced[1]} students on their side
@@ -310,36 +279,36 @@ module.exports = {
           actions.push(replaceNamesAction(this.spells[this.duelInfo.duel2.spellChoice][spellName2].win, this.duelInfo.duel2.name, this.duelInfo.duel1.name))
         }
       }
-
       // push the fun stuff later
       return actions
     }
   },
-  timeToDual: function(){
-    if(this.beginDuel){
-      this.duelInfo = {
-        duel1:{
-          name:this.duelists[1],
-          strength:Math.floor(Math.random()*100)+1,
-          spellChoice: this.pickRandomSpell()
-        },
-        duel2:{
-          name:this.duelists[2],
-          strength:Math.floor(Math.random()*100)+1,
-          spellChoice: this.pickRandomSpell()
-        }
+  timeToDuel: function()  {
+    console.log(`beginDuel timeToDuel(): ${this.beginDuel}`)
+    //if(this.beginDuel){ //this.beginDuel is not working?
+    this.duelInfo = {
+      duel1:{
+        name:this.duelists[1],
+        strength:Math.floor(Math.random()*100)+1,
+        spellChoice: this.pickRandomSpell()
+      },
+      duel2:{
+        name:this.duelists[2],
+        strength:Math.floor(Math.random()*100)+1,
+        spellChoice: this.pickRandomSpell()
       }
-      if(this.duelInfo.duel1.strength > this.duelInfo.duel2.strength){
-        this.betsPlaced[0] = 1;
-        this.duelists[0] = this.duelInfo.duel1.name;
-      }else if(this.duelInfo.duel1.strength < this.duelInfo.duel2.strength){
-        this.betsPlaced[0] = 2;
-        this.duelists[0] = this.duelInfo.duel2.name;
-      }
-      
-      this.beginDuel = false;
-      this.winnerFound = true;
     }
+    if(this.duelInfo.duel1.strength > this.duelInfo.duel2.strength){
+      this.betsPlaced[0] = 1;
+      this.duelists[0] = this.duelInfo.duel1.name;
+    }else if(this.duelInfo.duel1.strength < this.duelInfo.duel2.strength){
+      this.betsPlaced[0] = 2;
+      this.duelists[0] = this.duelInfo.duel2.name;
+    }
+    
+    this.beginDuel = false;
+    this.winnerFound = true;
+    //} //end if
   },
   pickRandomSpell: function(){
     return Math.floor(Math.random() * this.spells.length)
@@ -426,4 +395,8 @@ function replaceNamesAction(action, self, other){
 
 function isButt(name){
   return name.toLowerCase() == "thabuttress"
+}
+
+function isJoe(name){
+  return name.toLowerCase() == "joefish5"
 }

@@ -40,8 +40,8 @@ let opts = {
     password: CONFIG.OAUTH
    },
    channels: [
-    'joefish5',
     'thabuttress',
+    'joefish5',
     'oooskittles',
     'thethingssheplays'
    ]
@@ -307,6 +307,18 @@ function onMessageHandler (target, context, msg, self) {
           client.action(target, `WIN WIN ${houses.houseNames[houseNum].toUpperCase()}`)
         else // houseNum == 3
           client.action(target, `RA RA ${houses.houseNames[houseNum].toUpperCase()}`)
+      }
+      else{
+        client.action(target, `Sorry ${context['display-name']}, you need a !house to cheer.`)
+      }
+      break;
+    case 'raid':
+      if(houses.isEnrolled(context.username)){
+        let houseNum = houses.students[context.username]
+        client.action(target, `buttButt buttCrew ${houses.houseNames[houseNum].toUpperCase()} RAID buttBest buttCrew`)
+      }
+      else{
+        client.action(target, `MUGGLE RAID!!!`)
       }
       break;
     case 'commands':

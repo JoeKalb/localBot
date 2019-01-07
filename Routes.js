@@ -49,7 +49,7 @@ function delayedWinnings(target, messages){
   for(let i in messages){
     setTimeout(() => {
       client.action(target, messages[i])   
-    }, 3000 + i*3000)
+    }, i*3000)
   }
 }
 
