@@ -285,30 +285,30 @@ module.exports = {
   },
   timeToDuel: function()  {
     console.log(`beginDuel timeToDuel(): ${this.beginDuel}`)
-    //if(this.beginDuel){ //this.beginDuel is not working?
-    this.duelInfo = {
-      duel1:{
-        name:this.duelists[1],
-        strength:Math.floor(Math.random()*100)+1,
-        spellChoice: this.pickRandomSpell()
-      },
-      duel2:{
-        name:this.duelists[2],
-        strength:Math.floor(Math.random()*100)+1,
-        spellChoice: this.pickRandomSpell()
+      if(this.beginDuel){ //this.beginDuel is not working?
+      this.duelInfo = {
+        duel1:{
+          name:this.duelists[1],
+          strength:Math.floor(Math.random()*100)+1,
+          spellChoice: this.pickRandomSpell()
+        },
+        duel2:{
+          name:this.duelists[2],
+          strength:Math.floor(Math.random()*100)+1,
+          spellChoice: this.pickRandomSpell()
+        }
       }
-    }
-    if(this.duelInfo.duel1.strength > this.duelInfo.duel2.strength){
-      this.betsPlaced[0] = 1;
-      this.duelists[0] = this.duelInfo.duel1.name;
-    }else if(this.duelInfo.duel1.strength < this.duelInfo.duel2.strength){
-      this.betsPlaced[0] = 2;
-      this.duelists[0] = this.duelInfo.duel2.name;
-    }
-    
-    this.beginDuel = false;
-    this.winnerFound = true;
-    //} //end if
+      if(this.duelInfo.duel1.strength > this.duelInfo.duel2.strength){
+        this.betsPlaced[0] = 1;
+        this.duelists[0] = this.duelInfo.duel1.name;
+      }else if(this.duelInfo.duel1.strength < this.duelInfo.duel2.strength){
+        this.betsPlaced[0] = 2;
+        this.duelists[0] = this.duelInfo.duel2.name;
+      }
+      
+      this.beginDuel = false;
+      this.winnerFound = true;
+    } //end if
   },
   pickRandomSpell: function(){
     return Math.floor(Math.random() * this.spells.length)
