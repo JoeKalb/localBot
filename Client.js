@@ -42,7 +42,7 @@ let opts = {
    channels: [
     'thabuttress',
     'joefish5',
-    'oooskittles',
+    //'oooskittles',
     'thethingssheplays'
    ]
 }
@@ -217,8 +217,7 @@ function onMessageHandler (target, context, msg, self) {
       client.say(target, `You rolled a ${num}`)
       break;
     case 'nerds':
-      if(target == "#joefish5")
-        client.say(target, "You're all such nerds!!!")
+      client.say(target, "You're all such nerds!!!")
       console.log(`* Executed ${commandName} command`)
       break;
     case 'hangman':
@@ -328,6 +327,18 @@ function onMessageHandler (target, context, msg, self) {
       commands += " Wizard duel[!wizard !duel !duelists !bet (1 or 2)]";
       commands += " Hangman[!hangman !guessed]";
       client.say(target, commands)
+      break;
+    // delete when thaBottress comes back
+    case 'house':
+      client.action(target, 
+        `If you want to join in on the Harry Potter fun go the the pottermore website http://bit.ly/2ETyXDB and post a screenshot your house in the #sorting_hat channel of the discord! https://discord.gg/j3G5bx3`)
+      break;
+    case 'lego':
+      client.action(target, `Butt's on the final day of building the 6020 piece Hogwarts Lego Set! https://amzn.to/2LEy7uE buttHouse`)
+      break;
+    case 'discord':
+        if(target == '#thabuttress')
+          client.action(target, `Discord: https://discord.gg/j3G5bx3`)
       break;
     default:
       // this shows unknows commands

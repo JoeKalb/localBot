@@ -70,7 +70,7 @@ module.exports = {
         define:"Renders target immobile.",
         0:"<other>'s shoulders become stuff.",
         1:"<other> muscles tighten up, they can hardly move.",
-        2:"<other> ends up becoming ",
+        2:"<other> looks like Neville at the end of The Sorcerer's Stone!",
         win:"<other> can no longer continue."
       }
     },

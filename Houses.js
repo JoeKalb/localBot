@@ -116,7 +116,11 @@ module.exports = {
     pandaloreart:3,
     wookie:1,
     actionba5tard:0,
-    biggiesnacks:2
+    biggiesnacks:2,
+    scarid:1,
+    sleeping_quill:2,
+    nimasho:3,
+    realsarge198:0
     //gryf = 0, huff = 1, syl = 2, raven = 3
   },
   getHouse: function(name){
