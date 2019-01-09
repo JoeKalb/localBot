@@ -146,6 +146,27 @@ clickBtnBind(duelBtn)
 const resetDuelBtn = document.getElementById("resetDuelBtn")
 clickBtnBind(resetDuelBtn)
 
+// backup bot buttons
+const backupBotBtn = document.getElementById("backupBotBtn")
+backupBotBtn.addEventListener('click', backupBtnToggle)
+
+async function backupBtnToggle(){
+  let response = await fetch(window.location + backupBotBtn.value)
+  let json = await response.json()
+  botStatus(json)
+}
+
+(async () => {
+  let response = await fetch(window.location + 'backupBot')
+  let json = await response.json()
+  botStatus(json)
+})();
+
+function botStatus(status){
+  (status)? backupBotBtn.innerHTML = backupBotBtn.innerHTML.replace('On', 'Off'):
+  backupBotBtn.innerHTML = backupBotBtn.innerHTML.replace('Off', 'On');
+}
+
 // giveaway controls
 const giveStartBtn = document.getElementById("giveawayStartBtn")
 clickBtnBindChannel(giveStartBtn)

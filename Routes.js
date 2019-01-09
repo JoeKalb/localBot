@@ -7,6 +7,8 @@ let randNum = require('./RandNumber')
 let quidditch = require('./Quidditch')
 let wizardDuel = require('./WizardDuel')
 
+let backupBot = require('./BackupBot')
+
 const fs = require('fs');
 let today = new Date();
 let fileName = `logs/${today.getUTCMonth()+1}-${today.getUTCDate()}.txt`;
@@ -197,6 +199,15 @@ router.get('/duel/game/start', (req, res) => {
 router.get('/duel/game/clear', (req, res) => {
   wizardDuel.clear();
   res.status(200).json("clearing the duel")
+})
+
+// backup bot commands
+router.get('/backupBot', (req, res) => {
+  res.status(200).json(backupBot.isBottressDown())
+})
+
+router.get('/backupBot/toggle', (req, res) => {
+  res.status(200).json(backupBot.toggleBackupBot())
 })
 
 // clear all info

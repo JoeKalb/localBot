@@ -144,16 +144,19 @@ function onMessageHandler (target, context, msg, self) {
   // The command name is the first (0th) one:
   const commandName = parse[0]
   
+  // backup bot commands
   if(backupBot.isBottressDown()){
     let message = backupBot.BotHandler(target, context.mod, commandName, parse)
     if(typeof message == "string")
       client.action(target, message)
-    else
+    else if(typeof message == "object")
       message.then((res) => {
         client.action(target, res)
       })
+    else{
+      console.log(`Message Returned as: ${message}`)
+    }
   }
-  
   
   // switch cases for wizardDuel only
   if(wizardDuel.beginDuel || wizardDuel.allowBets 
@@ -337,7 +340,7 @@ function onMessageHandler (target, context, msg, self) {
       break;
     case 'commands':
       let commands = "Current list of all Harry Potter commands:";
-      commands += " House info[!house !houses !whathouse !myhouse !earn !cheer]";
+      commands += " House info[!house !houses !whathouse !myhouse !earn !cheer !raid]";
       commands += " Quidditch[!play !results !mypoints !snitch]";
       commands += " Wizard duel[!wizard !duel !duelists !bet (1 or 2)]";
       commands += " Hangman[!hangman !guessed]";
