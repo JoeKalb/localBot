@@ -1,4 +1,5 @@
 const tmi = require('tmi.js')
+const co = require('co');
 let hangman = require('./Hangman')
 let giveaway = require('./Giveaway') 
 let randNum = require('./RandNumber')
@@ -6,7 +7,10 @@ let quidditch = require('./Quidditch')
 let wizardDuel = require('./WizardDuel')
 const fs = require('fs');
 const houses = require('./Houses')
-let CONFIG; 
+let CONFIG;
+
+let backupBot = require('./BackupBot')
+
 
 if(process.env.OAUTH === undefined) {
   let localConfig = require('./config.js')
@@ -42,16 +46,12 @@ let opts = {
    channels: [
     'thabuttress',
     'joefish5',
-    //'oooskittles',
+    'oooskittles',
     'thethingssheplays'
    ]
 }
 
-// Function called when the "dice" command is issued:
-function rollDice () {
-  const sides = 6;
-  return Math.floor(Math.random() * sides) + 1
-}
+let playMarbels = true;
 
 // Create a client with our options:
 let client = new tmi.client(opts)
@@ -144,7 +144,17 @@ function onMessageHandler (target, context, msg, self) {
   // The command name is the first (0th) one:
   const commandName = parse[0]
   
-
+  if(backupBot.isBottressDown()){
+    let message = backupBot.BotHandler(target, context.mod, commandName, parse)
+    if(typeof message == "string")
+      client.action(target, message)
+    else
+      message.then((res) => {
+        client.action(target, res)
+      })
+  }
+  
+  
   // switch cases for wizardDuel only
   if(wizardDuel.beginDuel || wizardDuel.allowBets 
     || wizardDuel.allowEntries || wizardDuel.studentCount){
@@ -212,13 +222,18 @@ function onMessageHandler (target, context, msg, self) {
   }
   // If the command is known, let's execute it:
   switch(commandName){
-    case 'dice':
-      const num = rollDice()
-      client.say(target, `You rolled a ${num}`)
-      break;
-    case 'nerds':
-      client.say(target, "You're all such nerds!!!")
-      console.log(`* Executed ${commandName} command`)
+    case 'play':
+      if(target == '#oooskittles' 
+        && context.username == "oooskittles"
+        && playMarbels){
+          playMarbels = false;
+          setTimeout(() => {
+            client.say(target, `!play ${Math.floor(Math.random() * 15) + 1}`)
+          }, 5000)
+          setTimeout(() => {
+            playMarbels = true;
+          }, 30000)
+        }
       break;
     case 'hangman':
       if(target == "#" + hangman.channel){
@@ -327,18 +342,6 @@ function onMessageHandler (target, context, msg, self) {
       commands += " Wizard duel[!wizard !duel !duelists !bet (1 or 2)]";
       commands += " Hangman[!hangman !guessed]";
       client.say(target, commands)
-      break;
-    // delete when thaBottress comes back
-    case 'house':
-      client.action(target, 
-        `If you want to join in on the Harry Potter fun go the the pottermore website http://bit.ly/2ETyXDB and post a screenshot your house in the #sorting_hat channel of the discord! https://discord.gg/j3G5bx3`)
-      break;
-    case 'lego':
-      client.action(target, `Butt's on the final day of building the 6020 piece Hogwarts Lego Set! https://amzn.to/2LEy7uE buttHouse`)
-      break;
-    case 'discord':
-        if(target == '#thabuttress')
-          client.action(target, `Discord: https://discord.gg/j3G5bx3`)
       break;
     default:
       // this shows unknows commands
