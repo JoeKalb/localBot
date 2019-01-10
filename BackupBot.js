@@ -24,7 +24,7 @@ module.exports = {
     return bottressDown
   },
   BotHandler: (target, mod, commandName, parse) => {
-    if(bottressDown && (target == '#thabuttress' || target == '#joefish5')){
+    if(bottressDown && target == '#thabuttress'){
       switch(commandName){
         case 'discord':
           return `All people are welcome to join the discord, and subs get access to special channels!!! https://discord.gg/j3G5bx3`

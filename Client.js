@@ -47,7 +47,7 @@ let opts = {
     'thabuttress',
     'joefish5',
     'oooskittles',
-    'thethingssheplays'
+    'thethingssheplays',
    ]
 }
 
