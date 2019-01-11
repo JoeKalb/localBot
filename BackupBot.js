@@ -1,4 +1,4 @@
-let bottressDown = false;
+let bottressDown = true;
 const fs = require('fs');
 const fetch = require('node-fetch');
 const co = require('co');
@@ -27,7 +27,7 @@ module.exports = {
     if(bottressDown && target == '#thabuttress'){
       switch(commandName){
         case 'discord':
-          return `All people are welcome to join the discord, and subs get access to special channels!!! https://discord.gg/j3G5bx3`
+          return `Join our offline Discord chat! Subs: Link your discord to your twitch account for bonus channels! https://discord.gg/rWnczNe`
         case 'house':
           return `buttHouse If you want to join in on the Harry Potter fun go the the pottermore website http://bit.ly/2ETyXDB and post a screenshot your house in the #sorting_hat channel of the discord! https://discord.gg/j3G5bx3 buttHouse`
         case 'lego':
@@ -44,6 +44,12 @@ module.exports = {
           return `Digging the current playlist? https://www.twitch.tv/relaxbeats`
         case 'tats':
           return `Here are all of butt's tattoos! https://imgur.com/a/Vd1iAMF`
+        case 'subnight':
+          return `IF YOU ARE A SUB...Subnights will be held every other Thursday!!! We'll be watching all the Fantastic Beasts movies at around 7pm so make sure to join the !discord and link it with your twitch account!!! buttHouse`
+        case 'earn':
+          return `Ways to earn points for your house: Donations - $1=5pts Bits - 100=5pts Gifted Subs - 1=25pts Community Games buttHouse`
+        case 'current':
+          return `Butt's currently building the Hexa Gear Rayblade Impulse buttOMG https://amzn.to/2M3RYnr`
         default:
           if(!mod)
             return false;
@@ -80,16 +86,23 @@ module.exports = {
               }
             })
           case 'buttcoins':
-            let user = parse[2].replace('@', '')
-            let payout = `${user} ${parse[1]} ${parse[3]}`
-            recordButtcoins(payout)
-            return `Recorded: ${payout}`
+            try{
+              let user = parse[2].replace('@', '')
+              let payout = `${user} ${parse[1]} ${parse[3]}`
+              recordButtcoins(payout)
+              return `Recorded: ${payout}`
+            }
+            catch(err){
+              console.log(err)
+              return false;
+            }
           default:
             //console.log(`Unknown mod command ${commandName}`)
-            //return false;
+            return false;
         }
       }
+      console.log(`Should not be here: ${commandName}`)
+      return false;
     }
-    //return false;
   }
 }

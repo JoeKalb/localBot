@@ -48,10 +48,12 @@ let opts = {
     'joefish5',
     'oooskittles',
     'thethingssheplays',
+    'mopgarden'
    ]
 }
 
-let playMarbels = true;
+let playMarbelsSkoots = true;
+let playMarbelsMop = true;
 
 // Create a client with our options:
 let client = new tmi.client(opts)
@@ -145,7 +147,7 @@ function onMessageHandler (target, context, msg, self) {
   const commandName = parse[0]
   
   // backup bot commands
-  if(backupBot.isBottressDown()){
+  if(backupBot.isBottressDown() && target == '#thabuttress'){
     let message = backupBot.BotHandler(target, context.mod, commandName, parse)
     if(typeof message == "string")
       client.action(target, message)
@@ -225,19 +227,6 @@ function onMessageHandler (target, context, msg, self) {
   }
   // If the command is known, let's execute it:
   switch(commandName){
-    case 'play':
-      if(target == '#oooskittles' 
-        && context.username == "oooskittles"
-        && playMarbels){
-          playMarbels = false;
-          setTimeout(() => {
-            client.say(target, `!play ${Math.floor(Math.random() * 15) + 1}`)
-          }, 5000)
-          setTimeout(() => {
-            playMarbels = true;
-          }, 30000)
-        }
-      break;
     case 'hangman':
       if(target == "#" + hangman.channel){
         (!hangman.getPause()) 
@@ -261,6 +250,12 @@ function onMessageHandler (target, context, msg, self) {
         `${context['display-name']} is${(giveaway.check(context['display-name']) 
         ? " ": " not ")}in the giveaway. There's current ${giveaway.count} enteries.`)
       break;
+    case 'quidditch':
+      if(target == "#thabuttress" && context.username == "joefish5"){
+        quidditch.start('thabuttress')
+        client.say(target, "Want to play some Quidditch! Do !play to join the game!!!")
+      }
+      break;
     case 'play':
       if(quidditch.gameOn && target == "#" + quidditch.channel){
         let play = quidditch.play(context['display-name'])
@@ -276,6 +271,28 @@ function onMessageHandler (target, context, msg, self) {
           console.log(`${context['display-name']} has hit the max tries of ${quidditch.users[context['display-name']].tries}`)
         }
       }
+      else if(target == '#oooskittles' 
+        && context.username == "oooskittles"
+        && playMarbelsSkoots){
+        playMarbelsSkoots = false;
+        setTimeout(() => {
+          client.say(target, `!play ${Math.floor(Math.random() * 15) + 1}`)
+        }, 5000)
+        setTimeout(() => {
+          playMarbelsSkoots = true;
+        }, 30000)
+      }
+      else if(target == '#mopgarden'
+       && context.mod
+       && playMarbelsMop){
+        playMarbelsMop = false;
+        setTimeout(() => {
+          client.say(target, `!play`)
+        }, 5000)
+        setTimeout(() => {
+          playMarbelsMop = true;
+        }, 30000)
+       }
       break;
     case 'results':
       if(!quidditch.gameOn && quidditch.playerCount && target == "#" + quidditch.channel){

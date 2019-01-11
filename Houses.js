@@ -120,7 +120,11 @@ module.exports = {
     scarid:1,
     sleeping_quill:2,
     nimasho:3,
-    realsarge198:0
+    realsarge198:0,
+    gsoultaker:3,
+    billdit:0,
+    coldasiceii:1,
+    du5tiin:3
     //gryf = 0, huff = 1, syl = 2, raven = 3
   },
   getHouse: function(name){
