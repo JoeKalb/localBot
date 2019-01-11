@@ -75,6 +75,9 @@ function onMessageHandler (target, context, msg, self) {
   if (self) { return } // Ignore messages from the bot
   // This isn't a command since it has no prefix:
 
+  if(context.username == 'thabottress' && msg == `I'm up and running.`)
+    backupBot.bottressStatusLive();
+
   // hangman logic
   if(!hangman.getPause() && target == '#' + hangman.channel){
     if (hangman.isAnswer(msg)) {
@@ -227,6 +230,11 @@ function onMessageHandler (target, context, msg, self) {
   }
   // If the command is known, let's execute it:
   switch(commandName){
+    case 'test':
+      if(target == '#thabuttress'){
+        backupBot.checkingBottressStatus();
+      }
+      break;
     case 'hangman':
       if(target == "#" + hangman.channel){
         (!hangman.getPause()) 

@@ -14,6 +14,8 @@ recordButtcoins = (payout) => {
   })
 }
 
+let pendingStatus;
+
 module.exports = {
   isBottressDown: () => {
     return bottressDown
@@ -22,6 +24,18 @@ module.exports = {
     (bottressDown) ?
       bottressDown = false : bottressDown = true;
     return bottressDown
+  },
+  checkingBottressStatus: function(){
+    console.log(`Checking Bot status`)
+    pendingStatus = setTimeout(() => {
+      console.log(`Borress Status: Down`)
+      bottressDown = true;
+    }, 7000)
+  },
+  bottressStatusLive: function(){
+    console.log(`Bottress Status: Live`)
+    clearTimeout(pendingStatus)
+    bottressDown = false;
   },
   BotHandler: (target, mod, commandName, parse) => {
     if(bottressDown && target == '#thabuttress'){
