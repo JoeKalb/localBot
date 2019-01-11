@@ -134,6 +134,72 @@ const quidditchResultsBtn = document.getElementById("quidditchResultsBtn")
 clickBtnBind(quidditchResultsBtn)
 
 // duel controls
+// special select duelists
+let allStudents;
+const selectDuel1 = document.getElementById("duelSelect1")
+const selectDuel2 = document.getElementById("duelSelect2")
+const specialDuelBtn = document.getElementById("specialDuelBtn")
+specialDuelBtn.addEventListener('click', postSpecialDuel)
+
+let getStudents = async() => {
+  let response = await fetch(window.location + 'students')
+  allStudents = await response.json()
+  updateStudentSelector(selectDuel1, allStudents)
+  updateStudentSelector(selectDuel2, allStudents)
+}
+
+let updateStudentSelector = (selectItem, students) =>{
+  let names = Object.keys(students)
+  let sortedStudents = [[], [], [], []]
+  const houses = ["Gryffindor", "Hufflepuff", "Syltherin", "Ravenclaw"]
+  names.map((name) => {
+    sortedStudents[students[name]].push(name)
+  })
+  let newOption;
+
+  for(let i in sortedStudents){
+    newOption = document.createElement('option')
+    newOption.innerText = houses[i].toUpperCase()
+    newOption.disabled = true;
+    selectItem.appendChild(newOption)
+
+    sortedStudents[i].map((name) => {
+      newOption = document.createElement('option')
+      newOption.value = name
+      newOption.innerText = name
+      selectItem.appendChild(newOption)
+    })
+  }
+}
+getStudents();
+
+async function postSpecialDuel()  {
+  // make sure names are different
+  
+  if(allStudents[selectDuel1.value] != allStudents[selectDuel2.value]){
+    let data = JSON.stringify({
+      "channel":dropDown.value,
+      "student1":selectDuel1.value,
+      "student2":selectDuel2.value
+    })
+
+    let response = await fetch(window.location + 'duel/game/specialDuel', {
+      method: "POST",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: data
+    })
+
+    let json = await response.json()
+    console.log(json)
+  }
+  else
+    console.log("Students were the same house!")
+}
+
+// standard duel random selector
 const startDuelBtn = document.getElementById("startDuelBtn")
 clickBtnBindChannel(startDuelBtn)
 

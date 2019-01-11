@@ -6,6 +6,7 @@ let giveaway = require('./Giveaway')
 let randNum = require('./RandNumber')
 let quidditch = require('./Quidditch')
 let wizardDuel = require('./WizardDuel')
+let houses = require('./Houses')
 
 let backupBot = require('./BackupBot')
 
@@ -196,6 +197,18 @@ router.get('/duel/game/start', (req, res) => {
   else res.status(200).json("Bets aren't in yet")
 })
 
+router.post('/duel/game/specialDuel', (req, res) => {
+  
+  let duel = wizardDuel.preSelectedStudents(req.body)
+  if(houses.students[req.body.student1] != houses.students[req.body.student2]){
+    client.action(wizardDuel.channel, duel)
+    res.status(200).json(`Special Duel: ${req.body.student1} VS ${req.body.student2}`)
+  }
+  else{
+    res.status(200).json(`Duelists were from the same house, try again!`)
+  }
+})
+
 router.get('/duel/game/clear', (req, res) => {
   wizardDuel.clear();
   res.status(200).json("clearing the duel")
@@ -210,6 +223,11 @@ router.get('/backupBot/toggle', (req, res) => {
   res.status(200).json(backupBot.toggleBackupBot())
 })
 
+// get all students for info
+router.get('/students', (req, res) => {
+  res.status(200).json(houses.students)
+})
+
 // clear all info
 router.get('/clear/all', (req, res) => {
   giveaway.clear();
@@ -219,6 +237,5 @@ router.get('/clear/all', (req, res) => {
   wizardDuel.clear();
   res.status(200).json("All Games Cleared!")
 })
-
 
 module.exports = router
