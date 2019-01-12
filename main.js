@@ -233,6 +233,16 @@ function botStatus(status){
   backupBotBtn.innerHTML = backupBotBtn.innerHTML.replace('Off', 'On');
 }
 
+// search controls
+const startSearchBtn = document.getElementById("startSearchBtn")
+clickBtnBindChannel(startSearchBtn)
+
+const pauseSearchBtn = document.getElementById("pauseSearchBtn")
+clickBtnBind(pauseSearchBtn)
+
+const clearSearchBtn = document.getElementById("clearSearchBtn")
+clickBtnBind(clearSearchBtn)
+
 // giveaway controls
 const giveStartBtn = document.getElementById("giveawayStartBtn")
 clickBtnBindChannel(giveStartBtn)

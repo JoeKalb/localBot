@@ -40,7 +40,9 @@ let housePayouts = [0, 0, 0, 0]
 
 module.exports = {
   channel:"",
-  start: (channel) => {
+  start: function(channel) {
+    if(this.channel)
+      this.clear();
     this.channel = channel
     allowEntries = true;
   },
@@ -212,6 +214,26 @@ module.exports = {
     }
 
     return results
+  },
+  clear: function(){
+    turn = 0;
+    allowEntries = false;
+    searching = false;
+    continueGame = true;
+    foundItem = false;
+    students = {} // find a student to sneak
+    studentVote = {}
+    sneakyStudent = {
+      name:"",
+      houseNum:-1,
+      item:0,
+      vote:[0, 0, 0]
+    }
+    chosenDirection = [0, 0, 0]
+    isChosenRight = [false, false, false]
+    allowVotes = false;
+    allowVotesTimer;
+    housePayouts = [0, 0, 0, 0]
   }
 }
 

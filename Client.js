@@ -1,5 +1,4 @@
 const tmi = require('tmi.js')
-const co = require('co');
 let hangman = require('./Hangman')
 let giveaway = require('./Giveaway') 
 let randNum = require('./RandNumber')
@@ -52,7 +51,6 @@ let opts = {
 }
 
 let playMarbelsSkoots = true;
-let playMarbelsMop = true;
 
 // Create a client with our options:
 let client = new tmi.client(opts)

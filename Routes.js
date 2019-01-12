@@ -7,6 +7,7 @@ let randNum = require('./RandNumber')
 let quidditch = require('./Quidditch')
 let wizardDuel = require('./WizardDuel')
 let houses = require('./Houses')
+let search = require('./Search')
 
 let backupBot = require('./BackupBot')
 
@@ -228,6 +229,21 @@ router.get('/students', (req, res) => {
   res.status(200).json(houses.students)
 })
 
+// search command routes
+router.get('/search/:channel', (req, res) => {
+  search.start(req.params.channel)
+  res.status(200).json(`Search Started in Channel: ${search.channel}`)
+})
+
+router.get('/search/game/pause', (req, res) => {
+  res.status(200).json(`Search Game Paused`)
+})
+
+router.get('/search/game/clear', (req, res) => {
+  search.clear();
+  res.status(200).json(`Search Game Cleared`)
+})
+
 // clear all info
 router.get('/clear/all', (req, res) => {
   giveaway.clear();
@@ -235,6 +251,7 @@ router.get('/clear/all', (req, res) => {
   quidditch.clear();
   randNum.clear();
   wizardDuel.clear();
+  search.clear();
   res.status(200).json("All Games Cleared!")
 })
 

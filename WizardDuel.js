@@ -212,9 +212,9 @@ module.exports = {
   },
   options: function(){
     if(this.allowBets){
-      return `!bet 1 [${this.duelists[1]} from 
+      return `!bet 1 [${this.duelists[1]} of 
       ${houses.houseNames[this.students[this.duelists[1]].houseNum]}] 
-      or !bet 2 [${this.duelists[2]} from 
+      or !bet 2 [${this.duelists[2]} of 
       ${houses.houseNames[this.students[this.duelists[2]].houseNum]}]`
     }
     else{
