@@ -48,7 +48,6 @@ let opts = {
     'joefish5',
     'oooskittles',
     'thethingssheplays',
-    'mopgarden'
    ]
 }
 
@@ -159,7 +158,7 @@ function onMessageHandler (target, context, msg, self) {
         client.action(target, res)
       })
     else{
-      console.log(`Message Returned as: ${message}`)
+      //console.log(`Message Returned as: ${message}`)
     }
   }
   
@@ -290,17 +289,6 @@ function onMessageHandler (target, context, msg, self) {
           playMarbelsSkoots = true;
         }, 30000)
       }
-      else if(target == '#mopgarden'
-       && context.mod
-       && playMarbelsMop){
-        playMarbelsMop = false;
-        setTimeout(() => {
-          client.say(target, `!play`)
-        }, 5000)
-        setTimeout(() => {
-          playMarbelsMop = true;
-        }, 30000)
-       }
       break;
     case 'results':
       if(!quidditch.gameOn && quidditch.playerCount && target == "#" + quidditch.channel){

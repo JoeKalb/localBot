@@ -167,10 +167,10 @@ module.exports = {
 
     let student2 = Math.floor(Math.random() * this.studentCount)
     this.duelists[2] = names[student2]
-    while(this.students[names[student1]].houseNum == 
-      this.students[names[student2]].houseNum
+    while(houses.students[this.duelists[1]] === houses.students[this.duelists[2]]
       && picks < 5 
       && (isButt(this.duelists[2]) || isJoe(this.duelists[2]))){
+      console.log(`Duelists 1 house: ${houses.students[this.duelists[1]]} | Duelists 2 house: ${houses.students[this.duelists[2]]}`)
       student2 = Math.floor(Math.random() * this.studentCount)
       this.duelists[2] = names[student2]
       ++picks;
@@ -201,7 +201,7 @@ module.exports = {
 
     this.allowEntries = false;
     this.duelists[1] = info.student1;
-    this.duelists[2] = info.student1;
+    this.duelists[2] = info.student2;
 
     this.allowBets = true;
 

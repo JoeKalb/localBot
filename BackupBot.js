@@ -28,7 +28,7 @@ module.exports = {
   checkingBottressStatus: function(){
     console.log(`Checking Bot status`)
     pendingStatus = setTimeout(() => {
-      console.log(`Borress Status: Down`)
+      console.log(`Bottress Status: Down`)
       bottressDown = true;
     }, 7000)
   },
@@ -45,13 +45,13 @@ module.exports = {
         case 'house':
           return `buttHouse If you want to join in on the Harry Potter fun go the the pottermore website http://bit.ly/2ETyXDB and post a screenshot your house in the #sorting_hat channel of the discord! https://discord.gg/j3G5bx3 buttHouse`
         case 'lego':
-          return `Butt's on the final day of building the 6020 piece Hogwarts Lego Set! https://amzn.to/2LEy7uE buttHouse`
+          return `Butt's built the 6020 piece Hogwarts Lego Set! https://amzn.to/2LEy7uE buttHouse https://clips.twitch.tv/AltruisticBreakableToadDuDudu`
         case 'nerds':
           return "You're all such nerds!!!"
         case 'gundam':
           return `If you're planning on buying a kit check out https://www.gundamplanet.com/ and use coupon code "THABUTTRESS" to get 10% off all regularly priced items!`
         case 'imgur':
-          return `Look at all these cool items that thaButtress has built and customized! https://imgur.com/user/ThaButtress buttOMG`
+          return `Look at all these cool items that thaButtress has built and customized! https://thabuttress.imgur.com/ buttOMG`
         case 'built':
           return `Check out Butt's built list and backlog!!! https://goo.gl/7DxzVX buttDab`
         case 'playlist':
@@ -64,6 +64,20 @@ module.exports = {
           return `Ways to earn points for your house: Donations - $1=5pts Bits - 100=5pts Gifted Subs - 1=25pts Community Games buttHouse`
         case 'current':
           return `Butt's currently building the Hexa Gear Rayblade Impulse buttOMG https://amzn.to/2M3RYnr`
+        case 'twitter':
+          return `Butt's twitter: https://twitter.com/thaButtress`
+        case 'socials':
+          return `Twitter: https://twitter.com/thaButtress | Insta: https://instagram.com/thabuttress/ | YouTube: https://goo.gl/uIL66O | SnapChat: @thabuttress`
+        case 'insta':
+          return `Butt's Instagram: https://instagram.com/thabuttress/`
+        case 'define':
+          return `Buttress (noun) - a projecting support of stone or brick built against a wall`
+        case 'snap':
+          return `You can follow @thabuttress on snapchat but she only does add backs for T2 subs and above.`
+        case 'lotto':
+          return `Check out these Gundam Planet lotto winners! https://www.twitch.tv/videos/362520541`
+        case 'dad':
+          return `buttDad buttDad buttDad buttDad buttDad buttDad buttDad buttDad buttDad buttDad buttDad buttDad buttDad buttDad buttDad buttDad buttDad buttDad`
         default:
           if(!mod)
             return false;

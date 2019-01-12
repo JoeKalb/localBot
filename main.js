@@ -151,7 +151,7 @@ let getStudents = async() => {
 let updateStudentSelector = (selectItem, students) =>{
   let names = Object.keys(students).sort()
   let sortedStudents = [[], [], [], []]
-  const houses = ["Gryffindor", "Hufflepuff", "Syltherin", "Ravenclaw"]
+  const houses = ["Gryffindor", "Hufflepuff", "Slytherin", "Ravenclaw"]
   names.map((name) => {
     sortedStudents[students[name]].push(name)
   })

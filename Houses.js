@@ -1,5 +1,5 @@
 module.exports = {
-  houseNames: ["Gryffindor", "Hufflepuff", "Syltherin", "Ravenclaw"],
+  houseNames: ["Gryffindor", "Hufflepuff", "Slytherin", "Ravenclaw"],
   students:{ 
     joefish5:0,
     oi_atomsk_io:2,
@@ -125,8 +125,13 @@ module.exports = {
     billdit:0,
     coldasiceii:1,
     du5tiin:3,
-    dafallancaptain:3
-    //gryf = 0, huff = 1, syl = 2, raven = 3
+    dafallancaptain:3,
+    drooyoo:0,
+    blacklance:3,
+    kjedi:3,
+    blackjax:3,
+    probit:3
+    //gryf = 0, huff = 1, sly = 2, raven = 3
   },
   getHouse: function(name){
     let check = name.toLowerCase();
@@ -155,7 +160,7 @@ module.exports = {
   myHouse:function(name){
     let lowName = name.toLowerCase()
     if(this.students.hasOwnProperty(lowName)){
-      let result = `Here's the current students in 
+      let result = `Students in 
         ${this.houseNames[this.students[lowName]]} with ${name}! `
       let house = this.students[lowName]
       let allNames = Object.keys(this.students);
