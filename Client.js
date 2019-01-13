@@ -33,6 +33,14 @@ function recordHousePoints(message){
   })
 }
 
+function delayedWinnings(target, messages){
+  for(let i in messages){
+    setTimeout(() => {
+      client.action(target, messages[i])   
+    }, i*3000)
+  }
+}
+
 // Valid commands start with:
 let commandPrefix = '!'
 
@@ -256,9 +264,18 @@ function onMessageHandler (target, context, msg, self) {
         ? " ": " not ")}in the giveaway. There's current ${giveaway.count} enteries.`)
       break;
     case 'quidditch':
-      if(target == "#thabuttress" && context.username == "joefish5"){
+      if(target == "#thabuttress" && (context.mod || context.username == 'thabuttress')){
         quidditch.start('thabuttress')
         client.say(target, "Want to play some Quidditch! Do !play to join the game!!!")
+      }
+      break;
+    case 'end':
+      if(quidditch.playerCount && (context.mod || context.username == 'thabuttress')){
+        let snitch = quidditch.snitchCaught();
+        let winnings = quidditch.finalPayouts();
+        let messages = [`${snitch} caught the Golden Snitch and ended the game!`, winnings]
+        delayedWinnings(quidditch.channel, messages)
+        recordPayouts(`${winnings} | ${snitch} caught the snitch!`)
       }
       break;
     case 'play':

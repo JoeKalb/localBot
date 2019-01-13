@@ -9,7 +9,7 @@ module.exports = {
   maxTries: 3,
   start: function(channelName){
     if(this.playerCount)
-      this.clear;
+      this.clear();
     this.channel = channelName;
     this.gameOn = true;
   },
