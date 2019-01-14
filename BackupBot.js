@@ -1,4 +1,4 @@
-let bottressDown = true;
+let bottressDown = false;
 const fs = require('fs');
 const fetch = require('node-fetch');
 const co = require('co');
@@ -78,6 +78,8 @@ module.exports = {
           return `Check out these Gundam Planet lotto winners! https://www.twitch.tv/videos/362520541`
         case 'dad':
           return `buttDad buttDad buttDad buttDad buttDad buttDad buttDad buttDad buttDad buttDad buttDad buttDad buttDad buttDad buttDad buttDad buttDad buttDad`
+        case 'morebuttress':
+          return `Instagram https://goo.gl/Jf4v7U | Twitter https://goo.gl/y3gpVu | FaceBook https://goo.gl/kqIjiz | Patreon https://goo.gl/iDRnBW | Snapchat: thaButtress`
         default:
           if(!mod)
             return false;
@@ -109,7 +111,7 @@ module.exports = {
                 return message
               }
               catch(err){
-                console.log(`Error status from !buttshout: ${err}`)
+                console.log(`Error !buttshout: ${err}`)
                 return `Could not find broadcaster: ${broadcaster}`
               }
             })

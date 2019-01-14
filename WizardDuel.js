@@ -191,13 +191,15 @@ module.exports = {
       DO !bet 1 [${this.duelists[1]}] or !bet 2 [${this.duelists[2]}]`
   },
   preSelectedStudents: function(info) {
-    if(houses.students[info.student1] == houses.students[info.student2]){
-      this.clear();
+    this.clear();
+    if(houses.students[info.student1.toLowerCase()] == houses.students[info.student2.toLowerCase()] 
+      || !houses.isEnrolled(info.student1) 
+      || !houses.isEnrolled(info.student2)){
       return false;
     }
     this.start(info.channel)
-    this.enter(info.student1, houses.students[info.student1])
-    this.enter(info.student2, houses.students[info.student2])
+    this.enter(info.student1, houses.students[info.student1.toLowerCase()])
+    this.enter(info.student2, houses.students[info.student2.toLowerCase()])
 
     this.allowEntries = false;
     this.duelists[1] = info.student1;
@@ -205,9 +207,7 @@ module.exports = {
 
     this.allowBets = true;
 
-    return `The Duelists have been chosen! 
-      ${this.duelists[1]} from ${houses.houseNames[this.students[this.duelists[1]].houseNum]} 
-      VS ${this.duelists[2]} from ${houses.houseNames[this.students[this.duelists[2]].houseNum]}!!! 
+    return `${this.duelists[1]} from ${houses.houseNames[this.students[this.duelists[1]].houseNum]} has challenged ${this.duelists[2]} from ${houses.houseNames[this.students[this.duelists[2]].houseNum]} to a duel! 
       DO !bet 1 [${this.duelists[1]}] or !bet 2 [${this.duelists[2]}]`
   },
   options: function(){

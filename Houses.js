@@ -130,7 +130,19 @@ module.exports = {
     blacklance:3,
     kjedi:3,
     blackjax:3,
-    probit:3
+    probit:3,
+    castorr91:3,
+    poidasmall:2,
+    pickledeggz:1,
+    samj30:3,
+    ace0fjacks:2,
+    j_skittah:1,
+    roulette_king_yeti:3,
+    fleetwood619:3,
+    liingy:0,
+    syl_x:1,
+    ms85_hart: 3,
+    micktrinus:2,
     //gryf = 0, huff = 1, sly = 2, raven = 3
   },
   getHouse: function(name){

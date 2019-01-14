@@ -202,7 +202,8 @@ router.post('/duel/game/specialDuel', (req, res) => {
   
   let duel = wizardDuel.preSelectedStudents(req.body)
   if(houses.students[req.body.student1] != houses.students[req.body.student2]){
-    client.action(wizardDuel.channel, duel)
+    console.log('special duel called')
+    client.action("#" + wizardDuel.channel, duel)
     res.status(200).json(`Special Duel: ${req.body.student1} VS ${req.body.student2}`)
   }
   else{

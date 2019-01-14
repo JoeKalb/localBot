@@ -187,12 +187,10 @@ function onMessageHandler (target, context, msg, self) {
             client.say(target, `Welcome to the dueling club ${context['display-name']}!`)
           }
         }
-      }
-      if(wizardDuel.winnerFound
+      } else if(wizardDuel.winnerFound
         && target == "#" + wizardDuel.channel
         && wizardDuel.checkIfInDuel(context['display-name']))
         client.say(target, wizardDuel.myResults(context['display-name']))
-        break;
       case 'pickDuelists':
         if(target == "#" + wizardDuel.channel
         && (context.username == "joefish5" || context.username == "thabuttress")){
@@ -233,6 +231,24 @@ function onMessageHandler (target, context, msg, self) {
         //console.log(`Wizard Duel Switch Case Default: ${commandName}`)
     }
   }
+  /* else if(target == '#thabuttress' && (context.mod || context.username == 'thabuttress')
+    && parse.length == 3){
+    wizardDuel.clear();
+    console.log(`Duel start in chat: ${parse}`)
+    let info = {
+      channel:'thabuttress',
+      student1: parse[1].replace('@', ''),
+      student2: parse[2].replace('@', '')
+    }
+    let duel = wizardDuel.preSelectedStudents(info)
+    if(duel)
+      client.action(target, duel)
+    else
+      client.action(target, `This duel is forbidden!!!`)
+  }
+  else{
+    console.log(`!duel ${context['display-name']}`)
+  } */
   // If the command is known, let's execute it:
   switch(commandName){
     case 'test':
