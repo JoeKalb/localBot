@@ -170,7 +170,7 @@ function onMessageHandler (target, context, msg, self) {
   
   // switch cases for wizardDuel only
   
-  /* if(commandName == 'duel' && target == '#thabuttress' 
+  if(commandName == 'startduel' && target == '#thabuttress' 
     && (context.mod || context.username == 'thabuttress')
     && parse.length == 3){
     console.log(`Duel start in chat: ${parse}`)
@@ -188,7 +188,7 @@ function onMessageHandler (target, context, msg, self) {
   }
   else{
     //console.log(`!duel ${context['display-name']}`)
-  } */
+  }
   if(wizardDuel.beginDuel || wizardDuel.allowBets 
     || wizardDuel.allowEntries || wizardDuel.studentCount){
     switch(commandName){ // 
@@ -243,6 +243,32 @@ function onMessageHandler (target, context, msg, self) {
       case 'duelHouses':
         if(target == "#" + wizardDuel.channel)
           client.say(target, wizardDuel.showEntries())
+        break;
+      case 'go':
+        if(target == "#" + wizardDuel.channel
+          && (context.mod || context.username == 'thabuttress') && wizardDuel.allowBets){
+            client.action("#"+wizardDuel.channel, wizardDuel.readyToDuel());
+            wizardDuel.timeToDuel();
+            wizardDuel.finalHousePayouts();
+
+            let actions = []
+            let results = wizardDuel.houseResults();
+            actions = wizardDuel.duelArray();
+            actions.push(wizardDuel.champ());
+            actions.push(results);
+
+            delayedWinnings(wizardDuel.channel, actions)
+          
+            recordPayouts(results)
+        }
+        break;
+      case 'testDuelBets':
+        if(target == '#' + wizardDuel.channel
+          && context.username == 'joefish5'){
+            let names = Object.keys(houses.students)
+            for(let name of names)
+              wizardDuel.placeBet(name, Math.floor(Math.random() * 2) + 1)
+          }
         break;
       default:
         // commands during wizard duel that do not apply

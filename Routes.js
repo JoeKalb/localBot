@@ -180,7 +180,7 @@ router.get('/duel/game/pick', (req, res) =>{
 
 router.get('/duel/game/start', (req, res) => {
   if(wizardDuel.allowBets){
-    client.say("#"+wizardDuel.channel, wizardDuel.readyToDuel());
+    client.action("#"+wizardDuel.channel, wizardDuel.readyToDuel());
     wizardDuel.timeToDuel();
     wizardDuel.finalHousePayouts();
 
