@@ -244,7 +244,7 @@ function onMessageHandler (target, context, msg, self) {
         if(target == "#" + wizardDuel.channel)
           client.say(target, wizardDuel.showEntries())
         break;
-      case 'go':
+      case 'begin':
         if(target == "#" + wizardDuel.channel
           && (context.mod || context.username == 'thabuttress') && wizardDuel.allowBets){
             client.action("#"+wizardDuel.channel, wizardDuel.readyToDuel());
