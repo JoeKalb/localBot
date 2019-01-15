@@ -288,7 +288,18 @@ module.exports = {
       
       // do win spell for winning ability
       if(this.duelists[0] != ""){
-        if (this.duelists[0] == this.duelInfo.duel1.name){
+        // add all duels
+        actions.push(`${this.duelInfo.duel1.name} casts ${spellName1}!`)
+        actions.push(replaceNamesAction(duel1Attack, this.duelInfo.duel1.name, this.duelInfo.duel2.name))
+        actions.push(`${this.duelInfo.duel2.name} casts ${spellName2}!`)
+        actions.push(replaceNamesAction(duel2Attack, this.duelInfo.duel2.name, this.duelInfo.duel1.name))
+        
+        if (this.duelists[0] == this.duelInfo.duel1.name)
+          actions.push(replaceNamesAction(this.spells[this.duelInfo.duel1.spellChoice][spellName1].win, this.duelInfo.duel1.name, this.duelInfo.duel2.name))
+        else
+          actions.push(replaceNamesAction(this.spells[this.duelInfo.duel2.spellChoice][spellName2].win, this.duelInfo.duel2.name, this.duelInfo.duel1.name))
+
+        /* if (this.duelists[0] == this.duelInfo.duel1.name){
           actions.push(`${this.duelInfo.duel1.name} casts ${spellName1}!`)
           actions.push(replaceNamesAction(duel1Attack, this.duelInfo.duel1.name, this.duelInfo.duel2.name))
           actions.push(replaceNamesAction(this.spells[this.duelInfo.duel1.spellChoice][spellName1].win, this.duelInfo.duel1.name, this.duelInfo.duel2.name))
@@ -297,7 +308,7 @@ module.exports = {
           actions.push(`${this.duelInfo.duel2.name} casts ${spellName2}!`)
           actions.push(replaceNamesAction(duel2Attack, this.duelInfo.duel2.name, this.duelInfo.duel1.name))
           actions.push(replaceNamesAction(this.spells[this.duelInfo.duel2.spellChoice][spellName2].win, this.duelInfo.duel2.name, this.duelInfo.duel1.name))
-        }
+        } */
       }
       // push the fun stuff later
       return actions
@@ -357,13 +368,9 @@ module.exports = {
       }
     }
     else { //it was a tie
-      this.students[this.duelists[1]].payout = this.students[this.duelists[2]].payout = Math.floor(champsTake/2);
-      for(let i = 0; i < this.studentCount; ++i){
-        if(names[i] != this.duelists[1] || names[i] != this.duelists[2]){ // not a duelist
-          if(this.students[names[i]].betOn)
-            this.students[names[i]].payout = -1 * this.betAmount;
-        }
-      }
+      this.students[this.duelists[1]].payout = this.students[this.duelists[2]].payout = champsTake
+      this.finalPayouts[this.students[this.duelists[1]].houseNum] = this.students[this.duelists[1]].payout
+      this.finalPayouts[this.students[this.duelists[2]].houseNum] = this.students[this.duelists[2]].payout
     }
   },
   houseResults: function(){

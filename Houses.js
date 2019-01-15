@@ -143,6 +143,7 @@ module.exports = {
     syl_x:1,
     ms85_hart: 3,
     micktrinus:2,
+    garceaj:1
     //gryf = 0, huff = 1, sly = 2, raven = 3
   },
   getHouse: function(name){
