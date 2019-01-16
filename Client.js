@@ -169,7 +169,6 @@ function onMessageHandler (target, context, msg, self) {
   }
   
   // switch cases for wizardDuel only
-  
   if(commandName == 'startduel' && target == '#thabuttress' 
     && (context.mod || context.username == 'thabuttress')
     && parse.length == 3){
@@ -395,7 +394,7 @@ function onMessageHandler (target, context, msg, self) {
         else // houseNum == 3
           client.action(target, `RA RA ${houses.houseNames[houseNum].toUpperCase()}`)
       }
-      else{
+      else if (target == '#thabuttress'){
         client.action(target, `Sorry ${context['display-name']}, you need a !house to cheer.`)
       }
       break;

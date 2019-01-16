@@ -15,22 +15,30 @@ let sneakyStudent = {
   item:0,
   vote:[0, 0, 0]
 }
-let items = [`Sorcerer's Stone`, `Chamber of Secrets`, `Infinate keg of Butterbeer`, 
+let items = [`Sorcerer's Stone`, `Chamber of Secrets`, `Keg of Endless Butterbeer`, 
   `Goblet of Fire`, `Room of Requirement`, `OWLs answer key`]
 let chosenDirection = [0, 0, 0]
 let isChosenRight = [false, false, false]
+let loseAmount = [10, 20 , 50]
+let winAmount = 200
 let options = [
   {
-    win:"First win",
-    lose: "First lose [Filtch]"
+    question:'Which way should <name> go when they leave the dorm? !left or !right',
+    action: '<name> walks out of the dorm and turns <direction>.',
+    win:"<name> leaves the <house> dorm and comes up on two moving staircases.",
+    lose: `<name> runs directly into Filtch's back, "Rather late hour to be out of the dorms isn't it." [${loseAmount[0]} points from <house>]`
   },
   {
-    win:"Second win",
-    lose: "Second lose [McGonagall]"
+    question:'Which staircase should <name> take? !left or !right',
+    action:'<name> heads down the <direction> staircase.',
+    win:`After walking down the staircase on the, <name> walks straight down the hall and comes up on two doors.`,
+    lose: `<name> sees a black cat sitting on the bottom of the staircase. The cat transforms into Professor McGonagall, "Howgarts students are not to leave their dorm at night!" [${loseAmount[1]} points from <house>]`
   },
   {
+    question:'Which door should <name> open? !left or !right',
+    action:'<name> slowly turns the knob of the door on the <direction>.',
     win:"Third win",
-    lose:"Third lose [snape]"
+    lose:`<name> opens the door, and looks directly at Professor Snape, "Roaming the halls at this hour and someone will think you're up to something..." [${loseAmount[2]} points from <house>]`
   }
 ]
 
@@ -74,7 +82,7 @@ module.exports = {
   },
   setItem: () => {
     sneakyStudent.item = Math.floor(Math.random() * items.length)
-    options[2].win = `${sneakyStudent.name} found the ${items[sneakyStudent.item]}!`
+    options[2].win = `${sneakyStudent.name} found the ${items[sneakyStudent.item]}! [${winAmount} points to <house>]`
   },
   startGameDisplay: () => {
     allowVotes = true;
@@ -156,13 +164,15 @@ module.exports = {
     if(isCorrect){
       ++turn;
       allowVotes = true;
-      if(turn == 3)
+      if(turn == 3){
         foundItem = true;
-      return options[turn-1].win
+        continueGame = false;
+      }
+      return options[turn-1].win.replace('<name>', sneakyStudent.name).replace('<direction>', chosenDirection[turn]).replace('<house>', houses.houseNames[sneakyStudent.houseNum])
     }
     else{
       continueGame = false;
-      return options[turn].lose
+      return options[turn].lose.replace('<name>', sneakyStudent.name).replace('<direction>', chosenDirection[turn]).replace('<house>', houses.houseNames[sneakyStudent.houseNum])
     }
   },
   getContinueGame: () => {

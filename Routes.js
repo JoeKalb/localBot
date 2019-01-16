@@ -250,7 +250,8 @@ router.get('/search/game/clear', (req, res) => {
 
 //send house info to House Points api
 router.get('/house/update', (req, res) => {
-  let buttCoinAPI = 'http://localhost:8001/'
+  //let buttCoinAPI = 'http://localhost:8001/' //local
+  let buttCoinAPI = 'https://butt-crew-house-points.herokuapp.com/' //live
  
   co(function *() {
     try{
