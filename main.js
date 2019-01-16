@@ -43,6 +43,9 @@ async function stardardAPICallChannel(){
 const testBtn = document.getElementById("testBtn")
 clickBtnBindChannel(testBtn)
 
+const houseUpdateBtn = document.getElementById("houseUpdateBtn")
+clickBtnBind(houseUpdateBtn)
+
 const clearAllBtn = document.getElementById("clearAllBtn")
 clearAllBtn.addEventListener('click', clearAllGames)
 

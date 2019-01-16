@@ -1,6 +1,9 @@
 const express = require('express')
 let router = express.Router()
 
+const co = require('co')
+const fetch = require('node-fetch')
+
 let hangman = require('./Hangman')
 let giveaway = require('./Giveaway') 
 let randNum = require('./RandNumber')
@@ -243,6 +246,30 @@ router.get('/search/game/pause', (req, res) => {
 router.get('/search/game/clear', (req, res) => {
   search.clear();
   res.status(200).json(`Search Game Cleared`)
+})
+
+//send house info to House Points api
+router.get('/house/update', (req, res) => {
+  let buttCoinAPI = 'http://localhost:8001/'
+ 
+  co(function *() {
+    try{
+      let houseUpdate = yield fetch(buttCoinAPI, {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        method: 'POST',
+        body: JSON.stringify(houses.students)
+      })
+      let json = yield houseUpdate.json()
+      res.status(200).json(json)
+    }
+    catch(err){
+      console.log(err)
+      res.status(404).json(err)
+    }
+  })
 })
 
 // clear all info
