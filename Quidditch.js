@@ -6,7 +6,7 @@ module.exports = {
   gameOn: false,
   playerCount: 0,
   snitch: "",
-  maxTries: 3,
+  maxTries: 5,
   start: function(channelName){
     if(this.playerCount)
       this.clear();

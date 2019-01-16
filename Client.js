@@ -368,7 +368,7 @@ function onMessageHandler (target, context, msg, self) {
       if(target == "#thabuttress" || target == "#joefish5"){
         let tryName = msg.split(' ')[1];
         (!tryName) ? client.say(target, houses.getHouse(context['display-name']))
-          : client.say(target, houses.getHouse(tryName))
+          : client.say(target, houses.getHouse(tryName.replace('@', '')))
       }
       break;
     case 'houses':
@@ -380,11 +380,11 @@ function onMessageHandler (target, context, msg, self) {
       if(target == "#thabuttress" || target == "#joefish5"){
         let tryName = msg.split(' ')[1];
         (!tryName) ? client.say(target, houses.myHouse(context['display-name']))
-          : client.say(target, houses.myHouse(tryName))
+          : client.say(target, houses.myHouse(tryName.replace('@', '')))
       }
       break;
     case 'cheer':
-      if(houses.isEnrolled(context.username)){
+      if(houses.isEnrolled(context.username) && target == '#thabuttress'){
         let houseNum = houses.students[context.username]
         if(houseNum == 0)
           client.action(target, `GO GO ${houses.houseNames[houseNum].toUpperCase()}`)
@@ -400,7 +400,7 @@ function onMessageHandler (target, context, msg, self) {
       }
       break;
     case 'raid':
-      if(houses.isEnrolled(context.username)){
+      if(houses.isEnrolled(context.username) && target == '#thabuttress'){
         let houseNum = houses.students[context.username]
         client.action(target, `buttButt buttCrew ${houses.houseNames[houseNum].toUpperCase()} RAID buttBest buttCrew`)
       }

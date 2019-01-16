@@ -80,6 +80,10 @@ module.exports = {
           return `buttDad buttDad buttDad buttDad buttDad buttDad buttDad buttDad buttDad buttDad buttDad buttDad buttDad buttDad buttDad buttDad buttDad buttDad`
         case 'morebuttress':
           return `Instagram https://goo.gl/Jf4v7U | Twitter https://goo.gl/y3gpVu | FaceBook https://goo.gl/kqIjiz | Patreon https://goo.gl/iDRnBW | Snapchat: thaButtress`
+        case 'win':
+          return `A donation of $10 gets your name into the Goblet of Fire! Each entry will be a ticket into a giveaway for the custom ButtCoin plus a lil extra something for the !top single donation! buttHouse`
+        case 'top':
+          return `The largest single donation by the 27th will get the chance to pick Butt's next Gundam + 500 points towards their house!`
         default:
           if(!mod)
             return false;
