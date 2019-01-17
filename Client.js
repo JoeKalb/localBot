@@ -10,7 +10,6 @@ let CONFIG;
 
 let backupBot = require('./BackupBot')
 
-
 if(process.env.OAUTH === undefined) {
   let localConfig = require('./config.js')
   CONFIG = localConfig.CONFIG;
