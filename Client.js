@@ -402,17 +402,17 @@ function onMessageHandler (target, context, msg, self) {
         let houseNum = houses.students[context.username]
         client.action(target, `buttButt buttCrew ${houses.houseNames[houseNum].toUpperCase()} RAID buttBest buttCrew`)
       }
-      else{
+      else if (target == "#thabuttress"){
         client.action(target, `MUGGLE RAID!!!`)
       }
       break;
     case 'commands':
       if(target == '#thabuttress'){
-        let commands = "Current list of all Harry Potter commands:";
-        commands += " House info[!house !houses !whathouse !myhouse !earn !cheer !raid]";
-        commands += " Quidditch[!play !results !mypoints !snitch]";
-        commands += " Wizard duel[!wizard !duel !duelists !bet (1 or 2)]";
-        commands += " Hangman[!hangman !guessed]";
+        let commands = "Current list of all Harry Potter commands: ";
+        commands += " House info [!house !houses !whathouse !myhouse !earn !cheer !raid] |";
+        commands += " Quidditch [!play !results !mypoints !snitch] |";
+        commands += " Wizard duel [!wizard !duel !duelists !bet (1 or 2)] |";
+        commands += " Hangman [!hangman !guessed]";
         client.say(target, commands)
       }
       break;

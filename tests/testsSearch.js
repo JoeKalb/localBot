@@ -15,20 +15,16 @@ console.log(search.startGameDisplay())
 
 let sneak = search.getSneakyName()
 
-for(let i in names){
-  search.vote(names[i], Math.floor(Math.random() *2) + 1)
-}
-
-console.log(search.showVotes()) // no space between voting
-
-console.log(search.displayTurn())
 
 while(search.getContinueGame()){
   for(let i in names){
-    search.vote(names[i], Math.floor(Math.random() * 2) + 1)
+    if(sneak == names[i]) search.vote(sneak, 1)
+    else search.vote(names[i], 2)
   }
   console.log(search.showVotes())
   console.log(search.displayTurn())
 }
 
 search.calcFinalPayouts()
+
+console.log(search.getHousePayouts())

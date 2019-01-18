@@ -145,7 +145,11 @@ module.exports = {
     micktrinus:2,
     garceaj:1,
     numbzeh:0,
-    abbyfabby:0
+    abbyfabby:0,
+    undead_artist:3,
+    grunderslacks:1,
+    ashcadelanne:1,
+    darthghostface:0
     //gryf = 0, huff = 1, sly = 2, raven = 3
   },
   getHouse: function(name){

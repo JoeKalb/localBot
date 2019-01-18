@@ -51,7 +51,7 @@ module.exports = {
   start: function(channel) {
     if(this.channel)
       this.clear();
-    this.channel = channel
+    this.channel = channel;
     allowEntries = true;
   },
   allowEntries: function(){
@@ -186,6 +186,9 @@ module.exports = {
     let names = Object.keys(studentVote)
 
     let checkTurn = 0;
+    if(foundItem)
+      housePayouts[sneakyStudent.houseNum] += 200
+    
     while(chosenDirection[checkTurn] && checkTurn < 3){
       for(let i in names){
         // check if the student chose the same way as the direct made
@@ -202,14 +205,33 @@ module.exports = {
           if(names[i] == sneakyStudent.name){
             if(madeSameChoice){
               housePayouts[sneakyStudent.houseNum] += 10 * (checkTurn + 1)
-            }else if(sneakyStudent.vote[checkTurn] != 0) // made wrong choice
+            }
+            else if(sneakyStudent.vote[checkTurn] != 0) // made wrong choice
               housePayouts[sneakyStudent.houseNum] -= 5 * (checkTurn + 1)
           }else{ // regular student vote
-
+            if(madeSameChoice){
+              housePayouts[studentVote[names[i]].houseNum] += 5 * (checkTurn + 1)
+            }
+            else if(studentVote[names[i]].vote[checkTurn] != 0){
+              housePayouts[studentVote[names[i]].houseNum] -= 2 * (checkTurn + 1)
+            }
           }
         }
-        else{
-
+        else{ // lost round
+          if(names[i] == sneakyStudent.name){
+            if(madeSameChoice){
+              housePayouts[sneakyStudent.houseNum] -= loseAmount[checkTurn]
+            }
+            else if(sneakyStudent.vote[checkTurn] != 0) // made wrong choice
+              housePayouts[sneakyStudent.houseNum] += 10 * (checkTurn + 1)
+          }else{ // regular student vote
+            if(madeSameChoice){
+              housePayouts[studentVote[names[i]].houseNum] -= 2 * (checkTurn + 1)
+            }
+            else if(studentVote[names[i]].vote[checkTurn] != 0){
+              housePayouts[studentVote[names[i]].houseNum] += 5 * (checkTurn + 1)
+            }
+          }
         }
       }
 
