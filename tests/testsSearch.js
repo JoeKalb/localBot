@@ -15,7 +15,6 @@ console.log(search.startGameDisplay())
 
 let sneak = search.getSneakyName()
 
-
 while(search.getContinueGame()){
   for(let i in names){
     if(sneak == names[i]) search.vote(sneak, 1)
