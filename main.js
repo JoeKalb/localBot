@@ -149,6 +149,7 @@ let getStudents = async() => {
   allStudents = await response.json()
   updateStudentSelector(selectDuel1, allStudents)
   updateStudentSelector(selectDuel2, allStudents)
+  updateStudentSelector(searchSelect, allStudents)
 }
 
 let updateStudentSelector = (selectItem, students) =>{
@@ -237,11 +238,31 @@ function botStatus(status){
 }
 
 // search controls
+const searchSelect = document.getElementById("searchSelect")
 const startSearchBtn = document.getElementById("startSearchBtn")
-clickBtnBindChannel(startSearchBtn)
+startSearchBtn.addEventListener("click", startSearchGame)
 
-const pauseSearchBtn = document.getElementById("pauseSearchBtn")
-clickBtnBind(pauseSearchBtn)
+async function startSearchGame() {
+  let data = JSON.stringify({
+    student:searchSelect.value,
+    channel:dropDown.value
+  })
+
+  let response = await fetch(window.location + 'search',{
+    method: "POST",
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: data
+  })
+
+  let json = await response.json();
+  console.log(json)
+}
+
+const continueSearchBtn = document.getElementById("continueSearchBtn")
+clickBtnBind(continueSearchBtn)
 
 const clearSearchBtn = document.getElementById("clearSearchBtn")
 clickBtnBind(clearSearchBtn)

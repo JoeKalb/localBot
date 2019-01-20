@@ -4,6 +4,7 @@ let giveaway = require('./Giveaway')
 let randNum = require('./RandNumber')
 let quidditch = require('./Quidditch')
 let wizardDuel = require('./WizardDuel')
+let search = require('./Search')
 const fs = require('fs');
 const houses = require('./Houses')
 let CONFIG;
@@ -273,13 +274,134 @@ function onMessageHandler (target, context, msg, self) {
         //console.log(`Wizard Duel Switch Case Default: ${commandName}`)
     }
   }
+  // search game commands
+  if(search.searching() && target == `#${search.channel}`){
+    switch(commandName){
+      case 'left':
+        search.vote(context['display-name'], 1)
+        break;
+      case 'right':
+        search.vote(context['display-name'], 2)
+        break;
+
+      default:
+    }
+  }
+
+
+
+
   // If the command is known, let's execute it:
-  switch(commandName){
-    case 'test':
-      if(target == '#thabuttress'){
-        backupBot.checkingBottressStatus();
+
+  // commands only for butt's channel
+  if(target == '#thabuttress' || target == '#joefish5'){
+    switch(commandName){
+      case 'test':
+        if(target == '#thabuttress'){
+          backupBot.checkingBottressStatus();
+        }
+        break;
+      case 'quidditch':
+        if(target == "#thabuttress" && (context.mod || context.username == 'thabuttress')){
+          quidditch.start('thabuttress')
+          client.say(target, "Want to play some Quidditch! Do !play to join the game!!!")
+        }
+        break;
+      case 'end':
+        if(quidditch.playerCount && (context.mod || context.username == 'thabuttress')){
+          let snitch = quidditch.snitchCaught();
+          let winnings = quidditch.finalPayouts();
+          let messages = [`${snitch} caught the Golden Snitch and ended the game!`, winnings]
+          delayedWinnings(quidditch.channel, messages)
+          recordPayouts(`${winnings} | ${snitch} caught the snitch!`)
+        }
+        break;
+      case 'play':
+        if(quidditch.gameOn && target == "#" + quidditch.channel){
+          let play = quidditch.play(context['display-name'])
+          if(play == 10){
+            client.say(quidditch.channel, `${context['display-name']} threw the Quaffle and scored! That's 10 points buttOMG 
+              ${(quidditch.users[context['display-name']].tries < quidditch.maxTries)? quidditch.maxTries-quidditch.users[context['display-name']].tries : "No"} 
+              ${(quidditch.users[context['display-name']].tries == quidditch.maxTries-1) ? "try" : "tries"} left.`)
+          } else if(play == 0){
+            client.say(quidditch.channel, `${context['display-name']} threw the Quaffle and missed! buttThump 
+              ${(quidditch.users[context['display-name']].tries < quidditch.maxTries)? quidditch.maxTries-quidditch.users[context['display-name']].tries : "No"}
+              ${(quidditch.users[context['display-name']].tries == quidditch.maxTries-1) ? "try" : "tries"} left.`)
+          }else{
+            console.log(`${context['display-name']} has hit the max tries of ${quidditch.users[context['display-name']].tries}`)
+          }
+        }
+        break;
+      case 'results':
+        if(!quidditch.gameOn && quidditch.playerCount && target == "#" + quidditch.channel){
+          client.say(quidditch.channel, quidditch.finalPayouts())
+        }
+        break;
+      case 'snitch':
+        if(!quidditch.gameOn && quidditch.playerCount 
+          && target == "#"+quidditch.channel){
+          client.say(quidditch.channel, `${quidditch.snitch} caught the snitch!`)
+        }
+        break;
+      case 'mypoints':
+        if(target == "#" + quidditch.channel
+          && quidditch.users[context['display-name']])
+          client.say(target, quidditch.myPoints(context['display-name']))
+        break;
+        case 'whathouse':
+      if(target == "#thabuttress" || target == "#joefish5"){
+        let tryName = msg.split(' ')[1];
+        (!tryName) ? client.say(target, houses.getHouse(context['display-name']))
+          : client.say(target, houses.getHouse(tryName.replace('@', '')))
       }
       break;
+    case 'houses':
+      client.say(target, houses.classSizes())
+      break;
+    case 'myhouse':
+      let tryName = msg.split(' ')[1];
+      (!tryName) ? client.say(target, houses.myHouse(context['display-name']))
+        : client.say(target, houses.myHouse(tryName.replace('@', '')))
+      break;
+    case 'cheer':
+      if(houses.isEnrolled(context.username)){
+        let houseNum = houses.students[context.username]
+        if(houseNum == 0)
+          client.action(target, `GO GO ${houses.houseNames[houseNum].toUpperCase()}`)
+        else if(houseNum == 1)
+          client.action(target, `HOT STUFF ${houses.houseNames[houseNum].toUpperCase()}`)
+        else if(houseNum == 2)
+          client.action(target, `WIN WIN ${houses.houseNames[houseNum].toUpperCase()}`)
+        else // houseNum == 3
+          client.action(target, `RA RA ${houses.houseNames[houseNum].toUpperCase()}`)
+      }
+      else{
+        client.action(target, `Sorry ${context['display-name']}, you need a !house to cheer.`)
+      }
+      break;
+    case 'raid':
+      if(houses.isEnrolled(context.username)){
+        let houseNum = houses.students[context.username]
+        client.action(target, `buttButt buttCrew ${houses.houseNames[houseNum].toUpperCase()} RAID buttBest buttCrew`)
+      }
+      else if (target == "#thabuttress"){
+        client.action(target, `MUGGLE RAID!!!`)
+      }
+      break;
+    case 'commands':
+      let commands = "Current list of all Harry Potter commands: ";
+      commands += " House info [!house !houses !whathouse !myhouse !earn !cheer !raid] |";
+      commands += " Quidditch [!play !results !mypoints !snitch] |";
+      commands += " Wizard duel [!wizard !duel !duelists !bet (1 or 2)] |";
+      commands += " Hangman [!hangman !guessed]";
+      client.say(target, commands)
+      break;
+    default:
+        //console.log(`Unknown Command: ${commandName}`)
+    }
+  }
+
+  switch(commandName){
     case 'hangman':
       if(target == "#" + hangman.channel){
         (!hangman.getPause()) 
@@ -303,37 +425,8 @@ function onMessageHandler (target, context, msg, self) {
         `${context['display-name']} is${(giveaway.check(context['display-name']) 
         ? " ": " not ")}in the giveaway. There's current ${giveaway.count} enteries.`)
       break;
-    case 'quidditch':
-      if(target == "#thabuttress" && (context.mod || context.username == 'thabuttress')){
-        quidditch.start('thabuttress')
-        client.say(target, "Want to play some Quidditch! Do !play to join the game!!!")
-      }
-      break;
-    case 'end':
-      if(quidditch.playerCount && (context.mod || context.username == 'thabuttress')){
-        let snitch = quidditch.snitchCaught();
-        let winnings = quidditch.finalPayouts();
-        let messages = [`${snitch} caught the Golden Snitch and ended the game!`, winnings]
-        delayedWinnings(quidditch.channel, messages)
-        recordPayouts(`${winnings} | ${snitch} caught the snitch!`)
-      }
-      break;
     case 'play':
-      if(quidditch.gameOn && target == "#" + quidditch.channel){
-        let play = quidditch.play(context['display-name'])
-        if(play == 10){
-          client.say(quidditch.channel, `${context['display-name']} threw the Quaffle and scored! That's 10 points buttOMG 
-            ${(quidditch.users[context['display-name']].tries < quidditch.maxTries)? quidditch.maxTries-quidditch.users[context['display-name']].tries : "No"} 
-            ${(quidditch.users[context['display-name']].tries == quidditch.maxTries-1) ? "try" : "tries"} left.`)
-        } else if(play == 0){
-          client.say(quidditch.channel, `${context['display-name']} threw the Quaffle and missed! buttThump 
-            ${(quidditch.users[context['display-name']].tries < quidditch.maxTries)? quidditch.maxTries-quidditch.users[context['display-name']].tries : "No"}
-            ${(quidditch.users[context['display-name']].tries == quidditch.maxTries-1) ? "try" : "tries"} left.`)
-        }else{
-          console.log(`${context['display-name']} has hit the max tries of ${quidditch.users[context['display-name']].tries}`)
-        }
-      }
-      else if(target == '#oooskittles' 
+      if(target == '#oooskittles' 
         && context.username == "oooskittles"
         && playMarbelsSkoots){
         playMarbelsSkoots = false;
@@ -343,77 +436,6 @@ function onMessageHandler (target, context, msg, self) {
         setTimeout(() => {
           playMarbelsSkoots = true;
         }, 30000)
-      }
-      break;
-    case 'results':
-      if(!quidditch.gameOn && quidditch.playerCount && target == "#" + quidditch.channel){
-        client.say(quidditch.channel, quidditch.finalPayouts())
-      }
-      break;
-    case 'snitch':
-      if(!quidditch.gameOn && quidditch.playerCount 
-        && target == "#"+quidditch.channel){
-        client.say(quidditch.channel, `${quidditch.snitch} caught the snitch!`)
-      }
-      break;
-    case 'mypoints':
-      if(target == "#" + quidditch.channel
-        && quidditch.users[context['display-name']])
-        client.say(target, quidditch.myPoints(context['display-name']))
-
-      break;
-    case 'whathouse':
-      if(target == "#thabuttress" || target == "#joefish5"){
-        let tryName = msg.split(' ')[1];
-        (!tryName) ? client.say(target, houses.getHouse(context['display-name']))
-          : client.say(target, houses.getHouse(tryName.replace('@', '')))
-      }
-      break;
-    case 'houses':
-      if(target == "#thabuttress" || target =="#joefish5"){
-        client.say(target, houses.classSizes())
-      }
-      break;
-    case 'myhouse':
-      if(target == "#thabuttress" || target == "#joefish5"){
-        let tryName = msg.split(' ')[1];
-        (!tryName) ? client.say(target, houses.myHouse(context['display-name']))
-          : client.say(target, houses.myHouse(tryName.replace('@', '')))
-      }
-      break;
-    case 'cheer':
-      if(houses.isEnrolled(context.username) && target == '#thabuttress'){
-        let houseNum = houses.students[context.username]
-        if(houseNum == 0)
-          client.action(target, `GO GO ${houses.houseNames[houseNum].toUpperCase()}`)
-        else if(houseNum == 1)
-          client.action(target, `HOT STUFF ${houses.houseNames[houseNum].toUpperCase()}`)
-        else if(houseNum == 2)
-          client.action(target, `WIN WIN ${houses.houseNames[houseNum].toUpperCase()}`)
-        else // houseNum == 3
-          client.action(target, `RA RA ${houses.houseNames[houseNum].toUpperCase()}`)
-      }
-      else if (target == '#thabuttress'){
-        client.action(target, `Sorry ${context['display-name']}, you need a !house to cheer.`)
-      }
-      break;
-    case 'raid':
-      if(houses.isEnrolled(context.username) && target == '#thabuttress'){
-        let houseNum = houses.students[context.username]
-        client.action(target, `buttButt buttCrew ${houses.houseNames[houseNum].toUpperCase()} RAID buttBest buttCrew`)
-      }
-      else if (target == "#thabuttress"){
-        client.action(target, `MUGGLE RAID!!!`)
-      }
-      break;
-    case 'commands':
-      if(target == '#thabuttress'){
-        let commands = "Current list of all Harry Potter commands: ";
-        commands += " House info [!house !houses !whathouse !myhouse !earn !cheer !raid] |";
-        commands += " Quidditch [!play !results !mypoints !snitch] |";
-        commands += " Wizard duel [!wizard !duel !duelists !bet (1 or 2)] |";
-        commands += " Hangman [!hangman !guessed]";
-        client.say(target, commands)
       }
       break;
     default:

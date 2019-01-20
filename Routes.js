@@ -239,8 +239,33 @@ router.get('/search/:channel', (req, res) => {
   res.status(200).json(`Search Started in Channel: ${search.channel}`)
 })
 
-router.get('/search/game/pause', (req, res) => {
-  res.status(200).json(`Search Game Paused`)
+router.post('/search', (req, res) => {
+  search.start(req.body.channel)
+  let searchGameStarted = search.manualChooseStudent(req.body.student)
+  
+
+  if (searchGameStarted){
+    console.log(req.body)
+    search.setItem();
+    client.action(`#${search.channel}`, search.startGameDisplay())
+
+    res.status(200).json(`${search.getSneakyName()} is now searching!`)
+  }
+  else res.status(404).json(`${req.body.student} not found.`)
+})
+
+router.get('/search/game/continue', (req, res) => {
+  let votesDisplay = [search.showVotes()]
+  for(let item of search.displayTurn()){
+    votesDisplay.push(item)
+  }
+
+  if(!search.getContinueGame()){
+    search.calcFinalPayouts()
+    votesDisplay.push(search.getHousePayouts())
+  }
+  delayedWinnings(search.channel, votesDisplay)
+  res.status(200).json(`Search Game Contunie`)
 })
 
 router.get('/search/game/clear', (req, res) => {

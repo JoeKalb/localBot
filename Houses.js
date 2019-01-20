@@ -198,5 +198,16 @@ module.exports = {
       return result;
     }
     return `Sorry ${name} doesn't have a !house yet!`;
+  },
+  allHouse:function(houseNum){
+    let students = `Students in ${this.houseNames[houseNum]}:`
+    let allNames = Object.keys(this.students)
+
+    for(let i in allNames){
+      if(this.students[allNames[i]] === houseNum)
+        students += ` ${allNames[i]} |`
+    }
+
+    return students
   }
 }

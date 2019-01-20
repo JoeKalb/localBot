@@ -25,14 +25,14 @@ let options = [
   {
     question:'Which way should <name> go when they leave the dorm? !left or !right',
     action: '<name> walks out of the dorm and turns <direction>.',
-    win:"<name> leaves the <house> dorm and comes up on two moving staircases.",
+    win:"<name> comes up on two moving staircases.",
     lose: `<name> runs directly into Filtch's back, "Rather late hour to be out of the dorms isn't it." [${loseAmount[0]} points from <house>]`
   },
   {
     question:'Which staircase should <name> take? !left or !right',
     action:'<name> heads down the <direction> staircase.',
     win:`After walking down the staircase on the, <name> walks straight down the hall and comes up on two doors.`,
-    lose: `<name> sees a black cat sitting on the bottom of the staircase. The cat transforms into Professor McGonagall, "Howgarts students are not to leave their dorm at night!" [${loseAmount[1]} points from <house>]`
+    lose: `<name> sees a black cat sitting on the bottom of the staircase. The cat transforms into Professor McGonagall, "Howgarts students are not permitted to leave the dorms at night!" [${loseAmount[1]} points from <house>]`
   },
   {
     question:'Which door should <name> open? !left or !right',
@@ -77,6 +77,16 @@ module.exports = {
     sneakyStudent.name = names[i]
     sneakyStudent.houseNum = houses.students[names[i].toLowerCase()]
   },
+  manualChooseStudent: (name) => {
+    if(houses.isEnrolled(name)){
+      sneakyStudent.name = name;
+      sneakyStudent.houseNum = houses.students[name.toLowerCase()]
+      allowEntries = false;
+      searching = true;
+      return true;
+    }
+    return false;
+  },
   getSneakyName: () =>{
     return sneakyStudent.name
   },
@@ -88,15 +98,15 @@ module.exports = {
     allowVotes = true;
     allowVotesTimer = setTimeout( () => {
       allowVotes = false
-    }, 30000) // 30 seconds for voting
+    }, 60000) // 60 seconds for voting
     return `${sneakyStudent.name} snuck out of the 
       ${houses.houseNames[sneakyStudent.houseNum]} dorm to search for the
-      ${items[sneakyStudent.item]}.`
+      ${items[sneakyStudent.item]}. ${options[0].question.replace('<name>', sneakyStudent.name)}`
   },
   vote: (name, direction) => { // 1 = left, 2 = right // only when search is allowed
     if(searching && allowVotes){
       //console.log(`${name} voted ${direction}`)
-      if(name == sneakyStudent.name)
+      if(name.toLowerCase() == sneakyStudent.name)
         sneakyStudent.vote[turn] = direction
       else{
         if(!studentVote.hasOwnProperty(name)){
@@ -145,7 +155,7 @@ module.exports = {
         : ` (Student Vote: ${studentVotePower}% right)`
     }
 
-    if(studentVotePower > 75 || !sneakyStudent.vote[turn]){
+    if(!sneakyStudent.vote[turn]){
       chosenDirection[turn] = (left > right) ? 1:2
       results += ` ${sneakyStudent.name} goes ${showDirection((left > right)? 1:2)}`
     }else{
@@ -161,6 +171,7 @@ module.exports = {
   displayTurn: () => {
     let isCorrect = choseCorrectly()
     isChosenRight[turn] = isCorrect;
+    let gameActions = [formatAction(options[turn].action)]
     if(isCorrect){
       ++turn;
       allowVotes = true;
@@ -168,12 +179,16 @@ module.exports = {
         foundItem = true;
         continueGame = false;
       }
-      return options[turn-1].win.replace('<name>', sneakyStudent.name).replace('<direction>', chosenDirection[turn]).replace('<house>', houses.houseNames[sneakyStudent.houseNum])
+      gameActions.push(formatAction(options[turn-1].win))
+      if(continueGame) 
+        gameActions.push(formatAction(options[turn].question))
     }
     else{
       continueGame = false;
-      return options[turn].lose.replace('<name>', sneakyStudent.name).replace('<direction>', chosenDirection[turn]).replace('<house>', houses.houseNames[sneakyStudent.houseNum])
+      gameActions.push(formatAction(options[turn].lose))
     }
+
+    return gameActions
   },
   getContinueGame: () => {
     return continueGame;
@@ -186,57 +201,26 @@ module.exports = {
     let names = Object.keys(studentVote)
 
     let checkTurn = 0;
-    if(foundItem)
-      housePayouts[sneakyStudent.houseNum] += 200
-    
-    while(chosenDirection[checkTurn] && checkTurn < 3){
-      for(let i in names){
-        // check if the student chose the same way as the direct made
-        let madeSameChoice;
-        if(names[i] == sneakyStudent.name)
-          madeSameChoice 
-            = sneakyStudent.vote[checkTurn] == chosenDirection[checkTurn]
-        else
-          madeSameChoice 
-            = studentVote[names[i]].vote[checkTurn] == chosenDirection[checkTurn]
 
-        
-        if(isChosenRight[checkTurn]){ // made it past round 
-          if(names[i] == sneakyStudent.name){
-            if(madeSameChoice){
-              housePayouts[sneakyStudent.houseNum] += 10 * (checkTurn + 1)
-            }
-            else if(sneakyStudent.vote[checkTurn] != 0) // made wrong choice
-              housePayouts[sneakyStudent.houseNum] -= 5 * (checkTurn + 1)
-          }else{ // regular student vote
-            if(madeSameChoice){
-              housePayouts[studentVote[names[i]].houseNum] += 5 * (checkTurn + 1)
-            }
-            else if(studentVote[names[i]].vote[checkTurn] != 0){
-              housePayouts[studentVote[names[i]].houseNum] -= 2 * (checkTurn + 1)
-            }
-          }
-        }
-        else{ // lost round
-          if(names[i] == sneakyStudent.name){
-            if(madeSameChoice){
-              housePayouts[sneakyStudent.houseNum] -= loseAmount[checkTurn]
-            }
-            else if(sneakyStudent.vote[checkTurn] != 0) // made wrong choice
-              housePayouts[sneakyStudent.houseNum] += 10 * (checkTurn + 1)
-          }else{ // regular student vote
-            if(madeSameChoice){
-              housePayouts[studentVote[names[i]].houseNum] -= 2 * (checkTurn + 1)
-            }
-            else if(studentVote[names[i]].vote[checkTurn] != 0){
-              housePayouts[studentVote[names[i]].houseNum] += 5 * (checkTurn + 1)
-            }
-          }
+    while(chosenDirection[checkTurn] && checkTurn < 3){
+      for(let name of names){
+        if(name != sneakyStudent.name && studentVote[name].vote[checkTurn]){
+          if((isChosenRight[checkTurn] && studentVote[name].vote[checkTurn] == chosenDirection[checkTurn])
+            || (!isChosenRight[checkTurn] && studentVote[name].vote[checkTurn] != chosenDirection[checkTurn]))
+            housePayouts[studentVote[name].houseNum] += 10 * (1 + checkTurn)
+          else if((isChosenRight[checkTurn] && studentVote[name].vote[checkTurn] != chosenDirection[checkTurn])
+            || (!isChosenRight[checkTurn] && studentVote[name].vote[checkTurn] == chosenDirection[checkTurn]))
+            housePayouts[studentVote[name].houseNum] -= 10 * (1 + checkTurn)
         }
       }
-
       ++checkTurn
     }
+
+    // sneaky student payout
+    if(foundItem)
+      housePayouts[sneakyStudent.houseNum] += 200
+    else
+      housePayouts[sneakyStudent.houseNum] -= loseAmount[turn]
   },
   getHousePayouts: () => {
     let results = "Payouts for Search Items |"
@@ -270,25 +254,29 @@ module.exports = {
 }
 
 // helper functions
-isButt = (name) => {
+let isButt = (name) => {
   return name.toLowerCase() == "thabuttress"
 }
 
-isJoe = (name) => {
+let isJoe = (name) => {
   return name.toLowerCase() == "joefish5"
 }
 
-showDirection = (num) => {
+let showDirection = (num) => {
   if(num == 1)
     return "left"
   else if(num == 2)
     return "right"
 }
 
-choseCorrectly = () => {
+let choseCorrectly = () => {
   let wrongChoice = turn + 1;
   let choices = maxTurns + 5;
   let option = Math.floor(Math.random() * choices) + 1;
   //console.log(`wrongChoice: ${wrongChoice}\nchoices: ${choices}\noption: ${option}`)
   return option > wrongChoice;
+}
+
+let formatAction = (action) => {
+  return action.replace('<name>', sneakyStudent.name).replace('<direction>', showDirection(chosenDirection[turn])).replace('<house>', houses.houseNames[sneakyStudent.houseNum])
 }
