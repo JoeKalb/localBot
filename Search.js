@@ -17,6 +17,13 @@ let sneakyStudent = {
 }
 let items = [`Sorcerer's Stone`, `Chamber of Secrets`, `Keg of Endless Butterbeer`, 
   `Goblet of Fire`, `Room of Requirement`, `OWLs answer key`]
+let winItem = [
+  `<name> comes face to face with a mirror, and then feel a small bump in their pocket.`, 
+  `Behind the door is a dark staircase, <name> walks down it to find a giant stone face of Salazar Slytherin.`,
+  `<name> walks into the giant room. If seems like its raining but liquid is sweet with its source bursting from the center of the room.`,
+  `A giant stone chalice sits in the middle of the room with a huge blue flame coming out of it.`,
+  `<name> really had to go to the bathroom, and finds the fanciests chamberpots in the entire school!`,
+  `Floating in the middle of the room is a thin book that guarantees a perfect score on the tests next week!`]
 let chosenDirection = [0, 0, 0]
 let isChosenRight = [false, false, false]
 let loseAmount = [10, 20 , 50]
@@ -25,13 +32,13 @@ let options = [
   {
     question:'Which way should <name> go when they leave the dorm? !left or !right',
     action: '<name> walks out of the dorm and turns <direction>.',
-    win:"<name> comes up on two moving staircases.",
+    win:"At the end of the hall there are two moving staircases.",
     lose: `<name> runs directly into Filtch's back, "Rather late hour to be out of the dorms isn't it." [${loseAmount[0]} points from <house>]`
   },
   {
     question:'Which staircase should <name> take? !left or !right',
     action:'<name> heads down the <direction> staircase.',
-    win:`After walking down the staircase on the, <name> walks straight down the hall and comes up on two doors.`,
+    win:`At the bottom of the staircase there are two doors.`,
     lose: `<name> sees a black cat sitting on the bottom of the staircase. The cat transforms into Professor McGonagall, "Howgarts students are not permitted to leave the dorms at night!" [${loseAmount[1]} points from <house>]`
   },
   {
@@ -92,13 +99,13 @@ module.exports = {
   },
   setItem: () => {
     sneakyStudent.item = Math.floor(Math.random() * items.length)
-    options[2].win = `${sneakyStudent.name} found the ${items[sneakyStudent.item]}! [${winAmount} points to <house>]`
+    options[2].win = `${formatAction(winItem[sneakyStudent.item])} ${sneakyStudent.name} found the ${items[sneakyStudent.item]}! [${winAmount} points to <house>]`
   },
   startGameDisplay: () => {
     allowVotes = true;
-    allowVotesTimer = setTimeout( () => {
+    /* allowVotesTimer = setTimeout( () => {
       allowVotes = false
-    }, 60000) // 60 seconds for voting
+    }, 60000) // 60 seconds for voting */
     return `${sneakyStudent.name} snuck out of the 
       ${houses.houseNames[sneakyStudent.houseNum]} dorm to search for the
       ${items[sneakyStudent.item]}. ${options[0].question.replace('<name>', sneakyStudent.name)}`
@@ -106,7 +113,8 @@ module.exports = {
   vote: (name, direction) => { // 1 = left, 2 = right // only when search is allowed
     if(searching && allowVotes){
       //console.log(`${name} voted ${direction}`)
-      if(name.toLowerCase() == sneakyStudent.name)
+      let reg = new RegExp(sneakyStudent.name, 'i')
+      if(reg.test(name))
         sneakyStudent.vote[turn] = direction
       else{
         if(!studentVote.hasOwnProperty(name)){
@@ -156,8 +164,14 @@ module.exports = {
     }
 
     if(!sneakyStudent.vote[turn]){
-      chosenDirection[turn] = (left > right) ? 1:2
-      results += ` ${sneakyStudent.name} goes ${showDirection((left > right)? 1:2)}`
+      if(left == right){
+        chosenDirection[turn] = Math.floor(Math.random() * 2) + 1
+        results += ` ${sneakyStudent.name} goes ${showDirection(chosenDirection[turn])}.`
+      }
+      else{
+        chosenDirection[turn] = (left > right) ? 1:2
+        results += ` ${sneakyStudent.name} goes ${showDirection((left > right)? 1:2)}.`
+      }
     }else{
       chosenDirection[turn] = sneakyStudent.vote[turn]
       results += ` ${sneakyStudent.name} goes ${showDirection(sneakyStudent.vote[turn])}.`
@@ -190,6 +204,12 @@ module.exports = {
 
     return gameActions
   },
+  getCurrentQuestion: () => {
+    if(continueGame){
+      return formatAction(options[turn].question)
+    }
+    return false;
+  },
   getContinueGame: () => {
     return continueGame;
   },
@@ -202,9 +222,10 @@ module.exports = {
 
     let checkTurn = 0;
 
+    let reg = new RegExp(sneakyStudent.name, 'i')
     while(chosenDirection[checkTurn] && checkTurn < 3){
       for(let name of names){
-        if(name != sneakyStudent.name && studentVote[name].vote[checkTurn]){
+        if(reg.test(name) && studentVote[name].vote[checkTurn]){
           if((isChosenRight[checkTurn] && studentVote[name].vote[checkTurn] == chosenDirection[checkTurn])
             || (!isChosenRight[checkTurn] && studentVote[name].vote[checkTurn] != chosenDirection[checkTurn]))
             housePayouts[studentVote[name].houseNum] += 10 * (1 + checkTurn)
@@ -271,9 +292,9 @@ let showDirection = (num) => {
 
 let choseCorrectly = () => {
   let wrongChoice = turn + 1;
-  let choices = maxTurns + 5;
+  let choices = maxTurns + 4;
   let option = Math.floor(Math.random() * choices) + 1;
-  //console.log(`wrongChoice: ${wrongChoice}\nchoices: ${choices}\noption: ${option}`)
+  console.log(`Current odds are ${choices - wrongChoice} out of ${choices}`)
   return option > wrongChoice;
 }
 

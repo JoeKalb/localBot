@@ -275,6 +275,27 @@ function onMessageHandler (target, context, msg, self) {
     }
   }
   // search game commands
+  if(commandName == 'search'){
+    if(parse.length > 1 && (context.mod || context.username == 'joefish5')){
+      search.start(target.replace('#', ''))
+      let readyToSearch = search.manualChooseStudent(parse[1].replace('@', ''))
+
+      if(readyToSearch){
+        search.setItem()
+        client.action(`#${search.channel}`, search.startGameDisplay())
+      }
+      else{
+        search.clear()
+        client.action(target, `Cannot find student: ${parse[1].replace('@', '')}`)
+      }
+    }
+    else{
+      let currentQuestion = search.getCurrentQuestion()
+      if(currentQuestion)
+        client.action(target, currentQuestion)
+    }
+  }
+
   if(search.searching() && target == `#${search.channel}`){
     switch(commandName){
       case 'left':
