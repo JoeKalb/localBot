@@ -28,24 +28,28 @@ let chosenDirection = [0, 0, 0]
 let isChosenRight = [false, false, false]
 let loseAmount = [10, 20 , 50]
 let winAmount = 200
+let otherStudentsBaseAmount = 10
 let options = [
   {
     question:'Which way should <name> go when they leave the dorm? !left or !right',
     action: '<name> walks out of the dorm and turns <direction>.',
     win:"At the end of the hall there are two moving staircases.",
-    lose: `<name> runs directly into Filtch's back, "Rather late hour to be out of the dorms isn't it." [${loseAmount[0]} points from <house>]`
+    lose: `<name> runs directly into Filtch's back, "Rather late hour to be out of the dorms isn't it." [${loseAmount[0]} points from <house>]`,
+    staff: `Filtch`
   },
   {
     question:'Which staircase should <name> take? !left or !right',
     action:'<name> heads down the <direction> staircase.',
     win:`At the bottom of the staircase there are two doors.`,
-    lose: `<name> sees a black cat sitting on the bottom of the staircase. The cat transforms into Professor McGonagall, "Howgarts students are not permitted to leave the dorms at night!" [${loseAmount[1]} points from <house>]`
+    lose: `<name> sees a black cat sitting on the bottom of the staircase. The cat transforms into Professor McGonagall, "Howgarts students are not permitted to leave the dorms at night!" [${loseAmount[1]} points from <house>]`,
+    staff: 'Professor Mcgonagall'
   },
   {
     question:'Which door should <name> open? !left or !right',
     action:'<name> slowly turns the knob of the door on the <direction>.',
     win:"Third win",
-    lose:`<name> opens the door, and looks directly at Professor Snape, "Roaming the halls at this hour and someone will think you're up to something..." [${loseAmount[2]} points from <house>]`
+    lose:`<name> opens the door, and looks directly at Professor Snape, "Roaming the halls at this hour and someone will think you're up to something..." [${loseAmount[2]} points from <house>]`,
+    staff: `Professor Snape`
   }
 ]
 
@@ -159,8 +163,8 @@ module.exports = {
       studentVotePower = (left > right) ? Math.floor((left/(left + right) * 100))
         : Math.floor((right/(left + right) * 100))
       results += (left > right)
-        ? ` (Student Vote: ${studentVotePower}% left)`
-        : ` (Student Vote: ${studentVotePower}% right)`
+        ? ` (${studentVotePower}% of ${left+right} students chose left)`
+        : ` (${studentVotePower}% of ${left+right} students chose right)`
     }
 
     if(!sneakyStudent.vote[turn]){
@@ -225,13 +229,13 @@ module.exports = {
     let reg = new RegExp(sneakyStudent.name, 'i')
     while(chosenDirection[checkTurn] && checkTurn < 3){
       for(let name of names){
-        if(reg.test(name) && studentVote[name].vote[checkTurn]){
+        if(!reg.test(name) && studentVote[name].vote[checkTurn]){
           if((isChosenRight[checkTurn] && studentVote[name].vote[checkTurn] == chosenDirection[checkTurn])
             || (!isChosenRight[checkTurn] && studentVote[name].vote[checkTurn] != chosenDirection[checkTurn]))
-            housePayouts[studentVote[name].houseNum] += 10 * (1 + checkTurn)
+            housePayouts[studentVote[name].houseNum] += otherStudentsBaseAmount + (5 * checkTurn)
           else if((isChosenRight[checkTurn] && studentVote[name].vote[checkTurn] != chosenDirection[checkTurn])
             || (!isChosenRight[checkTurn] && studentVote[name].vote[checkTurn] == chosenDirection[checkTurn]))
-            housePayouts[studentVote[name].houseNum] -= 10 * (1 + checkTurn)
+            housePayouts[studentVote[name].houseNum] -= otherStudentsBaseAmount + (5 * checkTurn)
         }
       }
       ++checkTurn
@@ -251,6 +255,49 @@ module.exports = {
     }
 
     return results
+  },
+  getMyResults: (name) => {
+    let reg = new RegExp(sneakyStudent.name, 'i')
+    if(reg.test(name)){
+      if (foundItem) 
+       return `${sneakyStudent.name} found ${items[sneakyStudent.item]}! [${winAmount} to ${houses.houseNames[sneakyStudent.houseNum]}] buttOMG`;
+      return `${options[turn].staff} caught ${sneakyStudent.name} wandering the halls! [${loseAmount[turn]} from ${houses.houseNames[sneakyStudent.houseNum]}]`
+    }
+    
+    if(continueGame || !studentVote.hasOwnProperty(name))
+      return false;
+
+    let result = `Search Payout for ${name}: [`
+
+    let checkTurn = 0; 
+    let totalPoints = 0;
+    let amountChange = 0;
+    while(chosenDirection[checkTurn] && checkTurn < 3){
+      if((isChosenRight[checkTurn] && studentVote[name].vote[checkTurn] == chosenDirection[checkTurn])
+        || !isChosenRight[checkTurn] && studentVote[name].vote[checkTurn] != chosenDirection[checkTurn]){
+          amountChange = otherStudentsBaseAmount + (5 * checkTurn)
+          totalPoints += amountChange;
+          (checkTurn) ? result += `+${amountChange}`
+            :result += `${amountChange}`
+        }
+      else if((isChosenRight[checkTurn] && studentVote[name].vote[checkTurn] != chosenDirection[checkTurn]
+        || !isChosenRight[checkTurn] && studentVote[name].vote[checkTurn] == chosenDirection[checkTurn])){
+          amountChange = otherStudentsBaseAmount + (5 * checkTurn)
+          totalPoints -= amountChange;
+          result += `-${amountChange}`
+        }
+      else{
+        (checkTurn) ? result += '+0' : '0'; 
+      }
+
+      ++checkTurn;
+    }
+
+    let isGain = (totalPoints < 0) ? false : true;
+    result += `] ${(isGain) ? `${totalPoints} points to` : `-${totalPoints * -1} points from`} ${houses.houseNames[studentVote[name].houseNum]} ${(isGain) 
+      ? 'buttHouse' : 'buttThump'}`
+  
+    return result;
   },
   clear: function(){
     turn = 0;

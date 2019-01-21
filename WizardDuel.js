@@ -235,10 +235,16 @@ module.exports = {
         if(name != this.duelists[1] && name != this.duelists[2]){
           console.log(`${name} !bet ${bet} \t| ${houses.houseNames[this.students[name].houseNum]}`)
           if(bet == 1 || reg1.test(bet)){
+            if(this.students[name].betOn == 2)
+              --this.betsPlaced[2];
+            
             this.students[name].betOn = 1;
             ++this.betsPlaced[1];
           }
           else if(bet == 2 || reg2.test(bet)){
+            if(this.students[name].betOn == 1)
+              --this.betsPlaced[1];
+
             this.students[name].betOn = 2;
             ++this.betsPlaced[2];
           }
@@ -286,6 +292,7 @@ module.exports = {
       duel2SpellStrength = this.spellStrengthOption(duel2SpellStrength)
       let duel2Attack = this.spells[this.duelInfo.duel2.spellChoice][spellName2][duel2SpellStrength]
       
+      console.log(`${this.duelInfo.duel1.name} ${this.duelInfo.duel1.strength} | ${this.duelInfo.duel2.name} ${this.duelInfo.duel2.strength}`)
       // do win spell for winning ability
       if(this.duelists[0] != ""){
         // add all duels

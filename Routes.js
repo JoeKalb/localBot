@@ -263,6 +263,8 @@ router.get('/search/game/continue', (req, res) => {
   if(!search.getContinueGame()){
     search.calcFinalPayouts()
     votesDisplay.push(search.getHousePayouts())
+
+    recordPayouts(`${search.getHousePayouts()} | ${search.getMyResults(search.getSneakyName())}`)
   }
   delayedWinnings(search.channel, votesDisplay)
   res.status(200).json(`Search Game Contunie`)

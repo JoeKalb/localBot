@@ -289,11 +289,6 @@ function onMessageHandler (target, context, msg, self) {
         client.action(target, `Cannot find student: ${parse[1].replace('@', '')}`)
       }
     }
-    else{
-      let currentQuestion = search.getCurrentQuestion()
-      if(currentQuestion)
-        client.action(target, currentQuestion)
-    }
   }
 
   if(search.searching() && target == `#${search.channel}`){
@@ -304,7 +299,19 @@ function onMessageHandler (target, context, msg, self) {
       case 'right':
         search.vote(context['display-name'], 2)
         break;
-
+      case 'results':
+        if(!search.getContinueGame()){
+          client.action(target, search.getHousePayouts())
+        }
+        break;
+      case 'mypoints':
+        if(!search.getContinueGame())
+          client.action(target, search.getMyResults(context['display-name']))
+        break;
+      case 'option':
+        let options = search.getCurrentQuestion();
+        if(options)
+          client.action(target, options)
       default:
     }
   }
@@ -414,7 +421,8 @@ function onMessageHandler (target, context, msg, self) {
       commands += " House info [!house !houses !whathouse !myhouse !earn !cheer !raid] |";
       commands += " Quidditch [!play !results !mypoints !snitch] |";
       commands += " Wizard duel [!wizard !duel !duelists !bet (1 or 2)] |";
-      commands += " Hangman [!hangman !guessed]";
+      commands += " Hangman [!hangman !guessed] |";
+      commands += " Item Hunt [!left !right !option !mypoints !results]"
       client.say(target, commands)
       break;
     default:
@@ -452,7 +460,7 @@ function onMessageHandler (target, context, msg, self) {
         && playMarbelsSkoots){
         playMarbelsSkoots = false;
         setTimeout(() => {
-          client.say(target, `!play ${Math.floor(Math.random() * 15) + 1}`)
+          client.say(target, `!play ${Math.floor(Math.random() * 31) + 1}`)
         }, 5000)
         setTimeout(() => {
           playMarbelsSkoots = true;
