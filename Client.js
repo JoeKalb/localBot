@@ -436,13 +436,25 @@ function onMessageHandler (target, context, msg, self) {
     case 'hunt':
       client.action(target, `During an item hunt you get the chance to choose !left or !right as you navigates Hogwarts while the other students in the chat also get to guess on which direction is corrent. But be careful! If you run into a professor you'll loose house points but making it all the way through and win 200!!! buttHouse Main student losses: [10, 20, 50] | Other students win/loss: [10, 15, 20]`)
       break;
+    case 'gry':
+      client.say(target, houses.specificHouseStudents(0))
+      break;
+    case 'huff':
+      client.say(target, houses.specificHouseStudents(1))
+      break;
+    case 'sly':
+      client.say(target, houses.specificHouseStudents(2))
+      break;
+    case 'rav':
+      client.say(target, houses.specificHouseStudents(3))
+      break;
     case 'commands':
       let commands = "Current list of all Harry Potter commands: ";
-      commands += " House info [!house !houses !whathouse !myhouse !earn !cheer !raid] |";
+      commands += " House info [!house !houses !whathouse !myhouse !earn !cheer !raid !gry !huff !sly !rav] |";
       commands += " Quidditch [!play !results !mypoints !snitch] |";
       commands += " Wizard duel [!wizard !duel !duelists !bet (1 or 2)] |";
       commands += " Hangman [!hangman !guessed] |";
-      commands += " Item Hunt [!left !right !option !mypoints !results]"
+      commands += " Item Hunt [!left !right !option !mypoints !results !hunt]"
       client.say(target, commands)
       break;
     default:

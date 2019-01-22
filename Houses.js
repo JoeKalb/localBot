@@ -212,5 +212,16 @@ module.exports = {
     }
 
     return students
+  },
+  specificHouseStudents:function(houseNum){
+    let results = `Students in ${this.houseNames[houseNum]}:`
+    let allNames = Object.keys(this.students)
+
+    for(let name of allNames){
+      if(this.students[name] === houseNum)
+        results += ` ${name} |`
+    }
+
+    return results
   }
 }
