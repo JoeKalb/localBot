@@ -312,6 +312,23 @@ function onMessageHandler (target, context, msg, self) {
         let options = search.getCurrentQuestion();
         if(options)
           client.action(target, options)
+        break;
+      case 'go':
+        if(target == '#thabuttress' && context.mod){
+          let votesDisplay = [search.showVotes()]
+          for(let item of search.displayTurn()){
+            votesDisplay.push(item)
+          }
+
+          if(!search.getContinueGame()){
+            search.calcFinalPayouts()
+            votesDisplay.push(search.getHousePayouts())
+
+            recordPayouts(`${search.getHousePayouts()} | ${search.getMyResults(search.getSneakyName())}`)
+          }
+          delayedWinnings(search.channel, votesDisplay)
+        }
+        break;
       default:
     }
   }
@@ -415,6 +432,9 @@ function onMessageHandler (target, context, msg, self) {
       else if (target == "#thabuttress"){
         client.action(target, `MUGGLE RAID!!!`)
       }
+      break;
+    case 'hunt':
+      client.action(target, `During an item hunt you get the chance to choose !left or !right as you navigates Hogwarts while the other students in the chat also get to guess on which direction is corrent. But be careful! If you run into a professor you'll loose house points but making it all the way through and win 200!!! buttHouse Main student losses: [10, 20, 50] | Other students win/loss: [10, 15, 20]`)
       break;
     case 'commands':
       let commands = "Current list of all Harry Potter commands: ";

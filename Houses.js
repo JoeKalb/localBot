@@ -155,7 +155,9 @@ module.exports = {
     axlyin:3,
     superkirby77:1,
     chill0862:2,
-    mbergman22:2
+    mbergman22:2,
+    fenrysk:3,
+    yessiocho:3
     //gryf = 0, huff = 1, sly = 2, raven = 3
   },
   getHouse: function(name){
