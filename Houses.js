@@ -160,7 +160,9 @@ module.exports = {
     axlyin:3,
     superkirby77:1,
     chill0862:2,
-    mbergman22:2
+    mbergman22:2,
+    fenrysk:3,
+    yessiocho:3
     //gryf = 0, huff = 1, sly = 2, raven = 3
   },
   getHouse: function(name){
@@ -249,5 +251,16 @@ module.exports = {
     console.log(`${userName} | ${newDisplayName}`)
     if(!displayNames.hasOwnProperty(userName) && this.students.hasOwnProperty(userName))
       displayNames[userName] = newDisplayName
+  },
+  specificHouseStudents:function(houseNum){
+    let results = `Students in ${this.houseNames[houseNum]}:`
+    let allNames = Object.keys(this.students)
+
+    for(let name of allNames){
+      if(this.students[name] === houseNum)
+        results += ` ${name} |`
+    }
+
+    return results
   }
 }
