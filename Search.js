@@ -90,12 +90,26 @@ module.exports = {
   },
   manualChooseStudent: (name) => {
     if(houses.isEnrolled(name)){
-      sneakyStudent.name = name;
-      sneakyStudent.houseNum = houses.students[name.toLowerCase()]
-      allowEntries = false;
-      searching = true;
-      return true;
+      let displayName = houses.getDisplayName(name)
+
+      if(typeof displayName == 'object'){
+        return displayName.then((res) => {
+          sneakyStudent.name = res;
+          sneakyStudent.houseNum = houses.students[name.toLowerCase()]
+          allowEntries = false;
+          searching = true;
+          return true;
+        })
+      }
+      else{
+        sneakyStudent.name = displayName;
+        sneakyStudent.houseNum = houses.students[name.toLowerCase()]
+        allowEntries = false;
+        searching = true;
+        return true;
+      }
     }
+    console.log(`${name} doesn't have a house`)
     return false;
   },
   getSneakyName: () =>{

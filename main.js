@@ -139,17 +139,18 @@ clickBtnBind(quidditchResultsBtn)
 // duel controls
 // special select duelists
 let allStudents;
-const selectDuel1 = document.getElementById("duelSelect1")
-const selectDuel2 = document.getElementById("duelSelect2")
 const specialDuelBtn = document.getElementById("specialDuelBtn")
+const studentsWizDuel1 = document.getElementById("studentsWizDuel1")
+const studentsWizDuel2 = document.getElementById("studentsWizDuel2")
+
 specialDuelBtn.addEventListener('click', postSpecialDuel)
 
 let getStudents = async() => {
   let response = await fetch(window.location + 'students')
   allStudents = await response.json()
-  updateStudentSelector(selectDuel1, allStudents)
-  updateStudentSelector(selectDuel2, allStudents)
   updateStudentSelector(searchSelect, allStudents)
+  updateStudentSelector(studentsWizDuel1, allStudents)
+  updateStudentSelector(studentsWizDuel2, allStudents)
 }
 
 let updateStudentSelector = (selectItem, students) =>{
@@ -170,7 +171,7 @@ let updateStudentSelector = (selectItem, students) =>{
     sortedStudents[i].map((name) => {
       newOption = document.createElement('option')
       newOption.value = name
-      newOption.innerText = name
+      newOption.innerText = `${houses[i][0]}| ${name}`
       selectItem.appendChild(newOption)
     })
   }
@@ -180,11 +181,11 @@ getStudents();
 async function postSpecialDuel()  {
   // make sure names are different
   
-  if(allStudents[selectDuel1.value] != allStudents[selectDuel2.value]){
+  if(allStudents[inputWizDuelSearch1.value] != allStudents[inputWizDuelSearch2.value]){
     let data = JSON.stringify({
       "channel":dropDown.value,
-      "student1":selectDuel1.value,
-      "student2":selectDuel2.value
+      "student1":inputWizDuelSearch1.value,
+      "student2":inputWizDuelSearch2.value
     })
 
     let response = await fetch(window.location + 'duel/game/specialDuel', {
@@ -238,13 +239,13 @@ function botStatus(status){
 }
 
 // search controls
-const searchSelect = document.getElementById("searchSelect")
+const itemHuntInput = document.getElementById("itemHuntInput")
 const startSearchBtn = document.getElementById("startSearchBtn")
 startSearchBtn.addEventListener("click", startSearchGame)
 
 async function startSearchGame() {
   let data = JSON.stringify({
-    student:searchSelect.value,
+    student:itemHuntInput.value,
     channel:dropDown.value
   })
 

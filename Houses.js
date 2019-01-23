@@ -1,3 +1,8 @@
+const co = require('co')
+const fetch = require('node-fetch')
+
+let displayNames = {}
+
 module.exports = {
   houseNames: ["Gryffindor", "Hufflepuff", "Slytherin", "Ravenclaw"],
   students:{ 
@@ -210,5 +215,39 @@ module.exports = {
     }
 
     return students
+  },getDisplayName:function(name){
+    if(displayNames.hasOwnProperty(name))
+      return displayNames[name]
+    
+    try{
+      return co(function *() {
+        let twitchLogin = yield fetch(`https://api.twitch.tv/kraken/users?login=${name}`, {
+          headers: {
+            'Client-ID' : 'q9qpitg0qv8dujukht7g581ds0n5hx',
+            'Accept': 'application/vnd.twitchtv.v5+json'
+          }
+        })
+        let twitchUser = yield twitchLogin.json();
+        let channelInfo = yield fetch(`https://api.twitch.tv/kraken/channels/${twitchUser.users[0]._id}`, {
+          headers: {
+            'Client-ID' : 'q9qpitg0qv8dujukht7g581ds0n5hx',
+            'Accept': 'application/vnd.twitchtv.v5+json'
+          }
+        })
+        let json = yield channelInfo.json()
+
+        displayNames[name] = json.display_name;
+        return displayNames[name]
+      })
+    } 
+    catch(err){
+      console.log(err)
+      console.log(`Could not find display name: ${name}`)
+      return name;
+    }
+  },setDisplayName:function(userName, newDisplayName){
+    console.log(`${userName} | ${newDisplayName}`)
+    if(!displayNames.hasOwnProperty(userName) && this.students.hasOwnProperty(userName))
+      displayNames[userName] = newDisplayName
   }
 }

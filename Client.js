@@ -143,12 +143,17 @@ function onMessageHandler (target, context, msg, self) {
       console.log(`${context['display-name']} entered the Dueling Club`)
   }
 
+  // save displayNames into houses from the chat
+  if(target == '#thabuttress' || target == '#joefish5')
+    houses.setDisplayName(context.username, context['display-name'])
+
   // all commands go under here!
   if (msg.substr(0, 1) !== commandPrefix) {
     // this shows all of chat
     //console.log(`[${target} (${context['message-type']})] ${context['display-name']}: ${msg}`)
     return
   }
+
   // Split the message into individual words:
   const parse = msg.slice(1).split(' ')
   // The command name is the first (0th) one:

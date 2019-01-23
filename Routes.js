@@ -243,13 +243,24 @@ router.post('/search', (req, res) => {
   search.start(req.body.channel)
   let searchGameStarted = search.manualChooseStudent(req.body.student)
   
-
   if (searchGameStarted){
-    console.log(req.body)
-    search.setItem();
-    client.action(`#${search.channel}`, search.startGameDisplay())
+    if(typeof searchGameStarted == 'object'){
+      searchGameStarted.then((twitchRes) => {
+        console.log(`object: ${searchGameStarted}`)
+        search.setItem();
+        client.action(`#${search.channel}`, search.startGameDisplay())
 
-    res.status(200).json(`${search.getSneakyName()} is now searching!`)
+        if(twitchRes)
+          res.status(200).json(`${search.getSneakyName()} is now searching!`)
+      })
+    }
+    else{
+      console.log(`non object: ${searchGameStarted}`)
+      search.setItem();
+      client.action(`#${search.channel}`, search.startGameDisplay())
+
+      res.status(200).json(`${search.getSneakyName()} is now searching!`)
+    }
   }
   else res.status(404).json(`${req.body.student} not found.`)
 })

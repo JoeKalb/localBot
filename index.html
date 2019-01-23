@@ -40,7 +40,11 @@
     <div id="duelDiv">
       <h5>Wizard Duel</h5>
       <div>
-        <select name="" id="duelSelect1"></select><span> VS </span><select name="" id="duelSelect2"></select>
+        <input type="text" id="inputWizDuelSearch1" list='studentsWizDuel1'>
+        <datalist id='studentsWizDuel1'></datalist>
+        <span> VS </span>
+        <input type="text" id="inputWizDuelSearch2" list='studentsWizDuel2'>
+        <datalist id='studentsWizDuel2'></datalist>
         <button id="specialDuelBtn">Special Duel</button>
       </div>
       <button id="startDuelBtn" value="duel/">START</button>
@@ -50,7 +54,8 @@
     </div>
     <div id="searchDiv">
       <h5>Search For Something!</h5>
-      <select name="" id="searchSelect"></select>
+      <input type="text" id='itemHuntInput' list='searchSelect'>
+      <datalist name="" id="searchSelect"></datalist>
       <button id="startSearchBtn" value="search/">START</button>
       <button id="continueSearchBtn" value="search/game/continue">CONTINUE</button>
       <button id="clearSearchBtn" value="search/game/clear">CLEAR</button>
