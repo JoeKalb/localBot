@@ -5,67 +5,138 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Bot Handler</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css">
+  <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+  <style>
+      body{
+        height: 100vh;
+        color:lavender;
+        background-color:rgb(61, 61, 61);
+        padding-left: 15px;
+      }
+    </style>
 </head>
-<body>
-  <h1>Local Bot <button id=backupBotBtn value="backupBot/toggle">Turn Backup Bot On</button></h1>
+<body >
+  <div class="container">
+    <section class="hero">
+      <div class="level is-mobile">
+        <div class="level-left">
+          <div class="level-item">
+              <h1 class="title is-4 has-text-grey-lighter">Local Bot</h1>
+          </div>
+          <div class="level-item">
+              <button id="backupBotBtn" class="button is-primary" value="backupBot/toggle">Turn Backup Bot On</button>
+          </div>
+        </div>
+      </div>
+    </section>
   <div>
-    <h3>Channel</h3>
     <div id="channelsDiv">
-      <select name="channels" id="channelsDropDown"></select>
-      <button id="testBtn" value="testBtn/">TEST</button>
-      <button id="houseUpdateBtn" value="house/update">UPDATE STUDENTS</button>
-      <button id="clearAllBtn" value="clear/all/">CLEAR ALL</button>
+      <h5 class="">Channel</h5>
+      <div class="columns is-mobile">
+        <div class="column is-3">
+          <div class="select is-small">
+            <select name="channels" id="channelsDropDown" class="level-item"></select>
+          </div>
+        </div>
+        <div class="column is-10">
+          <button id="testBtn" value="testBtn/" class="level-item button is-primary is-small">TEST</button> 
+          <button id="houseUpdateBtn" value="house/update" class="level-item button is-primary is-small">UPDATE</button>
+          <button id="clearAllBtn" value="clear/all/" class="level-item button is-primary is-small">CLEAR ALL</button>
+        </div>
+      </div>
     </div>
     <div id="hangmanDiv">
       <h5>Hangman</h5><p id="wordDisplay"></p>
-      <input type="text" id="hangmanInput" placeholder="Enter A Word or Phrase">
-      <button id="startBtn" value="hangman/">START</button>
-      <button id="pauseBtn" value="hangman/pause/">PAUSE</button>
-      <button id="clearBtn" value="hangman/clear/">STOP</button>
-    </div>
-    <div id="randomNumDiv">
-      <h5>Random Number</h5>
-      <input type="number" id="randomNumInput" placeholder="Enter this upper limit">
-      <button id="randomStartBtn" value="randNum/">START</button>
-      <button id="randomStopBtn" value="randNum/game/clear">STOP</button>
-    </div>
-    <div id="quidditchDiv">
-      <h5>Quidditch Game</h5>
-      <button id="quidditchStartBtn" value="quidditch/">START</button>
-      <button id="quidditchStopBtn" value="quidditch/game/over">STOP</button>
-      <button id="quidditchResultsBtn" value="quidditch/game/results">RESULTS</button>
-      <button id="quidditchPayoutsBtn" value="quidditch/game/payout">PAYOUTS</button>
-      <button id="quidditchClearBtn" value="quidditch/game/clear">CLEAR</button>
-    </div>
-    <div id="duelDiv">
-      <h5>Wizard Duel</h5>
-      <div>
-        <input type="text" id="inputWizDuelSearch1" list='studentsWizDuel1'>
-        <datalist id='studentsWizDuel1'></datalist>
-        <span> VS </span>
-        <input type="text" id="inputWizDuelSearch2" list='studentsWizDuel2'>
-        <datalist id='studentsWizDuel2'></datalist>
-        <button id="specialDuelBtn">Special Duel</button>
+      <div class="columns is-mobile">
+        <div class="column is-4">
+            <input type="text" id="hangmanInput" class="input is-small" placeholder="Enter A Word or Phrase">
+        </div>
+        <div class="column is-4">
+          <button id="startBtn" value="hangman/" class="button is-primary is-small">START</button>
+          <button id="pauseBtn" value="hangman/pause/" class="button is-warning is-small">PAUSE</button>
+          <button id="clearBtn" value="hangman/clear/" class="button is-danger is-small">STOP</button>
+        </div>
       </div>
-      <button id="startDuelBtn" value="duel/">START</button>
-      <button id="pickDuelBtn" value="duel/game/pick">PICK DUELISTS</button>
-      <button id="duelBtn" value="duel/game/start">DUEL</button>
-      <button id="resetDuelBtn" value="duel/game/clear">RESET DUEL</button>
     </div>
-    <div id="searchDiv">
-      <h5>Search For Something!</h5>
-      <input type="text" id='itemHuntInput' list='searchSelect'>
-      <datalist name="" id="searchSelect"></datalist>
-      <button id="startSearchBtn" value="search/">START</button>
-      <button id="continueSearchBtn" value="search/game/continue">CONTINUE</button>
-      <button id="clearSearchBtn" value="search/game/clear">CLEAR</button>
-    </div>
-    <div id="giveawayDiv">
-      <h5>Giveaway!</h5>
-      <button id="giveawayStartBtn" value="giveaway/">START</button>
-      <button id="giveawayStopBtn" value="giveaway/game/stop">STOP</button>
-      <button id="giveawayDrawBtn" value="giveaway/game/draw">DRAW</button>
-      <button id="giveawayClearBtn" value="giveaway/game/clear">CLEAR</button>
+      <div id="randomNumDiv">
+        <h5>Random Number</h5>
+        <div class="columns is-mobile">
+          <div class="column is-4">
+            <input type="number" id="randomNumInput" class="input is-small" placeholder="Enter this upper limit">
+          </div>
+          <div class="column is-3">
+            <button id="randomStartBtn" value="randNum/" class="button is-primary is-small">START</button>
+            <button id="randomStopBtn" value="randNum/game/clear" class="button is-danger is-small">STOP</button>
+          </div>
+        </div>
+      </div>
+      <div id="quidditchDiv">
+        <h5>Quidditch Game</h5>
+        <div class="columns is-mobile">
+          <div class="column is-4">
+            <button id="quidditchStartBtn" value="quidditch/" class="button is-primary is-small">START</button>
+            <button id="quidditchStopBtn" value="quidditch/game/over" class="button is-warning is-small">END</button>
+            <button id="quidditchClearBtn" value="quidditch/game/clear" class="button is-danger is-small">CLEAR</button>
+          </div>
+          <div class="column is-4">
+              <button id="quidditchResultsBtn" value="quidditch/game/results" class="button is-primary is-small">RESULTS</button>
+              <button id="quidditchPayoutsBtn" value="quidditch/game/payout" class="button is-primary is-small">PAYOUTS</button>
+          </div>
+        </div>
+      </div>
+      <div id="duelDiv">
+        <h5>Wizard Duel</h5>
+        <div class="columns is-mobile">
+          <div class="column is-3">
+            <input type="text" id="inputWizDuelSearch1" list='studentsWizDuel1' class="input is-small">
+            <datalist id='studentsWizDuel1'></datalist>
+          </div>
+          <div class="column is-1">
+            <span>VS</span>
+          </div>
+          <div class="column is-3">
+            <input type="text" id="inputWizDuelSearch2" list='studentsWizDuel2' class="input is-small">
+            <datalist id='studentsWizDuel2'></datalist> 
+          </div>
+          <div class="column">
+            <button id="specialDuelBtn" class="button is-primary is-small">Special Duel</button>
+          </div>
+        </div>
+        <div class="columns">
+          <div class="column is-7">
+            <button id="startDuelBtn" value="duel/" class="button is-primary is-small">START</button>
+            <button id="pickDuelBtn" value="duel/game/pick" class="button is-primary is-small">PICK DUELISTS</button>
+            <button id="duelBtn" value="duel/game/start" class="button is-primary is-small">DUEL</button>
+            <button id="resetDuelBtn" value="duel/game/clear" class="button is-danger is-small">RESET DUEL</button>
+          </div>
+        </div>
+      </div>
+      <div id="searchDiv">
+        <h5>Item Hunt!</h5>
+        <div class="columns is-mobile">
+          <div class="column is-4">
+            <input type="text" id='itemHuntInput' list='searchSelect' class="input is-small">
+            <datalist name="" id="searchSelect"></datalist>
+          </div>
+          <div class="column is-4">
+            <button id="startSearchBtn" value="search/" class="button is-primary is-small">START</button>
+            <button id="continueSearchBtn" value="search/game/continue" class="button is-primary is-small">CONTINUE</button>
+            <button id="clearSearchBtn" value="search/game/clear" class="button is-danger is-small">CLEAR</button>
+          </div>
+        </div>
+      </div>
+      <div id="giveawayDiv">
+        <h5>Giveaway!</h5>
+        <div class="columns is-moblie">
+          <div class="column is-6">
+            <button id="giveawayStartBtn" value="giveaway/" class="button is-primary is-small">START</button>
+            <button id="giveawayStopBtn" value="giveaway/game/stop" class="button is-warning is-small">STOP</button>
+            <button id="giveawayDrawBtn" value="giveaway/game/draw" class="button is-primary is-small">DRAW</button>
+            <button id="giveawayClearBtn" value="giveaway/game/clear" class="button is-danger is-small">CLEAR</button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
   <script src="main.js"></script>

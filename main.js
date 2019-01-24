@@ -171,7 +171,7 @@ let updateStudentSelector = (selectItem, students) =>{
     sortedStudents[i].map((name) => {
       newOption = document.createElement('option')
       newOption.value = name
-      newOption.innerText = `${houses[i][0]}| ${name}`
+      newOption.innerText = `${houses[i][0]}: ${name}`
       selectItem.appendChild(newOption)
     })
   }
