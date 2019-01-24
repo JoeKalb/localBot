@@ -25,6 +25,8 @@ for(let i in testsStudents){
     Math.floor(Math.random() * 2) + 1) // !bet 1 or !bet 2
 }
 
+console.log(wizardDuel.options())
+
 console.log(wizardDuel.readyToDuel()) //button click or !letsDuel
 console.log(wizardDuel.beginDuel)
 wizardDuel.timeToDuel()

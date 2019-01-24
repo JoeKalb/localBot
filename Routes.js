@@ -205,9 +205,20 @@ router.post('/duel/game/specialDuel', (req, res) => {
   
   let duel = wizardDuel.preSelectedStudents(req.body)
   if(houses.students[req.body.student1] != houses.students[req.body.student2]){
-    console.log('special duel called')
-    client.action("#" + wizardDuel.channel, duel)
-    res.status(200).json(`Special Duel: ${req.body.student1} VS ${req.body.student2}`)
+    
+
+    if(typeof duel == 'object'){
+      duel.then((duelRes) => {
+        console.log('Special Duel Called: Promise Displays Names')
+        client.action(`#${wizardDuel.channel}`, duelRes)
+        res.status(200).json(`Wizard duel promise: ${req.body.student1} VS ${req.body.student2}`)
+      })
+    }
+    else{
+      console.log('Special Duel Called: stored Display Names')
+      client.action("#" + wizardDuel.channel, duel)
+      res.status(200).json(`Special Duel: ${req.body.student1} VS ${req.body.student2}`)
+    }
   }
   else{
     res.status(200).json(`Duelists were from the same house, try again!`)
@@ -252,6 +263,8 @@ router.post('/search', (req, res) => {
 
         if(twitchRes)
           res.status(200).json(`${search.getSneakyName()} is now searching!`)
+        else
+          res.status(404).json(`Something went wrong: ${twitchRes}`)
       })
     }
     else{

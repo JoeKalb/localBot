@@ -173,6 +173,11 @@ module.exports = {
       result += " has no !house yet!"
     return result
   },
+  getHouseName:function(name){ //name must already be lower case
+    if(this.students.hasOwnProperty(name))
+      return `${this.houseNames[this.students[name]]}`
+    return false;
+  },
   classSizes: function(){
     let classCount = [0, 0, 0, 0]
     for(let key in this.students)
@@ -248,8 +253,7 @@ module.exports = {
       return name;
     }
   },setDisplayName:function(userName, newDisplayName){
-    console.log(`${userName} | ${newDisplayName}`)
-    if(!displayNames.hasOwnProperty(userName) && this.students.hasOwnProperty(userName))
+    if(this.students.hasOwnProperty(userName))
       displayNames[userName] = newDisplayName
   },
   specificHouseStudents:function(houseNum){

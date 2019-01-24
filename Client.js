@@ -133,7 +133,6 @@ function onMessageHandler (target, context, msg, self) {
     }
   }
 
-  
   // wizard duel logic
   if(wizardDuel.allowEntries 
     && target == "#" + wizardDuel.channel
@@ -174,18 +173,20 @@ function onMessageHandler (target, context, msg, self) {
   }
   
   // switch cases for wizardDuel only
-  if(commandName == 'startduel' && target == '#thabuttress' 
-    && (context.mod || context.username == 'thabuttress')
+  if(commandName == 'startduel' && (target == '#thabuttress' || target == '#joefish5') 
+    && (context.mod || context.username == 'thabuttress' || context.username == 'joefish5')
     && parse.length == 3){
     console.log(`Duel start in chat: ${parse}`)
     let info = {
       channel:'thabuttress',
-      student1: parse[1].replace('@', ''),
-      student2: parse[2].replace('@', '')
+      student1: parse[1].replace('@', '').toLowerCase(),
+      student2: parse[2].replace('@', '').toLowerCase()
     }
     let duel = wizardDuel.preSelectedStudents(info)
     if(duel){
-      client.action(target, duel)
+      Promise.all([duel]).then((duelRes) => {
+        client.action(target, duelRes)
+      })
     }
     else
       client.action(target, `This duel is forbidden!!!`)
@@ -250,7 +251,7 @@ function onMessageHandler (target, context, msg, self) {
         break;
       case 'begin':
         if(target == "#" + wizardDuel.channel
-          && (context.mod || context.username == 'thabuttress') && wizardDuel.allowBets){
+          && (context.mod || context.username == 'thabuttress' || context.username == 'joefish5') && wizardDuel.allowBets){
             client.action("#"+wizardDuel.channel, wizardDuel.readyToDuel());
             wizardDuel.timeToDuel();
             wizardDuel.finalHousePayouts();
@@ -338,11 +339,7 @@ function onMessageHandler (target, context, msg, self) {
     }
   }
 
-
-
-
   // If the command is known, let's execute it:
-
   // commands only for butt's channel
   if(target == '#thabuttress' || target == '#joefish5'){
     switch(commandName){

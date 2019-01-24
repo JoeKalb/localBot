@@ -197,27 +197,49 @@ module.exports = {
       || !houses.isEnrolled(info.student2)){
       return false;
     }
+
+    let duelStu1 = houses.getDisplayName(info.student1)
+    let duelStu2 = houses.getDisplayName(info.student2)
     this.start(info.channel)
-    this.enter(info.student1, houses.students[info.student1.toLowerCase()])
-    this.enter(info.student2, houses.students[info.student2.toLowerCase()])
+
+    if(typeof duelStu1 == 'object' || typeof duelStu2 == 'object'){
+      
+      return Promise.all([duelStu1, duelStu2]).then((val) => {
+        this.enter(val[0], houses.students[info.student1.toLowerCase()])
+        this.enter(val[1], houses.students[info.student2.toLowerCase()])
+
+        this.allowEntries = false;
+        this.duelists[1] = val[0]
+        this.duelists[2] = val[1]
+
+        this.allowBets = true;
+
+        return `${this.duelists[1]} from ${houses.getHouseName(info.student1)} has challenged ${this.duelists[2]} from ${houses.getHouseName(info.student2)} to a duel! 
+          DO !bet 1 [${this.duelists[1]}] or !bet 2 [${this.duelists[2]}]`
+      })
+    }
+
+    this.enter(duelStu1, houses.students[info.student1.toLowerCase()])
+    this.enter(duelStu2, houses.students[info.student2.toLowerCase()])
 
     this.allowEntries = false;
-    this.duelists[1] = info.student1;
-    this.duelists[2] = info.student2;
+    this.duelists[1] = duelStu1;
+    this.duelists[2] = duelStu2;
 
     this.allowBets = true;
 
-    return `${this.duelists[1]} from ${houses.houseNames[this.students[this.duelists[1]].houseNum]} has challenged ${this.duelists[2]} from ${houses.houseNames[this.students[this.duelists[2]].houseNum]} to a duel! 
+    return `${this.duelists[1]} from ${houses.getHouseName(info.student1)} has challenged ${this.duelists[2]} from ${houses.getHouseName(info.student2)} to a duel! 
       DO !bet 1 [${this.duelists[1]}] or !bet 2 [${this.duelists[2]}]`
   },
   options: function(){
     if(this.allowBets){
       return `!bet 1 [${this.duelists[1]} of 
-      ${houses.houseNames[this.students[this.duelists[1]].houseNum]}] 
+      ${houses.getHouseName(this.duelists[1].toLowerCase())}] 
       or !bet 2 [${this.duelists[2]} of 
-      ${houses.houseNames[this.students[this.duelists[2]].houseNum]}]`
+      ${houses.getHouseName(this.duelists[2].toLowerCase())}]`
     }
     else{
+
       return "This Duelists haven't been selected yet!"
     }
   },
@@ -404,7 +426,7 @@ module.exports = {
   },
   champ: function(){
     if (this.duelists[0] != "") 
-      return `${this.duelists[0]} won the duel! ${this.students[this.duelists[0]].payout} POINTS TO ${houses.houseNames[this.students[this.duelists[0]].houseNum].toUpperCase()}!!!`;
+      return `${this.duelists[0]} won the duel! ${this.students[this.duelists[0]].payout} POINTS TO ${houses.getHouseName(this.duelists[0].toLowerCase()).toUpperCase()}!!!`;
     return `${this.duelists[1]} and ${this.duelists[2]} were equaly matched. They had a good duel though so they split the winnings!`
   },
   clear: function(){
