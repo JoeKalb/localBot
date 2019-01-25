@@ -63,7 +63,7 @@ module.exports = {
   },
   myPoints: function(name){
     return `${name} scored ${this.users[name].points} points${(houses.isEnrolled(name)) 
-        ? ` for ${houses.houseNames[houses.students[name.toLowerCase()]]}!` 
+        ? ` for ${houses.getHouseName(name.toLowerCase())}!` 
         : `! Too bad they don't have a house yet buttThump`}`
   },
   clear: function(){

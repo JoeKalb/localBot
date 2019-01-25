@@ -1,7 +1,8 @@
 const co = require('co')
 const fetch = require('node-fetch')
+const fs = require('fs')
 
-let displayNames = {}
+let displayNames = JSON.parse(fs.readFileSync('displayNames.json'))
 
 module.exports = {
   houseNames: ["Gryffindor", "Hufflepuff", "Slytherin", "Ravenclaw"],
@@ -162,7 +163,10 @@ module.exports = {
     chill0862:2,
     mbergman22:2,
     fenrysk:3,
-    yessiocho:3
+    yessiocho:3,
+    thelasthamster:2,
+    tyrantsxblood:0,
+    jackiesimi:3
     //gryf = 0, huff = 1, sly = 2, raven = 3
   },
   getHouse: function(name){
@@ -244,6 +248,7 @@ module.exports = {
         let json = yield channelInfo.json()
 
         displayNames[name] = json.display_name;
+        fs.writeFileSync("displayNames.json", JSON.stringify(displayNames))
         return displayNames[name]
       })
     } 
@@ -253,8 +258,12 @@ module.exports = {
       return name;
     }
   },setDisplayName:function(userName, newDisplayName){
-    if(this.students.hasOwnProperty(userName))
-      displayNames[userName] = newDisplayName
+    if(this.students.hasOwnProperty(userName)){
+      if(!displayNames.hasOwnProperty(userName)){
+        displayNames[userName] = newDisplayName
+        fs.writeFileSync("displayNames.json", JSON.stringify(displayNames))
+      }
+    }
   },
   specificHouseStudents:function(houseNum){
     let results = `Students in ${this.houseNames[houseNum]}:`

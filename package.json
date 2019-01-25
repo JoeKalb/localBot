@@ -18,6 +18,9 @@
     "test": "node tests/testsDuel.js",
     "dev": "nodemon bot.js"
   },
+  "nodemonConfig":{
+    "ignore":["displayNames.json"]
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/JoeKalb/localBot.git"
