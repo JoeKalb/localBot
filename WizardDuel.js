@@ -240,7 +240,7 @@ module.exports = {
     }
     else{
 
-      return "This Duelists haven't been selected yet!"
+      return "The Duelists haven't been selected yet!"
     }
   },
   placeBet: function(name, bet){

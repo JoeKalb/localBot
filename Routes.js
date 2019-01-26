@@ -13,6 +13,7 @@ let houses = require('./Houses')
 let search = require('./Search')
 
 let backupBot = require('./BackupBot')
+let chatlogInfo = require('./chatlogInfo')
 
 const fs = require('fs');
 let today = new Date();
