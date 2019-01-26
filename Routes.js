@@ -134,7 +134,7 @@ router.get('/quidditch/game/over', (req, res) => {
   if(quidditch.playerCount){
     let snitch = quidditch.snitchCaught();
     let winnings = quidditch.finalPayouts();
-    let messages = [`${snitch} caught the Golden Snitch and ended the game!`, winnings]
+    let messages = [`${snitch} caught the Golden Snitch and ended the game!${(houses.isEnrolled(snitch)) ? ` 100 points to ${houses.getHouseName(snitch.toLowerCase())}!`:``}`, winnings]
     delayedWinnings(quidditch.channel, messages)
     recordPayouts(`${winnings} | ${snitch} caught the snitch!`)
     res.status(200).json(`${snitch} caught the snitch!`)
