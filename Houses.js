@@ -182,6 +182,13 @@ module.exports = {
       return `${this.houseNames[this.students[name]]}`
     return false;
   },
+  classSizesArray: function(){
+    let classCount = [0, 0, 0, 0]
+    for(let key in this.students)
+      ++classCount[this.students[key]]
+
+    return classCount
+  },
   classSizes: function(){
     let classCount = [0, 0, 0, 0]
     for(let key in this.students)

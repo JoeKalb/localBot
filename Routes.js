@@ -114,7 +114,7 @@ router.get('/giveaway/game/clear', (req, res) => {
 router.get('/randNum/:info', (req, res) => {
   let info = req.params.info.split("+")
   randNum.start(info[0], info[1])
-  client.say(info[1], `Guess a number betweet 1 and ${info[0]}`)
+  client.say(info[1], `Guess a number between 1 and ${info[0]}`)
   res.status(200).json(`The correct number is ${randNum.number}`)
 })
 

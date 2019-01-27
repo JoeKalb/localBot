@@ -2,10 +2,20 @@ const houses = require('./Houses')
 const fs = require('fs')
 
 let chatMessageCount = [0, 0, 0, 0]
+
 let snitchesByHouse = [0, 0, 0, 0]
 
 let hasCheered = {}
 let houseCheers = [0, 0, 0, 0]
+let houseUniqueCheer = [0, 0, 0, 0]
+
+let hangmanByHouse = [0, 0, 0, 0]
+
+let duelsParticipatedByHouse = [0, 0, 0, 0]
+let duelsWonByHouse = [0, 0, 0, 0]
+
+let randomNumWinner = {}
+let randomNumWinnerByHouse = [0, 0, 0, 0]
 
 const path = 'logs/buttressChatLogs'
 
@@ -124,7 +134,12 @@ let notBotResponse = (message) => {
         RegExp(`Students in `, 'g'),
         RegExp(` time!`, 'g'),
         RegExp(` times!`, 'g'),
-        RegExp(`-`, 'g')
+        RegExp(`-`, 'g'),
+        RegExp(`Guess a number betweet`, 'g'),
+        RegExp(`Guess a number between`, 'g'),
+        RegExp(`It's time for some hangman!`, 'g'),
+        RegExp(`Want to join the duel club?`, 'g'),
+        RegExp(/\|/, 'g')
     ]
 
     for(let botMessage of regexResponses){
@@ -133,14 +148,21 @@ let notBotResponse = (message) => {
             return false;
         }
     }
-
+    //console.log(message)
     return true;
 }
 
 let chatStats = (files) => {
     let comments;
     let allSeekers = []
+
     let regexSnitch = RegExp('caught the Golden Snitch', 'g');
+    let regexHangman = RegExp('The winner is ', 'g');
+    let regexDuelWin = RegExp(' won the duel! ', 'g')
+    let regexDuelHasChallenged = RegExp(' has challenged ', 'g')
+    let regexDuelChosen = RegExp('The Duelists have been chosen!', 'g')
+    let regexRandomNum = RegExp('wins! The correct number was', 'g')
+
     files.map((file) => {
         comments = JSON.parse(fs.readFileSync(`${path}/${file}`)).comments
         comments.map((comment) => {
@@ -151,7 +173,8 @@ let chatStats = (files) => {
                         ++chatMessageCount[0]
                 }
                 else
-                    ++chatMessageCount[houses.students[comment.commenter.name]]
+                    if(comment.message.body[0] !== '!')
+                        ++chatMessageCount[houses.students[comment.commenter.name]]
             }
             
             // quidditch snitch breakdown
@@ -160,14 +183,60 @@ let chatStats = (files) => {
             }
 
             // cheering breakdown
-
-            if(comment.message.body === '!cheer' && houses.isEnrolled(comment.commenter.name))
+            if(comment.message.body === '!cheer' && houses.isEnrolled(comment.commenter.name)){
                 if(!hasCheered.hasOwnProperty(comment.commenter.name)){
                     hasCheered[comment.commenter.name] = true;
-                    ++houseCheers[houses.students[comment.commenter.name]]
+                    ++houseUniqueCheer[houses.students[comment.commenter.name]]
                 }
+                ++houseCheers[houses.students[comment.commenter.name]]
+            }
+
+            // hangman winner breakdown
+            if(comment.commenter.name === 'joefish5' && regexHangman.test(comment.message.body)){
+                let hangmanWinner = comment.message.body.substr(14).split('!')[0]
+                if(houses.isEnrolled(hangmanWinner))
+                    ++hangmanByHouse[houses.students[hangmanWinner.toLowerCase()]]
+            }
+
+            if(comment.commenter.name === 'joefish5' && regexRandomNum.test(comment.message.body)){
+                randomNumWinner[comment.message.body] = 0
+            }
+
+            // duel winnings
+            if(comment.commenter.name === 'joefish5' && regexDuelWin.test(comment.message.body)){
+                let winner = comment.message.body.split(' ')[0].toLowerCase();
+                ++duelsWonByHouse[houses.students[winner]]
+            }
+
+            // duels competed in
+            if(comment.commenter.name === 'joefish5'
+                && (regexDuelHasChallenged.test(comment.message.body) || regexDuelChosen.test(comment.message.body))){
+                let duelAnnouncement = comment.message.body.replace('The Duelists have been chosen! ', '').replace('!!!', '').split(' ')
+                let houseNumbers = []
+                let i = 2;
+                while(houseNumbers.length != 2){
+                    if(duelAnnouncement[i] == "Gryffindor")
+                        houseNumbers.push(0)
+                    else if (duelAnnouncement[i] == "Hufflepuff")
+                        houseNumbers.push(1)
+                    else if(duelAnnouncement[i] == "Slytherin" || duelAnnouncement[i] == "Syltherin")
+                        houseNumbers.push(2)
+                    else if(duelAnnouncement[i] == "Ravenclaw")
+                        houseNumbers.push(3)
+
+                    ++i;
+                }
+                if(houseNumbers[0] !== houseNumbers[1]){
+                    ++duelsParticipatedByHouse[houseNumbers[0]]
+                    ++duelsParticipatedByHouse[houseNumbers[1]]
+                }
+            }
         })
     })
+
+    console.log(`Current Class sizes`)
+    console.log(houses.classSizesArray())
+
     console.log("Total Chat Messages")
     console.log(chatMessageCount)
     
@@ -205,9 +274,50 @@ let chatStats = (files) => {
 
     console.log(`Most Cheering by House`)
     console.log(houseCheers)
+    console.log(`Unique Cheers`)
+    console.log(houseUniqueCheer)
+
+    ++hangmanByHouse[houses.students['maverick825']]
+    console.log(`Hangman wins by house`)
+    console.log(hangmanByHouse)
+
+    console.log(`Duels Participated in by House`)
+    console.log(duelsParticipatedByHouse)
+
+    console.log(`Duels won by house`)
+    console.log(duelsWonByHouse)
+
+    let randomNumWinners = Object.keys(randomNumWinner).map(x => x.split(' ')[0])
+    for(let winner of randomNumWinners)
+        if(houses.isEnrolled(winner))
+            ++randomNumWinnerByHouse[houses.students[winner.toLowerCase()]]
+
+    console.log(`Random number winners by house`)
+    console.log(randomNumWinnerByHouse)
 }
 module.exports = {
     getChatMessageCount: () => {
         return chatMessageCount
+    },
+    getSnitchesByHouse: () => {
+        return snitchesByHouse
+    },
+    getHouseCheers: () => {
+        return houseCheers
+    },
+    getHouseUniqueCheer: () => {
+        return houseUniqueCheer
+    },
+    getHangmanByHouse: () => {
+        return hangmanByHouse
+    },
+    getDuelsParticipatedByHouse: () => {
+        return duelsParticipatedByHouse
+    },
+    getDuelsWonByHouse: () => {
+        return duelsWonByHouse
+    },
+    getRandomNumWinnerByHouse: () =>{
+        return randomNumWinnerByHouse
     }
 }
