@@ -436,7 +436,7 @@ function onMessageHandler (target, context, msg, self) {
       }
       break;
     case 'hunt':
-      client.action(target, `During an item hunt you get the chance to choose !left or !right as you navigates Hogwarts while the other students in the chat also get to guess on which direction is corrent. But be careful! If you run into a professor you'll loose house points but making it all the way through and win 200!!! buttHouse Main student losses: [10, 20, 50] | Other students win/loss: [10, 15, 20]`)
+      client.action(target, `During an item hunt you get the chance to choose !left or !right as you navigates Hogwarts while the other students in the chat also get to guess on which direction is correct. But be careful! If you run into a professor you'll loose house points but making it all the way through and win 200!!! buttHouse Main student losses: [10, 20, 50] | Other students win/loss: [10, 15, 20]`)
       break;
     case 'gry':
       client.say(target, houses.specificHouseStudents(0))
