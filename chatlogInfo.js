@@ -235,9 +235,9 @@ let chatStats = (files) => {
                 }
             }
 
-            /* if(comment.commenter.name === 'joefish5' && (regexResults.test(comment.message.body) || regexPayouts.test(comment.message.body))){
+            if(comment.commenter.name === 'joefish5' && (regexResults.test(comment.message.body) || regexPayouts.test(comment.message.body))){
                 console.log(comment.message.body)
-            } */
+            }
         })
     })
     console.log(`House Ordering: ${houses.houseNames}`)
