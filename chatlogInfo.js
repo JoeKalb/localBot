@@ -176,7 +176,7 @@ let chatStats = (files) => {
                 }
                 else
                     if(comment.message.body[0] !== '!')
-                        ++chatMessageCount[houses.students[comment.commenter.name]]
+                    ++chatMessageCount[houses.students[comment.commenter.name]]
             }
             
             // quidditch snitch breakdown
@@ -190,8 +190,8 @@ let chatStats = (files) => {
                     hasCheered[comment.commenter.name] = true;
                     ++houseUniqueCheer[houses.students[comment.commenter.name]]
                 }
-                //if(comment.commenter.name !== 'joefish5')
-                ++houseCheers[houses.students[comment.commenter.name]]
+                if(comment.commenter.name !== 'joefish5')
+                    ++houseCheers[houses.students[comment.commenter.name]]
             }
 
             // hangman winner breakdown
@@ -240,12 +240,12 @@ let chatStats = (files) => {
             } */
         })
     })
+    console.log(`House Ordering: ${houses.houseNames}`)
+    console.log(`Current Class sizes: ${houses.classSizesArray()}`)
+    console.log()
 
-    console.log(`Current Class sizes`)
-    console.log(houses.classSizesArray())
-
-    console.log("Total Chat Messages")
-    console.log(chatMessageCount)
+    console.log(`Total Chat Messages: ${chatMessageCount}`)
+    console.log()
     
     allSeekers.map((name) => {
         if(houses.isEnrolled(name)){
@@ -253,8 +253,8 @@ let chatStats = (files) => {
         }
     })
 
-    console.log("Snitches Caught by house")
-    console.log(snitchesByHouse)
+    console.log(`Snitches Caught by house: ${snitchesByHouse}`)
+    console.log()
 
     let snitchByName = {}
     allSeekers.map((seaker) => {
@@ -276,31 +276,31 @@ let chatStats = (files) => {
         else if(snitchByName[seaker] == mostCaught)
             topSeakers.push(seaker)
     })
-    console.log(`Most Snitches Caught: ${mostCaught}`)
-    console.log(topSeakers)
+    console.log(`Most Snitches Caught By One Person: ${mostCaught}`)
+    console.log(`People that caught the most Snitches: ${topSeakers}`)
+    console.log()
 
-    console.log(`Most Cheering by House`)
-    console.log(houseCheers)
-    console.log(`Unique Cheers`)
-    console.log(houseUniqueCheer)
+    console.log(`Most Cheering by House: ${houseCheers}`)
+    console.log(`Unique Cheers by House: ${houseUniqueCheer}`)
+    console.log()
 
     ++hangmanByHouse[houses.students['maverick825']]
-    console.log(`Hangman wins by house`)
-    console.log(hangmanByHouse)
+    console.log(`Hangman wins by house: ${hangmanByHouse}`)
+    console.log()
 
-    console.log(`Duels Participated in by House`)
-    console.log(duelsParticipatedByHouse)
+    console.log(`Duels Participated in by House: ${duelsParticipatedByHouse}`)
+    console.log()
 
-    console.log(`Duels won by house`)
-    console.log(duelsWonByHouse)
+    console.log(`Duels won by house ${duelsWonByHouse}`)
+    console.log()
 
     let randomNumWinners = Object.keys(randomNumWinner).map(x => x.split(' ')[0])
     for(let winner of randomNumWinners)
         if(houses.isEnrolled(winner))
             ++randomNumWinnerByHouse[houses.students[winner.toLowerCase()]]
 
-    console.log(`Random number winners by house`)
-    console.log(randomNumWinnerByHouse)
+    console.log(`Random number winners by house: ${randomNumWinnerByHouse}`)
+    console.log()
 }
 module.exports = {
     getChatMessageCount: () => {
