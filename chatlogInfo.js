@@ -162,6 +162,8 @@ let chatStats = (files) => {
     let regexDuelHasChallenged = RegExp(' has challenged ', 'g')
     let regexDuelChosen = RegExp('The Duelists have been chosen!', 'g')
     let regexRandomNum = RegExp('wins! The correct number was', 'g')
+    let regexResults = RegExp('Results', 'g')
+    let regexPayouts = RegExp('Payouts', 'g')
 
     files.map((file) => {
         comments = JSON.parse(fs.readFileSync(`${path}/${file}`)).comments
@@ -188,6 +190,7 @@ let chatStats = (files) => {
                     hasCheered[comment.commenter.name] = true;
                     ++houseUniqueCheer[houses.students[comment.commenter.name]]
                 }
+                //if(comment.commenter.name !== 'joefish5')
                 ++houseCheers[houses.students[comment.commenter.name]]
             }
 
@@ -231,6 +234,10 @@ let chatStats = (files) => {
                     ++duelsParticipatedByHouse[houseNumbers[1]]
                 }
             }
+
+            /* if(comment.commenter.name === 'joefish5' && (regexResults.test(comment.message.body) || regexPayouts.test(comment.message.body))){
+                console.log(comment.message.body)
+            } */
         })
     })
 

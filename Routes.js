@@ -13,7 +13,7 @@ let houses = require('./Houses')
 let search = require('./Search')
 
 let backupBot = require('./BackupBot')
-let chatlogInfo = require('./chatlogInfo')
+//let chatlogInfo = require('./chatlogInfo')
 
 const fs = require('fs');
 let today = new Date();
@@ -205,7 +205,8 @@ router.get('/duel/game/start', (req, res) => {
 router.post('/duel/game/specialDuel', (req, res) => {
   
   let duel = wizardDuel.preSelectedStudents(req.body)
-  if(houses.students[req.body.student1] != houses.students[req.body.student2]){
+  // student house check
+  /* if(houses.students[req.body.student1] != houses.students[req.body.student2]){
     
 
     if(typeof duel == 'object'){
@@ -223,6 +224,18 @@ router.post('/duel/game/specialDuel', (req, res) => {
   }
   else{
     res.status(200).json(`Duelists were from the same house, try again!`)
+  } */
+  if(typeof duel == 'object'){
+    duel.then((duelRes) => {
+      console.log('Special Duel Called: Promise Displays Names')
+      client.action(`#${wizardDuel.channel}`, duelRes)
+      res.status(200).json(`Wizard duel promise: ${req.body.student1} VS ${req.body.student2}`)
+    })
+  }
+  else{
+    console.log('Special Duel Called: stored Display Names')
+    client.action("#" + wizardDuel.channel, duel)
+    res.status(200).json(`Special Duel: ${req.body.student1} VS ${req.body.student2}`)
   }
 })
 

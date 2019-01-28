@@ -405,6 +405,9 @@ function onMessageHandler (target, context, msg, self) {
     case 'houses':
       client.say(target, houses.classSizes())
       break;
+    case 'students':
+      client.say(target, houses.classSizes())
+      break;
     case 'myhouse':
       let tryName = msg.split(' ')[1];
       (!tryName) ? client.say(target, houses.myHouse(context['display-name']))

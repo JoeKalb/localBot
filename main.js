@@ -181,7 +181,7 @@ getStudents();
 async function postSpecialDuel()  {
   // make sure names are different
   
-  if(allStudents[inputWizDuelSearch1.value] != allStudents[inputWizDuelSearch2.value]){
+  /* if(allStudents[inputWizDuelSearch1.value] != allStudents[inputWizDuelSearch2.value]){
     let data = JSON.stringify({
       "channel":dropDown.value,
       "student1":inputWizDuelSearch1.value,
@@ -201,7 +201,24 @@ async function postSpecialDuel()  {
     console.log(json)
   }
   else
-    console.log("Students were the same house!")
+    console.log("Students were the same house!") */
+  let data = JSON.stringify({
+    "channel":dropDown.value,
+    "student1":inputWizDuelSearch1.value,
+    "student2":inputWizDuelSearch2.value
+  })
+
+  let response = await fetch(window.location + 'duel/game/specialDuel', {
+    method: "POST",
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: data
+  })
+
+  let json = await response.json()
+  console.log(json)
 }
 
 // standard duel random selector

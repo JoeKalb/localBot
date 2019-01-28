@@ -16,7 +16,8 @@
   "devDependencies": {},
   "scripts": {
     "test": "node tests/testsDuel.js",
-    "dev": "nodemon bot.js"
+    "dev": "nodemon bot.js",
+    "data": "nodemon chatlogInfo.js" 
   },
   "nodemonConfig":{
     "ignore":["displayNames.json"]

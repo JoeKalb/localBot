@@ -192,11 +192,12 @@ module.exports = {
   },
   preSelectedStudents: function(info) {
     this.clear();
-    if(houses.students[info.student1.toLowerCase()] == houses.students[info.student2.toLowerCase()] 
+    // student house check
+    /* if(houses.students[info.student1.toLowerCase()] == houses.students[info.student2.toLowerCase()] 
       || !houses.isEnrolled(info.student1) 
       || !houses.isEnrolled(info.student2)){
       return false;
-    }
+    } */
 
     let duelStu1 = houses.getDisplayName(info.student1)
     let duelStu2 = houses.getDisplayName(info.student2)
