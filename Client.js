@@ -51,8 +51,8 @@ let opts = {
     password: CONFIG.OAUTH
    },
    channels: [
-    'thabuttress',
     'joefish5',
+    'thabuttress',
     'oooskittles',
     'thethingssheplays',
    ]
@@ -403,6 +403,9 @@ function onMessageHandler (target, context, msg, self) {
       }
       break;
     case 'houses':
+      client.say(target, houses.classSizes())
+      break;
+    case 'students':
       client.say(target, houses.classSizes())
       break;
     case 'myhouse':

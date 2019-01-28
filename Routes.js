@@ -13,6 +13,7 @@ let houses = require('./Houses')
 let search = require('./Search')
 
 let backupBot = require('./BackupBot')
+//let chatlogInfo = require('./chatlogInfo')
 
 const fs = require('fs');
 let today = new Date();
@@ -113,7 +114,7 @@ router.get('/giveaway/game/clear', (req, res) => {
 router.get('/randNum/:info', (req, res) => {
   let info = req.params.info.split("+")
   randNum.start(info[0], info[1])
-  client.say(info[1], `Guess a number betweet 1 and ${info[0]}`)
+  client.say(info[1], `Guess a number between 1 and ${info[0]}`)
   res.status(200).json(`The correct number is ${randNum.number}`)
 })
 
@@ -134,7 +135,7 @@ router.get('/quidditch/game/over', (req, res) => {
   if(quidditch.playerCount){
     let snitch = quidditch.snitchCaught();
     let winnings = quidditch.finalPayouts();
-    let messages = [`${snitch} caught the Golden Snitch and ended the game!`, winnings]
+    let messages = [`${snitch} caught the Golden Snitch and ended the game!${(houses.isEnrolled(snitch)) ? ` 100 points to ${houses.getHouseName(snitch.toLowerCase())}!`:``}`, winnings]
     delayedWinnings(quidditch.channel, messages)
     recordPayouts(`${winnings} | ${snitch} caught the snitch!`)
     res.status(200).json(`${snitch} caught the snitch!`)
@@ -204,7 +205,8 @@ router.get('/duel/game/start', (req, res) => {
 router.post('/duel/game/specialDuel', (req, res) => {
   
   let duel = wizardDuel.preSelectedStudents(req.body)
-  if(houses.students[req.body.student1] != houses.students[req.body.student2]){
+  // student house check
+  /* if(houses.students[req.body.student1] != houses.students[req.body.student2]){
     
 
     if(typeof duel == 'object'){
@@ -222,6 +224,18 @@ router.post('/duel/game/specialDuel', (req, res) => {
   }
   else{
     res.status(200).json(`Duelists were from the same house, try again!`)
+  } */
+  if(typeof duel == 'object'){
+    duel.then((duelRes) => {
+      console.log('Special Duel Called: Promise Displays Names')
+      client.action(`#${wizardDuel.channel}`, duelRes)
+      res.status(200).json(`Wizard duel promise: ${req.body.student1} VS ${req.body.student2}`)
+    })
+  }
+  else{
+    console.log('Special Duel Called: stored Display Names')
+    client.action("#" + wizardDuel.channel, duel)
+    res.status(200).json(`Special Duel: ${req.body.student1} VS ${req.body.student2}`)
   }
 })
 

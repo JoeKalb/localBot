@@ -166,7 +166,12 @@ module.exports = {
     yessiocho:3,
     thelasthamster:2,
     tyrantsxblood:0,
-    jackiesimi:3
+    jackiesimi:3,
+    drod262:3,
+    billwilliams1981:1,
+    missing_link:1,
+    toon_decree:1,
+    airbrush_wizard:0
     //gryf = 0, huff = 1, sly = 2, raven = 3
   },
   getHouse: function(name){
@@ -181,6 +186,13 @@ module.exports = {
     if(this.students.hasOwnProperty(name))
       return `${this.houseNames[this.students[name]]}`
     return false;
+  },
+  classSizesArray: function(){
+    let classCount = [0, 0, 0, 0]
+    for(let key in this.students)
+      ++classCount[this.students[key]]
+
+    return classCount
   },
   classSizes: function(){
     let classCount = [0, 0, 0, 0]
