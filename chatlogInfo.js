@@ -17,6 +17,8 @@ let duelsWonByHouse = [0, 0, 0, 0]
 let randomNumWinner = {}
 let randomNumWinnerByHouse = [0, 0, 0, 0]
 
+let currentClassSizes = [16, 7, 21, 12]
+
 const path = 'logs/buttressChatLogs'
 
 let allLogs;
@@ -164,6 +166,7 @@ let chatStats = (files) => {
     let regexRandomNum = RegExp('wins! The correct number was', 'g')
     let regexResults = RegExp('Results', 'g')
     let regexPayouts = RegExp('Payouts', 'g')
+    let regexStudents = RegExp('Current Class Sizes', 'g')
 
     files.map((file) => {
         comments = JSON.parse(fs.readFileSync(`${path}/${file}`)).comments
@@ -236,7 +239,19 @@ let chatStats = (files) => {
             }
 
             if(comment.commenter.name === 'joefish5' && (regexResults.test(comment.message.body) || regexPayouts.test(comment.message.body))){
-                console.log(comment.message.body)
+                let regBrackets = RegExp(/\]\[/, 'g')
+                let gamePoints = comment.message.body.replace('Final Results: [', '').replace('Quidditch Results: ', '').replace('Payouts for Search Items |', '').replace(regBrackets, '|').split('|')
+                console.log(gamePoints)
+            }
+
+            if(comment.commenter.name === 'joefish5' && regexStudents.test(comment.message.body)){
+                let currentClass = comment.message.body.replace('Current Class Sizes', '').split('|').slice(1, 5)
+                for(let i in currentClass){
+                    currentClass[i] = currentClass[i].trim()
+                    currentClass[i] = currentClass[i].split(' ')
+                    currentClassSizes[i] = parseInt(currentClass[i][1])
+                }
+                //console.log(currentClassSizes)
             }
         })
     })

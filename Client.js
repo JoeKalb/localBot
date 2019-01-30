@@ -454,7 +454,7 @@ function onMessageHandler (target, context, msg, self) {
       client.say(target, houses.specificHouseStudents(3))
       break;
     case 'commands':
-      let commands = "Current list of all Harry Potter commands: ";
+      let commands = "Current list of all Harry Potter commands:";
       commands += " House info [!house !houses !whathouse !myhouse !earn !cheer !raid !gry !huff !sly !rav] |";
       commands += " Quidditch [!play !results !mypoints !snitch] |";
       commands += " Wizard duel [!wizard !duel !duelists !bet (1 or 2)] |";
