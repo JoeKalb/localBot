@@ -173,7 +173,8 @@ module.exports = {
     toon_decree:1,
     airbrush_wizard:0,
     kgunnzxraven_:0,
-    goldsquadronrebel:3
+    goldsquadronrebel:3,
+    anomulus0:2
     //gryf = 0, huff = 1, sly = 2, raven = 3
   },
   getHouse: function(name){
