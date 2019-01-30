@@ -281,8 +281,8 @@ function onMessageHandler (target, context, msg, self) {
     }
   }
   // search game commands
-  if(commandName == 'search'){
-    if(parse.length > 1 && (context.mod || context.username == 'joefish5')){
+  if(commandName == 'starthunt'){
+    if(parse.length > 1 && (context.mod || context.username == 'joefish5' || context.username == 'thabuttress')){
       search.start(target.replace('#', ''))
       let readyToSearch = search.manualChooseStudent(parse[1].replace('@', ''))
 
@@ -320,7 +320,7 @@ function onMessageHandler (target, context, msg, self) {
           client.action(target, options)
         break;
       case 'go':
-        if(target == '#thabuttress' && context.mod){
+        if(target == '#thabuttress' && (context.mod || context.username === 'thabuttress')){
           let votesDisplay = [search.showVotes()]
           for(let item of search.displayTurn()){
             votesDisplay.push(item)
