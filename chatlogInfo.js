@@ -4,6 +4,7 @@ const fs = require('fs')
 let chatMessageCount = [0, 0, 0, 0]
 
 let snitchesByHouse = [0, 0, 0, 0]
+let totalQuidditchPoints = [0,0,0,0]
 
 let hasCheered = {}
 let houseCheers = [0, 0, 0, 0]
@@ -13,11 +14,14 @@ let hangmanByHouse = [0, 0, 0, 0]
 
 let duelsParticipatedByHouse = [0, 0, 0, 0]
 let duelsWonByHouse = [0, 0, 0, 0]
+let duelTotalPoints = [0,0,0,0]
 
 let randomNumWinner = {}
 let randomNumWinnerByHouse = [0, 0, 0, 0]
 
 let currentClassSizes = [16, 7, 21, 12]
+
+let totalHuntPoints = [0,0,0,0]
 
 const path = 'logs/buttressChatLogs'
 
@@ -167,6 +171,8 @@ let chatStats = (files) => {
     let regexResults = RegExp('Results', 'g')
     let regexPayouts = RegExp('Payouts', 'g')
     let regexStudents = RegExp('Current Class Sizes', 'g')
+    let regexQuid = RegExp(`Quidditch Results: `, 'g')
+    let regexDuel = RegExp('House payouts', 'g')
 
     files.map((file) => {
         comments = JSON.parse(fs.readFileSync(`${path}/${file}`)).comments
@@ -178,7 +184,7 @@ let chatStats = (files) => {
                         ++chatMessageCount[0]
                 }
                 else
-                    if(comment.message.body[0] !== '!')
+                    //if(comment.message.body[0] !== '!')
                     ++chatMessageCount[houses.students[comment.commenter.name]]
             }
             
@@ -238,10 +244,42 @@ let chatStats = (files) => {
                 }
             }
 
-            if(comment.commenter.name === 'joefish5' && (regexResults.test(comment.message.body) || regexPayouts.test(comment.message.body))){
+            if(comment.commenter.name === 'joefish5' && regexPayouts.test(comment.message.body)){
+                let points = comment.message.body.replace('Payouts for Search Items |').split('|')
+                points = points.map((house) => {
+                    let temp = house.split(':')
+                    return parseInt(temp[1])
+                })
+                for(let i = 0; i < 4; ++i)
+                    totalHuntPoints[i] += points[i]
+            }
+
+            /* if(comment.commenter.name === 'joefish5' && (regexResults.test(comment.message.body) || regexPayouts.test(comment.message.body))){
                 let regBrackets = RegExp(/\]\[/, 'g')
                 let gamePoints = comment.message.body.replace('Final Results: [', '').replace('Quidditch Results: ', '').replace('Payouts for Search Items |', '').replace(regBrackets, '|').split('|')
-                console.log(gamePoints)
+                //console.log(gamePoints)
+            } */
+
+            if(comment.commenter.name === 'joefish5' && regexQuid.test(comment.message.body)){
+                let points = comment.message.body.replace('Quidditch Results: ', '').split('|')
+                points = points.map((house) => {
+                    let temp = house.split(':')
+                    return parseInt(temp[1])
+                })
+
+                for(let i = 0; i < 4; ++i)
+                    totalQuidditchPoints[i] += points[i]
+            }
+
+            if(comment.commenter.name === 'joefish5' && regexDuel.test(comment.message.body)){
+                let points = comment.message.body.replace('House payouts for the duel:', '').split('|')
+                points = points.map((house) => {
+                    let temp = house.split(':')
+                    return parseInt(temp[1])
+                })
+
+                for(let i = 0; i < 4; ++i)
+                    duelTotalPoints[i] += points[i]
             }
 
             if(comment.commenter.name === 'joefish5' && regexStudents.test(comment.message.body)){
@@ -253,6 +291,8 @@ let chatStats = (files) => {
                 }
                 //console.log(currentClassSizes)
             }
+
+            
         })
     })
     console.log(`House Ordering: ${houses.houseNames}`)
@@ -295,6 +335,9 @@ let chatStats = (files) => {
     console.log(`People that caught the most Snitches: ${topSeakers}`)
     console.log()
 
+    console.log(`Total Quidditch Points ${totalQuidditchPoints}`)
+    console.log()
+
     console.log(`Most Cheering by House: ${houseCheers}`)
     console.log(`Unique Cheers by House: ${houseUniqueCheer}`)
     console.log()
@@ -316,6 +359,11 @@ let chatStats = (files) => {
 
     console.log(`Random number winners by house: ${randomNumWinnerByHouse}`)
     console.log()
+
+    console.log(`Hunt point totals: ${totalHuntPoints}`)
+    console.log()
+
+    console.log(`Total duel points: ${duelTotalPoints}15`)
 }
 module.exports = {
     getChatMessageCount: () => {
