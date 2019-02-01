@@ -23,6 +23,9 @@ let currentClassSizes = [16, 7, 21, 12]
 
 let totalHuntPoints = [0,0,0,0]
 
+let wings = [0,0,0,0]
+let pups = [0,0,0,0]
+
 const path = 'logs/buttressChatLogs'
 
 let allLogs;
@@ -173,6 +176,10 @@ let chatStats = (files) => {
     let regexStudents = RegExp('Current Class Sizes', 'g')
     let regexQuid = RegExp(`Quidditch Results: `, 'g')
     let regexDuel = RegExp('House payouts', 'g')
+    let regexWings = RegExp('Wings', 'g')
+    let regexwings = RegExp('wings', 'g')
+    let regexReggie = RegExp('buttReggie', 'g')
+    let regexMonty = RegExp('buttMonty', 'g')
 
     files.map((file) => {
         comments = JSON.parse(fs.readFileSync(`${path}/${file}`)).comments
@@ -292,10 +299,22 @@ let chatStats = (files) => {
                 //console.log(currentClassSizes)
             }
 
-            
+            if(regexWings.test(comment.message.body) || regexwings.test(comment.message.body)){
+                if(houses.isEnrolled(comment.commenter.name)){
+                    ++wings[houses.students[comment.commenter.name]]
+                }
+            }
+
+            if(regexReggie.test(comment.message.body) || regexMonty.test(comment.message.body)){
+                if(houses.isEnrolled(comment.commenter.name))
+                    ++pups[houses.students[comment.commenter.name]]
+            }
         })
     })
-    console.log(`House Ordering: ${houses.houseNames}`)
+
+    console.log(`Said Wings: ${wings}`)
+    console.log(`Said Pups: ${pups}`)
+    /* console.log(`House Ordering: ${houses.houseNames}`)
     console.log(`Current Class sizes: ${houses.classSizesArray()}`)
     console.log()
 
@@ -363,7 +382,7 @@ let chatStats = (files) => {
     console.log(`Hunt point totals: ${totalHuntPoints}`)
     console.log()
 
-    console.log(`Total duel points: ${duelTotalPoints}15`)
+    console.log(`Total duel points: ${duelTotalPoints}15`) */
 }
 module.exports = {
     getChatMessageCount: () => {
