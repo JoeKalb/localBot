@@ -353,7 +353,7 @@ let showDirection = (num) => {
 
 let choseCorrectly = () => {
   let wrongChoice = turn + 1;
-  let choices = maxTurns + 4;
+  let choices = maxTurns + 3;
   let option = Math.floor(Math.random() * choices) + 1;
   console.log(`Current odds are ${choices - wrongChoice} out of ${choices}`)
   return option > wrongChoice;

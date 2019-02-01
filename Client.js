@@ -53,8 +53,8 @@ let opts = {
    channels: [
     'joefish5',
     'thabuttress',
-    'oooskittles',
-    'thethingssheplays',
+    //'oooskittles',
+    //'thethingssheplays',
    ]
 }
 
@@ -284,7 +284,7 @@ function onMessageHandler (target, context, msg, self) {
   if(commandName == 'starthunt'){
     if(parse.length > 1 && (context.mod || context.username == 'joefish5' || context.username == 'thabuttress')){
       search.start(target.replace('#', ''))
-      let readyToSearch = search.manualChooseStudent(parse[1].replace('@', ''))
+      let readyToSearch = search.manualChooseStudent(parse[1].replace('@', '').toLowerCase())
 
       if(readyToSearch){
         search.setItem()
@@ -355,7 +355,7 @@ function onMessageHandler (target, context, msg, self) {
         }
         break;
       case 'end':
-        if(quidditch.playerCount && (context.mod || context.username == 'thabuttress')){
+        if(quidditch.playerCount && (context.mod || context.username == 'thabuttress') && quidditch.gameOn){
           let snitch = quidditch.snitchCaught();
           let winnings = quidditch.finalPayouts();
           let messages = [`${snitch} caught the Golden Snitch and ended the game!`, winnings]

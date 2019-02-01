@@ -174,7 +174,10 @@ module.exports = {
     airbrush_wizard:0,
     kgunnzxraven_:0,
     goldsquadronrebel:3,
-    anomulus0:2
+    anomulus0:2,
+    benefitoftheclout:2,
+    kennethmyers:0,
+    eroot:0
     //gryf = 0, huff = 1, sly = 2, raven = 3
   },
   getHouse: function(name){
