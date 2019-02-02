@@ -306,7 +306,7 @@ let chatStats = (files) => {
             }
 
             if(regexReggie.test(comment.message.body) || regexMonty.test(comment.message.body)){
-                if(houses.isEnrolled(comment.commenter.name))
+                if(houses.isEnrolled(comment.commenter.name) && comment.commenter.name !== 'joefish5')
                     ++pups[houses.students[comment.commenter.name]]
             }
         })

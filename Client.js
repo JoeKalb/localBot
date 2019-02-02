@@ -41,6 +41,12 @@ function delayedWinnings(target, messages){
   }
 }
 
+function delayButtcoinPayout(target, user, amount){
+  setTimeout(() => {
+    client.say(target, `!buttcoins add ${user} ${amount}`)
+  }, 3000)
+}
+
 // Valid commands start with:
 let commandPrefix = '!'
 
@@ -53,7 +59,7 @@ let opts = {
    channels: [
     'joefish5',
     'thabuttress',
-    //'oooskittles',
+    'oooskittles',
     //'thethingssheplays',
    ]
 }
@@ -89,6 +95,7 @@ function onMessageHandler (target, context, msg, self) {
       hangman.winner = context['display-name']
       recordPayouts(`The winner is ${hangman.winner}! ${hangman.answer}`)
       client.say(target, `The winner is ${hangman.winner}! ${hangman.answer}`)
+      delayButtcoinPayout(target, hangman.winner, 100);
     }
     else if (msg.length == 1){
       let letter = msg.toUpperCase();
@@ -100,6 +107,7 @@ function onMessageHandler (target, context, msg, self) {
           hangman.winner = context['display-name']
           recordPayouts(`The winner is ${hangman.winner}! ${hangman.answer}`)
           client.say(target, `The winner is ${hangman.winner}! ${hangman.answer}`)
+          delayButtcoinPayout(target, hangman.winner, 100);
         }
         else client.say(target, `${hangman.display}`)
       }else if(numCount == 0)
@@ -107,10 +115,10 @@ function onMessageHandler (target, context, msg, self) {
     }
 
     // display winner points if they are enrolled
-    if (hangman.found && houses.isEnrolled(context.username)){
+    /* if (hangman.found && houses.isEnrolled(context.username)){
       client.say(target, `100 points to ${houses.houseNames[houses.students[context.username]]}!`)
       recordHousePoints(`100 points to ${houses.houseNames[houses.students[context.username]]}!`)
-    }
+    } */
   }
 
   // giveaway logic
@@ -126,10 +134,11 @@ function onMessageHandler (target, context, msg, self) {
       client.say(target, `${context['display-name']} wins! The correct number was ${randNum.number}`)
       client.say(target, `${context['display-name']} wins! The correct number was ${randNum.number}`)
       client.say(target, `${context['display-name']} wins! The correct number was ${randNum.number}`)
-      if(houses.isEnrolled(context.username)){
+      delayButtcoinPayout(target, context['display-name'], 100);
+      /* if(houses.isEnrolled(context.username)){
         client.say(target, `100 points to ${houses.houseNames[houses.students[context.username]]}!`)
         recordHousePoints(`100 points to ${houses.houseNames[houses.students[context.username]]}!`)
-      }
+      } */
     }
   }
 
