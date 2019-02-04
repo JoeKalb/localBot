@@ -267,7 +267,7 @@ const giveStartBtn = document.getElementById("giveawayStartBtn")
 clickBtnBindChannel(giveStartBtn)
 
 const giveStopBtn = document.getElementById("giveawayStopBtn")
-clickBtnBind(giveStopBtn)
+clickBtnBindChannel(giveStopBtn)
 
 const giveDrawBtn = document.getElementById("giveawayDrawBtn")
 clickBtnBind(giveDrawBtn)

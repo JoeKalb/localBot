@@ -58,10 +58,18 @@ function delaySayMessage(target, msg, seconds){
 function handleResponses(target, response){
   if(response.hasMessage){
     let len = response.items.length
-    if(len == 1)
-      (response.isAction) ? client.action(target, response.items[0])
+    if(len == 1){
+      if(typeof response.items[0] == 'object'){
+        response.items[0].then((res) => {
+          (response.isAction) ? client.action(target, res)
+            : client.say(target, res)
+        })
+      }
+      else{
+        (response.isAction) ? client.action(target, response.items[0])
         : client.say(target, response.items[0])
-    
+      }
+    } 
     else{
       let payout = ''
       if(response.hasPayout){
@@ -160,10 +168,10 @@ function onMessageHandler (target, context, msg, self) {
   } */
 
   // giveaway logic
-  if(giveaway.allowEntries && target == "#" + giveaway.channel){
+/*   if(giveaway.allowEntries && target == "#" + giveaway.channel){
     console.log(`Checking name: ${context['display-name']}`)
     giveaway.isNewName(context['display-name'])
-  }
+  } */
 
   // randNum logic
   if(randNum.allowGuesses && target == "#" + randNum.channel){
@@ -205,20 +213,6 @@ function onMessageHandler (target, context, msg, self) {
   const parse = msg.slice(1).split(' ')
   // The command name is the first (0th) one:
   const commandName = parse[0]
-  
-  // backup bot commands
-  /* if(backupBot.isBottressDown() && target == '#thabuttress'){
-    let message = backupBot.BotHandler(target, context.mod, commandName, parse)
-    if(typeof message == "string")
-      client.action(target, message)
-    else if(typeof message == "object")
-      message.then((res) => {
-        client.action(target, res)
-      })
-    else{
-      //console.log(`Message Returned as: ${message}`)
-    }
-  } */
   
   // switch cases for wizardDuel only
   if(commandName == 'startduel' && (target == '#thabuttress' || target == '#joefish5') 
@@ -391,11 +385,6 @@ function onMessageHandler (target, context, msg, self) {
   // commands only for butt's channel
   if(target == '#thabuttress' || target == '#joefish5'){
     switch(commandName){
-      /* case 'test':
-        if(target == '#thabuttress'){
-          backupBot.checkingBottressStatus();
-        }
-        break; */
       case 'quidditch':
         if(target == "#thabuttress" && (context.mod || context.username == 'thabuttress')){
           quidditch.start('thabuttress')
@@ -516,29 +505,18 @@ function onMessageHandler (target, context, msg, self) {
   }
 
   switch(commandName){
-    /* case 'hangman':
-      if(target == "#" + hangman.channel){
-        (!hangman.getPause()) 
-          ? client.say(target, `${hangman.display}`) 
-          : client.say(target, "Hangman is currently paused!")
-      }
-      break;
-    case 'guessed':
-      if(!hangman.getPause() && target == "#" + hangman.channel)
-        client.say(target, `Letters already guessed: ${hangman.alreadyGuessed()}`)
-      break; */
     case 'start':
       if(context['display-name'] == "JoeFish5" && target == "#" + giveaway.channel){
         giveaway.start(target.replace("#", ""))
         client.say(giveaway.channel, "GIVEAWAY HAS STARTED! Talk in chat to enter!")
       }
       break;
-    case 'me':
+    /* case 'me':
       if(giveaway.allowEntries && target == "#" + giveaway.channel)
       client.say(giveaway.channel, 
         `${context['display-name']} is${(giveaway.check(context['display-name']) 
         ? " ": " not ")}in the giveaway. There's current ${giveaway.count} enteries.`)
-      break;
+      break; */
     case 'play':
       if(target == '#oooskittles' 
         && context.username == "oooskittles"

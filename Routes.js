@@ -108,15 +108,35 @@ router.get('/hangman/clear', (req, res) => {
 
 //giveaway
 router.get('/giveaway/:channel', (req, res) => {
-  giveaway.start(req.params.channel)
-  client.say(giveaway.channel, "GIVEAWAY HAS STARTED! Talk in chat to enter!")
-  res.status(200).json("Giveaway Started")
+  if(req.params.channel == 'thabuttress'){
+    thabuttress.startGiveaway();
+    client.say(req.params.channel, "A GIVEAWAY HAS STARTED! Talk in chat to enter!")
+    res.status(200).json(`Giveaway has started in channel: ${req.params.channel}`)
+  }
+  else{
+    giveaway.start(req.params.channel)
+    client.say(giveaway.channel, "GIVEAWAY HAS STARTED! Talk in chat to enter!")
+    res.status(200).json("Giveaway Started")
+  }
 })
 
 router.get('/giveaway/game/stop', (req, res) => {
   giveaway.stopEntries()
   client.say(giveaway.channel, "Giveaway is now closed!")
   res.status(200).json("No More Entries")
+})
+
+router.get('/giveaway/game/stop/:channel', (req, res) => {
+  if(req.params.channel == 'thabuttress'){
+    thabuttress.stopEntries();
+    client.say(thabuttress.channel, "Giveaway is now closed!")
+    res.status(200).json("No More Entries")
+  }
+  else{
+    giveaway.stopEntries()
+    client.say(giveaway.channel, "Giveaway is now closed!")
+    res.status(200).json("No More Entries")
+  }
 })
 
 router.get('/giveaway/game/draw', (req, res) => {

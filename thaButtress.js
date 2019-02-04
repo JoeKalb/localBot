@@ -19,6 +19,7 @@ const response = {
 const commandPrefix = '!';
 
 module.exports = {
+    channel:"#thabuttress",
     handleMessage: (context, msg) => {
         // all messages will choose to return through this object
         let result = Object.assign({}, response)
@@ -78,6 +79,10 @@ module.exports = {
             }
         }
 
+        // giveaway logic
+        if(giveaway.allowEntries)
+            giveaway.isNewName(context['display-name'])
+
         // all commands go under here
         if(msg.substr(0,1) !== commandPrefix)
             return result; // not a command
@@ -99,13 +104,11 @@ module.exports = {
                 return result;
             }
             else if(typeof message == 'object'){
-                message.then((res) => {
-                    result.hasPromise = true;
-                    result.hasMessage = true;
-                    result.isAction = true;
-                    result.items.push(res)
-                    return result;
-                })
+                result.hasPromise = true;
+                result.hasMessage = true;
+                result.isAction = true;
+                result.items.push(message)
+                return result;
             }
         }
 
@@ -123,6 +126,17 @@ module.exports = {
                     result.items.push(`Letters already guessed: ${hangman.alreadyGuessed()}`)
                     return result;
                 }
+            default:
+        }
+
+        // giveaway commands
+        switch(commandName){
+            case 'me':
+                result.hasMessage = true;
+                result.items.push(
+                    `${context['display-name']} is${(giveaway.check(context['display-name']) 
+                    ? " ": " not ")}in the giveaway! Entries: ${giveaway.count}`)
+                return result;
             default:
         }
 
@@ -162,6 +176,12 @@ module.exports = {
     },
     clearHangman:() => {
         hangman.clear();
+    },
+    startGiveaway:() => {
+        giveaway.start('thabuttress')
+    },
+    stopEntries:() => {
+        giveaway.stopEntries();
     }
 }
 
