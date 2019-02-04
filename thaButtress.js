@@ -35,7 +35,6 @@ module.exports = {
         if(!hangman.getPause()){
             if (hangman.isAnswer(msg)) {
                 result.hasMessage = true;
-                result.hasDelay = true;
                 result.hasPayout = true;
 
                 hangman.winner = context['display-name']
@@ -57,7 +56,6 @@ module.exports = {
                     hangman.updateDisplay(letter)
 
                     if(hangman.isDisplayAnswer()){
-                        result.hasDelay = true;
                         result.hasPayout = true;
 
                         hangman.winner = context['display-name']
@@ -152,6 +150,7 @@ module.exports = {
 
         // catch any final values and return them
     },
+    // commands to handle games
     startHangman: (info) => {
         hangman.start(info)
     },
@@ -182,6 +181,16 @@ module.exports = {
     },
     stopEntries:() => {
         giveaway.stopEntries();
+    },
+    drawWinner:() => {
+        return giveaway.drawWinner()
+    },
+    getGiveawayCount:() => {
+        let count = giveaway.count
+        return count
+    },
+    clearGiveaway:() => {
+        giveaway.clear();
     }
 }
 

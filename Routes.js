@@ -142,12 +142,36 @@ router.get('/giveaway/game/stop/:channel', (req, res) => {
 router.get('/giveaway/game/draw', (req, res) => {
   let winner = giveaway.drawWinner()
   client.say(giveaway.channel, `Out of ${giveaway.count + 1} people the winner is ${winner}!`)
-  res.status(200).json(`This winner is ${winner}`)
+  res.status(200).json(`The winner is ${winner}`)
+})
+
+router.get('/giveaway/game/draw/:channel', (req, res) => {
+  if(req.params.channel == 'thabuttress'){
+    let winner = thabuttress.drawWinner();
+    client.say(thabuttress.channel, `Out of ${thabuttress.getGiveawayCount() + 1} people the winner is ${winner}`)
+    res.status(200).json(`The winner is ${winner}`)
+  }
+  else{
+    let winner = giveaway.drawWinner()
+    client.say(giveaway.channel, `The winner is ${winner}!!!`)
+    res.status(200).json(`Winner: ${winner}`)
+  }
 })
 
 router.get('/giveaway/game/clear', (req, res) => {
   giveaway.clear()
   res.status(200).json("Giveaway now Cleared")
+})
+
+router.get('/giveaway/game/clear/:channel', (req, res) => {
+  if(req.params.channel == 'thabuttress'){
+    thabuttress.clearGiveaway()
+    res.status(200).json(`Giveaway cleared for ${req.params.channel}`)
+  }
+  else{
+  giveaway.clear()
+  res.status(200).json("Giveaway now Cleared")
+  }
 })
 
 // rand number calls
