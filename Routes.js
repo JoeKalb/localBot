@@ -13,7 +13,7 @@ let houses = require('./Houses')
 let search = require('./Search')
 
 let backupBot = require('./BackupBot')
-//let chatlogInfo = require('./chatlogInfo')
+let thabuttress = require('./thaButtress')
 
 const fs = require('fs');
 let today = new Date();
@@ -64,10 +64,18 @@ function delayedWinnings(target, messages){
 // hangman
 router.post('/hangman', (req, res) => {
   try{
-    hangman.start(req.body)
-    client.say(hangman.channel, `It's time for some hangman! ${hangman.wordCount} words (!hangman !guesses)`)
-    client.say(hangman.channel, `${hangman.display}`)
-    res.status(200).json(hangman.answer)
+    if(req.body.channel == 'thabuttress'){
+      thabuttress.startHangman(req.body)
+      client.say('#thabuttress', `It's time for some hangman! ${thabuttress.getHangmanWordCount()} words (!hangman !guesses)`)
+      client.say('#thabuttress', `${thabuttress.getHangmanDisplay()}`)
+      res.status(200).json(thabuttress.getHangmanAnswer())
+    }
+    else{
+      hangman.start(req.body)
+      client.say(hangman.channel, `It's time for some hangman! ${hangman.wordCount} words (!hangman !guesses)`)
+      client.say(hangman.channel, `${hangman.display}`)
+      res.status(200).json(hangman.answer)
+    }
   }
   catch(err){
     res.status(404).send(err)
@@ -75,14 +83,26 @@ router.post('/hangman', (req, res) => {
 })
 
 router.get('/hangman/pause', (req, res) => {
-  (hangman.getPause()) ? hangman.pause = false  
+  if(thabuttress.getHangmanDisplay() != ""){
+    thabuttress.toggleHangmanPause();
+    res.status(200).json(thabuttress.getHangmanPause())
+  }
+  else{
+    (hangman.getPause()) ? hangman.pause = false  
     : hangman.pause = true;
   
-  res.status(200).json(hangman.getPause())
+    res.status(200).json(hangman.getPause())
+  }
+  
 })
 
 router.get('/hangman/clear', (req, res) => {
-  hangman.clear();
+  if(thabuttress.getHangmanDisplay() != ''){
+    thabuttress.clearHangman();
+  }
+  else{
+    hangman.clear();
+  }
   res.status(200).json("hangman reset")
 })
 

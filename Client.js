@@ -9,7 +9,8 @@ const fs = require('fs');
 const houses = require('./Houses')
 let CONFIG;
 
-let backupBot = require('./BackupBot')
+let thabuttress = require('./thaButtress')
+//let backupBot = require('./BackupBot')
 
 if(process.env.OAUTH === undefined) {
   let localConfig = require('./config.js')
@@ -45,6 +46,39 @@ function delayButtcoinPayout(target, user, amount){
   setTimeout(() => {
     client.say(target, `!buttcoins add ${user} ${amount}`)
   }, 3000)
+}
+
+function delaySayMessage(target, msg, seconds){
+  setTimeout(() => {
+    client.say(target, msg)
+  }, seconds*1000)
+}
+
+// handle messages
+function handleResponses(target, response){
+  if(response.hasMessage){
+    let len = response.items.length
+    if(len == 1)
+      (response.isAction) ? client.action(target, response.items[0])
+        : client.say(target, response.items[0])
+    
+    else{
+      let payout = ''
+      if(response.hasPayout){
+        payout = response.items[len - 1]
+        response.items.pop();
+        delaySayMessage(target, payout, len)
+      }
+      if(response.isAction){
+        for(let item of response.items)
+          client.action(target, item)
+      }
+      else{
+        for(let item of response.items)
+          client.say(target, item)
+      }
+    }
+  }
 }
 
 // Valid commands start with:
@@ -86,7 +120,11 @@ function onMessageHandler (target, context, msg, self) {
   if (self) { return } // Ignore messages from the bot
   // This isn't a command since it has no prefix:
 
-  if(context.username == 'thabottress' && msg == `I'm up and running.`)
+  // buttress items
+  if(target == '#thabuttress'){
+    handleResponses(target, thabuttress.handleMessage(context, msg))
+  }
+  /* if(context.username == 'thabottress' && msg == `I'm up and running.`)
     backupBot.bottressStatusLive();
 
   // hangman logic 
@@ -115,11 +153,11 @@ function onMessageHandler (target, context, msg, self) {
     }
 
     // display winner points if they are enrolled
-    /* if (hangman.found && houses.isEnrolled(context.username)){
+    if (hangman.found && houses.isEnrolled(context.username)){
       client.say(target, `100 points to ${houses.houseNames[houses.students[context.username]]}!`)
       recordHousePoints(`100 points to ${houses.houseNames[houses.students[context.username]]}!`)
-    } */
-  }
+    } 
+  } */
 
   // giveaway logic
   if(giveaway.allowEntries && target == "#" + giveaway.channel){
@@ -130,10 +168,11 @@ function onMessageHandler (target, context, msg, self) {
   // randNum logic
   if(randNum.allowGuesses && target == "#" + randNum.channel){
     if(randNum.guess(msg)){
-      recordPayouts(`${context['display-name']} wins! The correct number was ${randNum.number}`)
-      client.say(target, `${context['display-name']} wins! The correct number was ${randNum.number}`)
-      client.say(target, `${context['display-name']} wins! The correct number was ${randNum.number}`)
-      client.say(target, `${context['display-name']} wins! The correct number was ${randNum.number}`)
+      let randNumWinDisplay = `${context['display-name']} wins! The correct number was ${randNum.number}`
+      recordPayouts(randNumWinDisplay)
+      client.say(target, randNumWinDisplay)
+      client.say(target, randNumWinDisplay)
+      client.say(target, randNumWinDisplay)
       delayButtcoinPayout(target, context['display-name'], 100);
       /* if(houses.isEnrolled(context.username)){
         client.say(target, `100 points to ${houses.houseNames[houses.students[context.username]]}!`)
@@ -168,7 +207,7 @@ function onMessageHandler (target, context, msg, self) {
   const commandName = parse[0]
   
   // backup bot commands
-  if(backupBot.isBottressDown() && target == '#thabuttress'){
+  /* if(backupBot.isBottressDown() && target == '#thabuttress'){
     let message = backupBot.BotHandler(target, context.mod, commandName, parse)
     if(typeof message == "string")
       client.action(target, message)
@@ -179,7 +218,7 @@ function onMessageHandler (target, context, msg, self) {
     else{
       //console.log(`Message Returned as: ${message}`)
     }
-  }
+  } */
   
   // switch cases for wizardDuel only
   if(commandName == 'startduel' && (target == '#thabuttress' || target == '#joefish5') 
@@ -352,11 +391,11 @@ function onMessageHandler (target, context, msg, self) {
   // commands only for butt's channel
   if(target == '#thabuttress' || target == '#joefish5'){
     switch(commandName){
-      case 'test':
+      /* case 'test':
         if(target == '#thabuttress'){
           backupBot.checkingBottressStatus();
         }
-        break;
+        break; */
       case 'quidditch':
         if(target == "#thabuttress" && (context.mod || context.username == 'thabuttress')){
           quidditch.start('thabuttress')
@@ -477,7 +516,7 @@ function onMessageHandler (target, context, msg, self) {
   }
 
   switch(commandName){
-    case 'hangman':
+    /* case 'hangman':
       if(target == "#" + hangman.channel){
         (!hangman.getPause()) 
           ? client.say(target, `${hangman.display}`) 
@@ -487,7 +526,7 @@ function onMessageHandler (target, context, msg, self) {
     case 'guessed':
       if(!hangman.getPause() && target == "#" + hangman.channel)
         client.say(target, `Letters already guessed: ${hangman.alreadyGuessed()}`)
-      break;
+      break; */
     case 'start':
       if(context['display-name'] == "JoeFish5" && target == "#" + giveaway.channel){
         giveaway.start(target.replace("#", ""))
