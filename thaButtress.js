@@ -149,7 +149,7 @@ module.exports = {
                 backupBot.checkingBottressStatus();
                 return result;
             default:
-                console.log(`Command Not Found: ${commandName}`)
+                //console.log(`Command Not Found: ${commandName}`)
                 return result;
         }
 
