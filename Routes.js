@@ -402,6 +402,47 @@ router.get('/house/update', (req, res) => {
   })
 })
 
+// puptime game router
+router.get('/puptime/:channel', (req, res) => {
+  if(req.params.channel == 'thabuttress'){
+    client.say(thabuttress.channel, `Let's play the puptime game! Get puptime to use the buttMonty or buttReggie and you can win buttcoins!`)
+    thabuttress.startPuptime()
+    res.status(200).json(`Puptime game started: ${req.params.channel}`)
+  }
+  else{
+    res.status(200).json(`Channel does not have puptime game: ${req.params.channel}`)
+  }
+})
+
+router.get('/puptime/game/stop/:channel', (req, res) => {
+  if(req.params.channel == 'thabuttress'){
+    let payouts = thabuttress.endPuptime();
+    let names = Object.keys(payouts)
+
+    let payoutStrings = []
+
+    for(let name of names){
+      payoutStrings.push(thabuttress.buttcoinPayout(name, payouts[name]))
+    }
+
+    client.delayedWinnings(thabuttress.channel, payoutStrings)
+    res.status(200).json(`Puptime points: ${payoutStrings}`)
+  }
+  else{
+    res.status(200).json(`Channel does not have puptime game: ${req.params.channel}`)
+  }
+})
+
+router.get('/puptime/game/clear/:channel', (req, res) => {
+  if(req.params.channel == 'thabuttress'){
+    thabuttress.clearPuptime();
+    res.status(200).json(`Puptime game cleared: ${req.params.channel}`)
+  }
+  else{
+    res.status(200).json(`Channel does not have puptime game: ${req.params.channel}`)
+  }
+})
+
 // clear all info
 router.get('/clear/all', (req, res) => {
   giveaway.clear();
@@ -410,6 +451,7 @@ router.get('/clear/all', (req, res) => {
   randNum.clear();
   wizardDuel.clear();
   search.clear();
+  thabuttress.clear();
   res.status(200).json("All Games Cleared!")
 })
 

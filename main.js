@@ -274,3 +274,13 @@ clickBtnBind(giveDrawBtn)
 
 const giveClearBtn = document.getElementById("giveawayClearBtn")
 clickBtnBind(giveClearBtn)
+
+// puptime controls
+const puptimeStartBtn = document.getElementById('puptimeStartBtn')
+clickBtnBindChannel(puptimeStartBtn)
+
+const puptimeStopBtn = document.getElementById('puptimeStopBtn')
+clickBtnBindChannel(puptimeStopBtn)
+
+const puptimeClearBtn = document.getElementById('puptimeClearBtn')
+clickBtnBindChannel(puptimeClearBtn)

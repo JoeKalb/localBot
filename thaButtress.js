@@ -1,5 +1,6 @@
 let hangman = new require('./Hangman')
 let giveaway = new require('./Giveaway')
+let puptimeGame = new require('./puptimeGame')
 let randNum = new require('./RandNumber')
 let quidditch = new require('./Quidditch')
 let wizardDuel = new require('./WizardDuel')
@@ -76,6 +77,10 @@ module.exports = {
                 }
             }
         }
+
+        // puptime logic
+        if(puptimeGame.getGameOn())
+            puptimeGame.checkMessage(context, msg);
 
         // giveaway logic
         if(giveaway.allowEntries)
@@ -191,6 +196,27 @@ module.exports = {
     },
     clearGiveaway:() => {
         giveaway.clear();
+    },
+    startPuptime:() => {
+        puptimeGame.start('thabuttress')
+    },
+    endPuptime:() => {
+        puptimeGame.end()
+        let finalPlayers = puptimeGame.getPlayers()
+        return finalPlayers;
+    },
+    clearPuptime:() => {
+        puptimeGame.clear();
+    },
+    buttcoinPayout:(user, amount) => {
+        let result = buttcoinPayout(user, amount)
+        return result;
+    },
+    clear:() => {
+        hangman.clear();
+        puptimeGame.clear();
+        giveaway.clear();
+        randNum.clear();
     }
 }
 

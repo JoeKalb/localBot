@@ -37,7 +37,7 @@ function recordHousePoints(message){
 function delayedWinnings(target, messages){
   for(let i in messages){
     setTimeout(() => {
-      client.action(target, messages[i])   
+      client.say(target, messages[i])   
     }, i*3000)
   }
 }
@@ -113,6 +113,10 @@ let client = new tmi.client(opts)
 
 client.getChannels = () => {
   return opts.channels
+}
+
+client.delayedWinnings = (target, messages) => {
+  delayedWinnings(target, messages)
 }
 
 // Register our event handlers (defined below):
