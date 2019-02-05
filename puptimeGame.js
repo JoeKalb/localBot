@@ -53,7 +53,7 @@ module.exports = {
     getPlayers: () => {
         return players
     },
-    clear: () => {
+    clear: function() {
         players = {}
         currentNames = []
         gameOn = false;
