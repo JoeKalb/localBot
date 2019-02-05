@@ -419,14 +419,33 @@ router.get('/puptime/game/stop/:channel', (req, res) => {
     let payouts = thabuttress.endPuptime();
     let names = Object.keys(payouts)
 
-    let payoutStrings = []
+    if(names.length > 0){
+      let payoutStrings = []
 
-    for(let name of names){
-      payoutStrings.push(thabuttress.buttcoinPayout(name, payouts[name]))
+      let topNames = [names[0]]
+      let topScore = payouts[names[0]]
+  
+      for(let name of names){
+        if(topScore == payouts[name])
+          topNames.push(name)
+        else if(topScore < payouts[name]){
+          topScore = payouts[name]
+          topNames = [name]
+        }
+        payoutStrings.push(thabuttress.buttcoinPayout(name, payouts[name]))
+      }
+  
+      let topDisplay = `Top Score: ${topScore} ${topNames}`
+      client.action(thabuttress.channel, topDisplay)
+      client.delayedWinnings(thabuttress.channel, payoutStrings)
+      res.status(200).json(`Puptime points: ${topDisplay}`)
+    }
+    else{
+      client.say(thabuttress.channel, 'The puptime game has ended and no one has won buttThump')
+      res.status(200).json(`Puptime game ended: no points`)
     }
 
-    client.delayedWinnings(thabuttress.channel, payoutStrings)
-    res.status(200).json(`Puptime points: ${payoutStrings}`)
+    
   }
   else{
     res.status(200).json(`Channel does not have puptime game: ${req.params.channel}`)
