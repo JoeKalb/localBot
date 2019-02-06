@@ -136,9 +136,7 @@ function onMessageHandler (target, context, msg, self) {
   if(target == '#thabuttress'){
     handleResponses(target, thabuttress.handleMessage(context, msg))
   }
-  /* if(context.username == 'thabottress' && msg == `I'm up and running.`)
-    backupBot.bottressStatusLive();
-
+  /*
   // hangman logic 
   if(!hangman.getPause() && target == '#' + hangman.channel){
     if (hangman.isAnswer(msg)) {
@@ -178,7 +176,7 @@ function onMessageHandler (target, context, msg, self) {
   } */
 
   // randNum logic
-  if(randNum.allowGuesses && target == "#" + randNum.channel){
+  /* if(randNum.allowGuesses && target == "#" + randNum.channel){
     if(randNum.guess(msg)){
       let randNumWinDisplay = `${context['display-name']} wins! The correct number was ${randNum.number}`
       recordPayouts(randNumWinDisplay)
@@ -189,10 +187,10 @@ function onMessageHandler (target, context, msg, self) {
       /* if(houses.isEnrolled(context.username)){
         client.say(target, `100 points to ${houses.houseNames[houses.students[context.username]]}!`)
         recordHousePoints(`100 points to ${houses.houseNames[houses.students[context.username]]}!`)
-      } */
+      } 
     }
-  }
-
+  } 
+*/
   // wizard duel logic
   if(wizardDuel.allowEntries 
     && target == "#" + wizardDuel.channel

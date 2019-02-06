@@ -82,6 +82,22 @@ module.exports = {
         if(puptimeGame.getGameOn())
             puptimeGame.checkMessage(context, msg);
 
+        // random number logic
+        if(randNum.allowGuesses){
+            if(randNum.guess(msg)){
+                let randNumWinDisplay = `${context['display-name']} wins! The correct number was ${randNum.number}`
+                result.hasMessage = true;
+                result.hasPayout = true;
+
+                for(let i = 0; i < 3; ++i)
+                    result.items.push(randNumWinDisplay)
+
+                result.items.push(buttcoinPayout(context['display-name'], 100))
+
+                return result;
+            }
+        }
+
         // giveaway logic
         if(giveaway.allowEntries)
             giveaway.isNewName(context['display-name'])
@@ -140,6 +156,17 @@ module.exports = {
                     `${context['display-name']} is${(giveaway.check(context['display-name']) 
                     ? " ": " not ")}in the giveaway! Entries: ${giveaway.count}`)
                 return result;
+            default:
+        }
+
+        // randNum commands
+        switch(commandName){
+            case 'number':
+                if(randNum.allowGuesses){
+                    result.hasMessage = true;
+                    result.items.push(`Guess a number between 1 and ${randNum.upper}`)
+                    return result;
+                }
             default:
         }
 
@@ -211,6 +238,19 @@ module.exports = {
     buttcoinPayout:(user, amount) => {
         let result = buttcoinPayout(user, amount)
         return result;
+    },
+    startRandNum:(upper) => {
+        randNum.start(upper, this.channel)
+    },
+    getRandNumAnswer:() => {
+        let answer = 0
+        if(randNum.allowGuesses)
+            answer = randNum.number
+        
+        return answer
+    },
+    clearRandNum:() => {
+        randNum.clear()
     },
     clear:() => {
         hangman.clear();

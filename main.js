@@ -118,7 +118,7 @@ async function startRandNum(){
 }
 
 const randomStopBtn = document.getElementById("randomStopBtn")
-clickBtnBind(randomStopBtn)
+clickBtnBindChannel(randomStopBtn)
 
 // quidditch controls
 const quidditchStartBtn = document.getElementById("quidditchStartBtn")
