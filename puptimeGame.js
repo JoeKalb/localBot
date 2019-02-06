@@ -8,7 +8,7 @@ module.exports = {
     channel:"",
     start:(channelName) => {
         if(Object.entries(players).length !== 0)
-            this.clear().bind(this);
+            clear();
         this.channel = channelName;
         gameOn = true;
     },
@@ -54,9 +54,7 @@ module.exports = {
         return players
     },
     clear: () => {
-        players = {}
-        currentNames = []
-        gameOn = false;
+        clear()
     }
 }
 
@@ -73,4 +71,10 @@ function triggersPuptime(msg){
             return true;
     }
     return false;
+}
+
+let clear = () => {
+    players = {}
+    currentNames = []
+    gameOn = false;
 }
