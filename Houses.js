@@ -177,7 +177,8 @@ module.exports = {
     anomulus0:2,
     benefitoftheclout:2,
     kennethmyers:0,
-    eroot:0
+    eroot:0,
+    gmpleiades:3
     //gryf = 0, huff = 1, sly = 2, raven = 3
   },
   getHouse: function(name){
