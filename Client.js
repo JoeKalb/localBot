@@ -70,6 +70,9 @@ function handleResponses(target, response){
         : client.say(target, response.items[0])
       }
     } 
+    else if(response.hasMultiPayout){
+      delayedWinnings(target, response.items)
+    }
     else{
       let payout = ''
       if(response.hasPayout){

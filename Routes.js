@@ -446,7 +446,7 @@ router.get('/puptime/game/stop/:channel', (req, res) => {
       let topScore = payouts[names[0]]
   
       for(let name of names){
-        if(topScore == payouts[name])
+        if(topScore == payouts[name] && topNames[0] != name)
           topNames.push(name)
         else if(topScore < payouts[name]){
           topScore = payouts[name]

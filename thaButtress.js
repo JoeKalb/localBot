@@ -12,6 +12,7 @@ const response = {
     hasMessage:false,
     hasDelay:false,
     hasPayout:false,
+    hasMultiPayout:false,
     isAction:false,
     hasPromise:false,
     items:[]
@@ -168,6 +169,82 @@ module.exports = {
                     return result;
                 }
             default:
+        }
+
+        // game start and ending mod commands
+        if(context.mod || `#${context.username}` == this.channel){
+            switch(commandName){
+                case'startpuptime':
+                    puptimeGame.start('thabuttress')
+                    result.hasMessage = true;
+                    result.items.push(`Let's play the puptime game! Get puptime to use the buttMonty or buttReggie and you can win buttcoins!`)
+                    return result;
+                case 'endpuptime':
+                    puptimeGame.end()
+                    let payouts = puptimeGame.getPlayers()
+
+                    let names = Object.keys(payouts)
+
+                    if(names.length > 0){
+                        let payoutStrings = []
+
+                        let topNames = [names[0]]
+                        let topScore = payouts[names[0]]
+                    
+                        for(let name of names){
+                            if(topScore == payouts[name] && topNames[0] != name)
+                            topNames.push(name)
+                            else if(topScore < payouts[name]){
+                            topScore = payouts[name]
+                            topNames = [name]
+                            }
+                            payoutStrings.push(buttcoinPayout(name, payouts[name]))
+                        }
+                    
+                        let topDisplay = `Top Score: ${topScore} ${topNames}`
+
+                        result.hasMessage = true;
+                        result.hasMultiPayout = true;
+                        result.items.push(topDisplay.concat(payoutStrings))
+                    }
+                    else{
+                        result.hasMessage = true;
+                        result.items.push(`The puptime game has ended and no one has won buttThump`)
+                    }
+                    return result;
+                case 'startrandom':
+                    let upper = 100;
+                    if(parse[1]){
+                        try{
+                            upper = parseInt(parse[1])
+                        }
+                        catch(err){
+                            console.log(`Problem trying to parse ${parse[1]}`)
+                            console.log(err)
+                            upper = 100;
+                        }
+                    }
+
+                    randNum.start(upper, this.channel)
+
+                    result.hasMessage = true;
+                    result.isAction = true;
+                    result.items.push(`Guess a number between 1 and ${upper}`)
+
+                    console.log(`Correct Number ${randNum.number}`)
+                    return result;
+                case 'endrandom':
+                    if(randNum.allowGuesses){
+                        result.hasMessage = true;
+                        result.isAction = true;
+
+                        for(let i = 0; i < 3; ++i)
+                            result.items.push(`The game has ended and no one guessed the correct answer: ${randNum.number} buttThump`)
+
+                        return result;
+                    }
+                default:
+            }
         }
 
         // general commands
