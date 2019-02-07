@@ -89,6 +89,7 @@ module.exports = {
                 let randNumWinDisplay = `${context['display-name']} wins! The correct number was ${randNum.number}`
                 result.hasMessage = true;
                 result.hasPayout = true;
+                result.isAction = true;
 
                 for(let i = 0; i < 3; ++i)
                     result.items.push(randNumWinDisplay)
@@ -205,7 +206,11 @@ module.exports = {
 
                         result.hasMessage = true;
                         result.hasMultiPayout = true;
-                        result.items.push(topDisplay.concat(payoutStrings))
+                        
+                        result.items.push(topDisplay)
+
+                        for(let payout of payoutStrings)
+                            result.items.push(payout)
                     }
                     else{
                         result.hasMessage = true;
@@ -241,6 +246,7 @@ module.exports = {
                         for(let i = 0; i < 3; ++i)
                             result.items.push(`The game has ended and no one guessed the correct answer: ${randNum.number} buttThump`)
 
+                        randNum.clear();
                         return result;
                     }
                 default:
