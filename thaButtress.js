@@ -73,6 +73,7 @@ module.exports = {
                     }
                 }
                 else if(numCount == 0){
+                    result.hasMessage = true
                     result.items.push(`no ${letter}`)
                     return result
                 }
@@ -141,7 +142,7 @@ module.exports = {
                     ? result.items.push(`${hangman.display}`)
                     : result.items.push("Hangman is currently paused!")
                 return result;
-            case 'guessed':
+            case 'guesses':
                 if(!hangman.getPause()){
                     result.hasMessage = true;
                     result.items.push(`Letters already guessed: ${hangman.alreadyGuessed()}`)
