@@ -39,6 +39,10 @@ module.exports = {
     return this.allowGuesses
   }
 
+  get number() {
+    return this.number
+  }
+
   guess(num){
     if(num == this.number){
       this.allowGuesses = false;
