@@ -495,7 +495,7 @@ function onMessageHandler (target, context, msg, self) {
     case 'rav':
       client.say(target, houses.specificHouseStudents(3))
       break;
-    case 'commands':
+    /* case 'commands':
       let commands = "Current list of all Harry Potter commands:";
       commands += " House info [!house !houses !whathouse !myhouse !earn !cheer !raid !gry !huff !sly !rav] |";
       commands += " Quidditch [!play !results !mypoints !snitch] |";
@@ -503,7 +503,7 @@ function onMessageHandler (target, context, msg, self) {
       commands += " Hangman [!hangman !guessed] |";
       commands += " Item Hunt [!left !right !option !mypoints !results !hunt]"
       client.say(target, commands)
-      break;
+      break; */
     default:
         //console.log(`Unknown Command: ${commandName}`)
     }
@@ -528,7 +528,7 @@ function onMessageHandler (target, context, msg, self) {
         && playMarbelsSkoots){
         playMarbelsSkoots = false;
         setTimeout(() => {
-          client.say(target, `!play ${Math.floor(Math.random() * 31) + 1}`)
+          //client.say(target, `!play ${Math.floor(Math.random() * 31) + 1}`)
         }, 5000)
         setTimeout(() => {
           playMarbelsSkoots = true;
