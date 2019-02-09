@@ -33,6 +33,16 @@ module.exports = {
             return result;
         }
 
+        let regexChainmail = /chain( )*mail/i
+        if(regexChainmail.test(msg)){
+            /* result.hasMessage = true;
+            result.items.push(
+                `${buttcoinRemove(context['display-name'], 10)} Reason: chainmail is the banned word of the day!`)
+            
+            return result; */
+            console.log(`Chainmail was said by ${context['display-name']}`)
+        }
+
         // hangman logic
         if(!hangman.getPause()){
             if (hangman.isAnswer(msg)) {
@@ -347,4 +357,8 @@ module.exports = {
 // helper functions
 function buttcoinPayout(user, amount){
     return `!buttcoins add ${user} ${amount}`;
+}
+
+function buttcoinRemove(user, amount){
+    return `!buttcoins remove ${user} ${amount}`
 }
