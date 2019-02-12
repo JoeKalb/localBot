@@ -179,7 +179,8 @@ module.exports = {
     kennethmyers:0,
     eroot:0,
     gmpleiades:3,
-    eyequeuex:3
+    eyequeuex:3,
+    mysteracles:2
     //gryf = 0, huff = 1, sly = 2, raven = 3
   },
   getHouse: function(name){
