@@ -528,7 +528,7 @@ function onMessageHandler (target, context, msg, self) {
         && playMarbelsSkoots){
         playMarbelsSkoots = false;
         setTimeout(() => {
-          //client.say(target, `!play ${Math.floor(Math.random() * 31) + 1}`)
+          client.say(target, `!play ${Math.floor(Math.random() * 32) + 1}`)
         }, 5000)
         setTimeout(() => {
           playMarbelsSkoots = true;
