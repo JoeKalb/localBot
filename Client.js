@@ -139,61 +139,7 @@ function onMessageHandler (target, context, msg, self) {
   if(target == '#thabuttress'){
     handleResponses(target, thabuttress.handleMessage(context, msg))
   }
-  /*
-  // hangman logic 
-  if(!hangman.getPause() && target == '#' + hangman.channel){
-    if (hangman.isAnswer(msg)) {
-      hangman.winner = context['display-name']
-      recordPayouts(`The winner is ${hangman.winner}! ${hangman.answer}`)
-      client.say(target, `The winner is ${hangman.winner}! ${hangman.answer}`)
-      delayButtcoinPayout(target, hangman.winner, 100);
-    }
-    else if (msg.length == 1){
-      let letter = msg.toUpperCase();
-      let numCount = hangman.isNewLetter(letter)
-      if(numCount > 0){
-        client.say(target, `${letter} appears ${numCount} time${(numCount > 1)? 's': ''}!`)
-        hangman.updateDisplay(letter)
-        if(hangman.isDisplayAnswer()){
-          hangman.winner = context['display-name']
-          recordPayouts(`The winner is ${hangman.winner}! ${hangman.answer}`)
-          client.say(target, `The winner is ${hangman.winner}! ${hangman.answer}`)
-          delayButtcoinPayout(target, hangman.winner, 100);
-        }
-        else client.say(target, `${hangman.display}`)
-      }else if(numCount == 0)
-        client.say(target, `no ${letter}`)
-    }
-
-    // display winner points if they are enrolled
-    if (hangman.found && houses.isEnrolled(context.username)){
-      client.say(target, `100 points to ${houses.houseNames[houses.students[context.username]]}!`)
-      recordHousePoints(`100 points to ${houses.houseNames[houses.students[context.username]]}!`)
-    } 
-  } */
-
-  // giveaway logic
-/*   if(giveaway.allowEntries && target == "#" + giveaway.channel){
-    console.log(`Checking name: ${context['display-name']}`)
-    giveaway.isNewName(context['display-name'])
-  } */
-
-  // randNum logic
-  /* if(randNum.allowGuesses && target == "#" + randNum.channel){
-    if(randNum.guess(msg)){
-      let randNumWinDisplay = `${context['display-name']} wins! The correct number was ${randNum.number}`
-      recordPayouts(randNumWinDisplay)
-      client.say(target, randNumWinDisplay)
-      client.say(target, randNumWinDisplay)
-      client.say(target, randNumWinDisplay)
-      delayButtcoinPayout(target, context['display-name'], 100);
-      /* if(houses.isEnrolled(context.username)){
-        client.say(target, `100 points to ${houses.houseNames[houses.students[context.username]]}!`)
-        recordHousePoints(`100 points to ${houses.houseNames[houses.students[context.username]]}!`)
-      } 
-    }
-  } 
-*/
+  
   // wizard duel logic
   if(wizardDuel.allowEntries 
     && target == "#" + wizardDuel.channel
