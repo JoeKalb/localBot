@@ -51,9 +51,10 @@ module.exports = {
 
                 hangman.winner = context['display-name']
 
-                result.items.push(`The winner is ${hangman.winner}! ${hangman.answer}`)
-                result.items.push(buttcoinPayout(context['display-name'], 100))
-
+                result.items = [...result.items,
+                    `The winner is ${hangman.winner}! ${hangman.answer}`,
+                    buttcoinPayout(context['display-name'], 100)]
+                
                 return result;
             }
             else if (msg.length == 1){

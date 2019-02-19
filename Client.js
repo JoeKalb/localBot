@@ -104,7 +104,7 @@ let opts = {
    channels: [
     'joefish5',
     'thabuttress',
-    //'oooskittles',
+    'oooskittles',
     //'thethingssheplays',
    ]
 }
