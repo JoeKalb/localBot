@@ -65,7 +65,8 @@ module.exports = {
                     
                     hangman.updateDisplay(letter)
 
-                    result.items.push(`${letter} appears ${numCount} time${(numCount > 1)? 's': ''}!`)
+                    //result.items.push(`${letter} appears ${numCount} time${(numCount > 1)? 's': ''}!`)
+                    result.items = [...result.items, `${letter} appears ${numCount} time${(numCount > 1)? 's': ''}!`]
                     hangman.updateDisplay(letter)
 
                     if(hangman.isDisplayAnswer()){
@@ -73,19 +74,20 @@ module.exports = {
 
                         hangman.winner = context['display-name']
 
-                        result.items.push(`The winner is ${hangman.winner}! ${hangman.answer}`)
-                        result.items.push(buttcoinPayout(context['display-name'], 100))
+                        result.items = [...result.items,
+                            `The winner is ${hangman.winner}! ${hangman.answer}`,
+                            buttcoinPayout(context['display-name'], 100)]
 
                         return result;
                     }
                     else {
-                        result.items.push(`${hangman.display}`)
+                        result.items = [...result.items, `${hangman.display}`]
                         return result
                     }
                 }
                 else if(numCount == 0){
                     result.hasMessage = true
-                    result.items.push(`no ${letter}`)
+                    result.items = [...result.items, `no ${letter}`]
                     return result
                 }
             }
@@ -104,9 +106,9 @@ module.exports = {
                 result.isAction = true;
 
                 for(let i = 0; i < 3; ++i)
-                    result.items.push(randNumWinDisplay)
+                    result.items = [...result.items, randNumWinDisplay]
 
-                result.items.push(buttcoinPayout(context['display-name'], 100))
+                result.items = [...result.items, buttcoinPayout(context['display-name'], 100)]
 
                 return result;
             }
@@ -133,14 +135,14 @@ module.exports = {
                 result.hasMessage = true;
                 result.isAction = true;
 
-                result.items.push(message)
+                result.items = [...result.items, message]
                 return result;
             }
             else if(typeof message == 'object'){
                 result.hasPromise = true;
                 result.hasMessage = true;
                 result.isAction = true;
-                result.items.push(message)
+                result.items = [...result.items, message]
                 return result;
             }
         }
@@ -150,13 +152,13 @@ module.exports = {
             case 'hangman':
                 result.hasMessage = true;
                 (!hangman.getPause())
-                    ? result.items.push(`${hangman.display}`)
-                    : result.items.push("Hangman is currently paused!")
+                    ? result.items = [...result.items, `${hangman.display}`]
+                    : result.items = [...result.items, "Hangman is currently paused!"]
                 return result;
             case 'guesses':
                 if(!hangman.getPause()){
                     result.hasMessage = true;
-                    result.items.push(`Letters already guessed: ${hangman.alreadyGuessed()}`)
+                    result.items = [...result.items, `Letters already guessed: ${hangman.alreadyGuessed()}`]
                     return result;
                 }
             default:
@@ -166,9 +168,9 @@ module.exports = {
         switch(commandName){
             case 'me':
                 result.hasMessage = true;
-                result.items.push(
+                result.items = [...result.items, 
                     `${context['display-name']} is${(giveaway.check(context['display-name']) 
-                    ? " ": " not ")}in the giveaway! Entries: ${giveaway.count}`)
+                    ? " ": " not ")}in the giveaway! Entries: ${giveaway.count}`]
                 return result;
             default:
         }
@@ -178,7 +180,7 @@ module.exports = {
             case 'number':
                 if(randNum.allowGuesses){
                     result.hasMessage = true;
-                    result.items.push(`Guess a number between 1 and ${randNum.upper}`)
+                    result.items = [...result.items, `Guess a number between 1 and ${randNum.upper}`]
                     return result;
                 }
             default:
@@ -190,7 +192,7 @@ module.exports = {
                 case'startpuptime':
                     puptimeGame.start('thabuttress')
                     result.hasMessage = true;
-                    result.items.push(`Let's play the puptime game! Get puptime to use the buttMonty or buttReggie and you can win buttcoins!`)
+                    result.items = [...result.items, `Let's play the puptime game! Get puptime to use the buttMonty or buttReggie and you can win buttcoins!`]
                     return result;
                 case 'endpuptime':
                     puptimeGame.end()
@@ -219,14 +221,14 @@ module.exports = {
                         result.hasMessage = true;
                         result.hasMultiPayout = true;
                         
-                        result.items.push(topDisplay)
+                        result.items = [...result.items, topDisplay]
 
                         for(let payout of payoutStrings)
-                            result.items.push(payout)
+                            result.items = [...result.items, payout]
                     }
                     else{
                         result.hasMessage = true;
-                        result.items.push(`The puptime game has ended and no one has won buttThump`)
+                        result.items = [...result.items, `The puptime game has ended and no one has won buttThump`]
                     }
                     return result;
                 case 'startrandom':
@@ -246,7 +248,7 @@ module.exports = {
 
                     result.hasMessage = true;
                     result.isAction = true;
-                    result.items.push(`Guess a number between 1 and ${upper}`)
+                    result.items = [...result.items, `Guess a number between 1 and ${upper}`]
 
                     console.log(`Correct Number ${randNum.number}`)
                     return result;
@@ -256,7 +258,7 @@ module.exports = {
                         result.isAction = true;
 
                         for(let i = 0; i < 3; ++i)
-                            result.items.push(`The game has ended and no one guessed the correct answer: ${randNum.number} buttThump`)
+                            result.items = [...result.items, `The game has ended and no one guessed the correct answer: ${randNum.number} buttThump`]
 
                         randNum.clear();
                         return result;
