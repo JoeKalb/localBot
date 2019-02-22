@@ -180,7 +180,8 @@ module.exports = {
     eroot:0,
     gmpleiades:3,
     eyequeuex:3,
-    mysteracles:2
+    mysteracles:2,
+    thedrummergirl:1
     //gryf = 0, huff = 1, sly = 2, raven = 3
   },
   getHouse: function(name){
