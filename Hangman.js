@@ -29,7 +29,7 @@ module.exports = {
     return this.pause
   },
   isNewLetter: function(newLetter){
-    if(!this.guessed.has(newLetter)){
+    if(!this.guessed.has(newLetter) && /[a-zA-Z]/.test(newLetter)){
       this.guessed.add(newLetter)
       if(this.lettersCount[newLetter])
         return this.lettersCount[newLetter]
