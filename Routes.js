@@ -66,7 +66,8 @@ router.post('/hangman', (req, res) => {
   try{
     if(req.body.channel == 'thabuttress'){
       thabuttress.startHangman(req.body)
-      client.say('#thabuttress', `It's time for some hangman! ${thabuttress.getHangmanWordCount()} words (!hangman !guesses)`)
+      let wordNum = thabuttress.getHangmanWordCount()
+      client.say('#thabuttress', `It's time for some hangman! ${wordNum} word${(wordNum > 1)? 's':''} (!hangman !guesses)`)
       client.say('#thabuttress', `${thabuttress.getHangmanDisplay()}`)
       res.status(200).json(thabuttress.getHangmanAnswer())
     }
