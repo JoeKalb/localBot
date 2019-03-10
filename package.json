@@ -20,7 +20,7 @@
     "data": "nodemon chatlogInfo.js" 
   },
   "nodemonConfig":{
-    "ignore":["displayNames.json"]
+    "ignore":["displayNames.json", "dogbets.json"]
   },
   "repository": {
     "type": "git",

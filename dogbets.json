@@ -1,0 +1,13 @@
+{
+    "amount":30,
+    "montyAmount":10,
+    "reggieAmount":20,
+    "joefish5":{
+        "monty":{
+            "pug":10
+        },
+        "reggie":{
+            "border_collie":20
+        }
+    }
+}

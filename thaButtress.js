@@ -6,6 +6,7 @@ let quidditch = new require('./Quidditch')
 let wizardDuel = new require('./WizardDuel')
 let search = new require('./Search')
 
+let dogbets = require('./dogbets')
 let backupBot = require('./BackupBot')
 
 const response = {
@@ -30,6 +31,11 @@ module.exports = {
         // backup bot
         if(context.username === 'thabottress' && msg == `I'm up and running.`){
             backupBot.bottressStatusLive();
+            return result;
+        }
+
+        if(context.username === 'thabottress'){
+            dogbets.placeBet(msg);
             return result;
         }
 
@@ -147,6 +153,18 @@ module.exports = {
             }
         }
 
+        // dog bets commands!
+        switch(commandName){
+            case 'mybets':
+                let bets = dogbets.showBets(context.username)
+                if(bets){
+                    result.hasMessage = true;
+                    result.items = [... result.items, bets];
+                    return result;
+                }
+            default:
+        }
+        
         // hangman commands
         switch(commandName){
             case 'hangman':
