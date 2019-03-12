@@ -24,10 +24,8 @@ module.exports = {
                             currentBets[name][dog] = {breed:amount}
                     }
                     else
-                        currentBets[name] = {
-                            dog:{
-                                breed:amount
-                            }
+                        currentBets[name][dog] = {
+                            breed:amount
                         }
                 }
                 else{
@@ -38,7 +36,7 @@ module.exports = {
                     }
                 }
                 currentBets.amount += amount
-                if(/monty/i.test(parse[2]))
+                if(/monty/i.test(dog))
                     currentBets.montyAmount += amount
                 else
                     currentBets.reggieAmount += amount
