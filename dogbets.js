@@ -12,16 +12,18 @@ module.exports = {
                 console.log(`Message saved: ${msg}`)
             })
             try{
-                let name = parse[0].toLowerCase();
-                let dog = parse[2].toLowerCase();
+                //console.log(currentBets)
+                let name = parse[0].toLowerCase()
+                let dog = parse[2].toLowerCase()
                 let breed = parse[5].toLowerCase().replace(':', '')
-                let amount = int(parse[6])
+                let amount = parseInt(parse[6])
+                
                 if(currentBets.hasOwnProperty(name)){
                     if(currentBets[name].hasOwnProperty(dog)){
                         if(currentBets[name][dog].hasOwnProperty(breed)){
                             currentBets[name][dog][breed] += amount
                         }else
-                            currentBets[name][dog] = {breed:amount}
+                            currentBets[name][dog][breed] = amount
                     }
                     else
                         currentBets[name][dog] = {
@@ -40,9 +42,9 @@ module.exports = {
                     currentBets.montyAmount += amount
                 else
                     currentBets.reggieAmount += amount
-                
-                fs.writeFileSync("dogbets.json", JSON.stringify(currentBets))
-                console.log(msg)
+
+                fs.writeFileSync('dogbets.json', JSON.stringify(currentBets))
+                console.log(`Bet added: ${dog} | ${name} | ${amount}`)
             }
             catch(err){
                 //console.log(`Error in dogbets: ${err}\nmsg: ${msg}`)

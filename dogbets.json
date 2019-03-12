@@ -1,13 +1,1 @@
-{
-    "amount":30,
-    "montyAmount":10,
-    "reggieAmount":20,
-    "joefish5":{
-        "monty":{
-            "pug":10
-        },
-        "reggie":{
-            "border_collie":20
-        }
-    }
-}
+{"amount":40,"montyAmount":15,"reggieAmount":25,"joefish5":{"monty":{"pug":10,"weiner_dog":5},"reggie":{"border_collie":20,"golden_lab":5}}}
