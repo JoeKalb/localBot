@@ -26,16 +26,13 @@ module.exports = {
                             currentBets[name][dog][breed] = amount
                     }
                     else
-                        currentBets[name][dog] = {
-                            breed:amount
-                        }
+                        currentBets.name[dog] = {}
+                        currentBets.name.dog[breed] = amount
                 }
                 else{
-                    currentBets[name] = {
-                        dog:{
-                            breed:amount
-                        }
-                    }
+                    currentBets[name] = {}
+                    currentBets[name][dog] = {}
+                    currentBets[name][dog][breed] = amount
                 }
                 currentBets.amount += amount
                 if(/monty/i.test(dog))
@@ -47,7 +44,7 @@ module.exports = {
                 console.log(`Bet added: ${dog} | ${name} | ${amount}`)
             }
             catch(err){
-                //console.log(`Error in dogbets: ${err}\nmsg: ${msg}`)
+                console.log(`Error in dogbets: ${err}\nmsg: ${msg}`)
             }
         }
     },

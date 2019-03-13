@@ -1,15 +1,33 @@
 {
-    "amount": 40,
-    "montyAmount": 15,
-    "reggieAmount": 25,
-    "joefish5": {
+    "amount": 443,
+    "montyAmount": 116,
+    "reggieAmount": 327,
+    "minovskyflight": {
         "monty": {
-            "pug": 10,
-            "weiner_dog": 5
+            "yorkie": 100
         },
         "reggie": {
-            "border_collie": 20,
-            "golden_lab": 5
+            "butt_mastiff": 300
+        }
+    },
+    "popthatbabymaker": {
+        "monty": {
+            "lab": 1964
+        }
+    },
+    "makeetea": {
+        "monty": {
+            "lab": 275
+        }
+    },
+    "patrioticgrizzly": {
+        "reggie": {
+            "bordador": 10000
+        }
+    },
+    "eladolo": {
+        "monty": {
+            "xoloitzcuintle": 1000
         }
     }
 }
