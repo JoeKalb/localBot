@@ -1,7 +1,7 @@
 {
-    "amount": 443,
-    "montyAmount": 116,
-    "reggieAmount": 327,
+    "amount": 13650,
+    "montyAmount": 3345,
+    "reggieAmount": 10305,
     "minovskyflight": {
         "monty": {
             "yorkie": 100
@@ -28,6 +28,15 @@
     "eladolo": {
         "monty": {
             "xoloitzcuintle": 1000
+        }
+    },
+    "joefish5":{
+        "monty":{
+            "batdog":5,
+            "lab":1
+        },
+        "reggie":{
+            "pug":5
         }
     }
 }
