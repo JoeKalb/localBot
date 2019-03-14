@@ -156,12 +156,18 @@ module.exports = {
         // dog bets commands!
         switch(commandName){
             case 'mybets':
-                let bets = dogbets.showBets(context.username)
+                let bets = (parse.length == 1) ?
+                    dogbets.showBets(context.username) : dogbets.showBets(parse[1].toLowerCase())
                 if(bets){
                     result.hasMessage = true;
                     result.items = [... result.items, bets];
                     return result;
                 }
+            case 'allbets':
+                let allbets = dogbets.winnings();
+                result.hasMessage = true;
+                result.items = [...result.items, allbets];
+                return result;
             default:
         }
         

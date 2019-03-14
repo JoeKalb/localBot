@@ -17,22 +17,40 @@ module.exports = {
                 let dog = parse[2].toLowerCase()
                 let breed = parse[5].toLowerCase().replace(':', '')
                 let amount = parseInt(parse[6])
+                let added = false
                 
                 if(currentBets.hasOwnProperty(name)){
                     if(currentBets[name].hasOwnProperty(dog)){
                         if(currentBets[name][dog].hasOwnProperty(breed)){
                             currentBets[name][dog][breed] += amount
+                            added = true;
                         }else
-                            currentBets[name][dog][breed] = amount
+                            if(!added){
+                                console.log(`New Breed for ${name} in ${dog}: ${breed}`)
+                                let originalBreeds = currentBets[name][dog]
+                                originalBreeds[breed] = amount
+                                currentBets[name][dog] = originalBreeds
+                                console.log(currentBets[name][dog])
+                                added = true
+                            }
                     }
                     else
-                        currentBets.name[dog] = {}
-                        currentBets.name.dog[breed] = amount
+                        if(!added){
+                            console.log(`New Dog for ${name}: ${dog}`)
+                            currentBets[name][dog] = {}
+                            currentBets[name][dog][breed] = amount
+                            added = true;
+                        }
                 }
                 else{
-                    currentBets[name] = {}
-                    currentBets[name][dog] = {}
-                    currentBets[name][dog][breed] = amount
+                    if(!added){
+                        console.log(`New Entry: ${name}`)
+                        currentBets[name] = {}
+                        currentBets[name][dog] = {}
+                        currentBets[name][dog][breed] = amount
+                        added = true;
+                    }
+
                 }
                 currentBets.amount += amount
                 if(/monty/i.test(dog))
@@ -54,13 +72,16 @@ module.exports = {
             let disName = houses.getDisplayName(name)
             let result = `${disName} -`
             for(let dog of dogs){
-                result += ` ${dog.toUpperCase()}:`
+                result += ` ${dog} :`
                 let breeds = Object.keys(currentBets[name][dog])
                 for(let breed of breeds)
                     result += ` ${breed}: ${currentBets[name][dog][breed]} |`
             }
-            return result
+            return result.replace('monty', 'buttMonty').replace('reggie', 'buttReggie')
         }
         return false
+    },
+    winnings:() => {
+        return `Total !breed Bets: ${currentBets.amount} [ buttMonty : ${currentBets.montyAmount}] [ buttReggie : ${currentBets.reggieAmount}]`
     }
 }
