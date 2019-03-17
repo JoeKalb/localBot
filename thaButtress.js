@@ -59,7 +59,7 @@ module.exports = {
 
                 result.items = [...result.items,
                     `The winner is ${hangman.winner}! ${hangman.answer}`,
-                    buttcoinPayout(context['display-name'], 100)]
+                    buttcoinPayout(context['display-name'], 200)]
                 
                 return result;
             }
