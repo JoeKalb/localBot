@@ -1,4 +1,4 @@
-let bottressDown = false;
+let bottressDown = true;
 const fs = require('fs');
 const fetch = require('node-fetch');
 const co = require('co');
@@ -39,6 +39,7 @@ module.exports = {
   },
   BotHandler: (target, mod, commandName, parse) => {
     if(bottressDown && target == '#thabuttress'){
+      console.log(commandName)
       switch(commandName){
         case 'discord':
           return `Join our offline Discord chat! Subs: Link your discord to your twitch account for bonus channels! https://discord.gg/rWnczNe`
@@ -84,6 +85,8 @@ module.exports = {
           return `A donation of $10 gets your name into the Goblet of Fire! Each entry will be a ticket into a giveaway for the custom ButtCoin plus a lil extra something for the !top single donation! buttHouse`
         case 'top':
           return `The largest single donation by the 27th will get the chance to pick Butt's next Gundam + 500 points towards their house!`
+        case 'breed':
+          return `buttMonty Bet on the dog breeds! (Ex Monty: !monty pug 10) (Ex. Reggie: !reggie border_collie 10) **if the breed you want is more that one word use an "_" rather than a space! buttReggie`
         default:
           if(!mod)
             return false;

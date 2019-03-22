@@ -39,7 +39,7 @@ module.exports = {
             return result;
         }
 
-        let regexChainmail = /chain( )*mail/i
+        let regexChainmail = /chain( )*mail/i 
         if(regexChainmail.test(msg)){
             /* result.hasMessage = true;
             result.items.push(
@@ -59,7 +59,7 @@ module.exports = {
 
                 result.items = [...result.items,
                     `The winner is ${hangman.winner}! ${hangman.answer}`,
-                    buttcoinPayout(context['display-name'], 200)]
+                    buttcoinPayout(context['display-name'], 100)]
                 
                 return result;
             }
