@@ -82,6 +82,6 @@ module.exports = {
         return false
     },
     winnings:() => {
-        return `Total !breed Bets: ${currentBets.amount} [ buttMonty : ${currentBets.montyAmount}] [ buttReggie : ${currentBets.reggieAmount}]`
+        return `Total !breeds Bets: ${currentBets.amount} [ buttMonty : ${currentBets.montyAmount}] [ buttReggie : ${currentBets.reggieAmount}]`
     }
 }

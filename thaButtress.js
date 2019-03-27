@@ -20,6 +20,7 @@ const response = {
 }
 
 const commandPrefix = '!';
+const standardPayout = 100;
 
 module.exports = {
     channel:"#thabuttress",
@@ -59,7 +60,7 @@ module.exports = {
 
                 result.items = [...result.items,
                     `The winner is ${hangman.winner}! ${hangman.answer}`,
-                    buttcoinPayout(context['display-name'], 100)]
+                    buttcoinPayout(context['display-name'], standardPayout)]
                 
                 return result;
             }
@@ -82,7 +83,7 @@ module.exports = {
 
                         result.items = [...result.items,
                             `The winner is ${hangman.winner}! ${hangman.answer}`,
-                            buttcoinPayout(context['display-name'], 100)]
+                            buttcoinPayout(context['display-name'], standardPayout)]
 
                         return result;
                     }
@@ -114,7 +115,7 @@ module.exports = {
                 for(let i = 0; i < 3; ++i)
                     result.items = [...result.items, randNumWinDisplay]
 
-                result.items = [...result.items, buttcoinPayout(context['display-name'], 100)]
+                result.items = [...result.items, buttcoinPayout(context['display-name'], standardPayout)]
 
                 return result;
             }
@@ -160,14 +161,20 @@ module.exports = {
                     dogbets.showBets(context.username) : dogbets.showBets(parse[1].toLowerCase())
                 if(bets){
                     result.hasMessage = true;
+                    result.isAction = true;
                     result.items = [... result.items, bets];
                     return result;
                 }
             case 'allbets':
                 let allbets = dogbets.winnings();
                 result.hasMessage = true;
+                result.isAction = true;
                 result.items = [...result.items, allbets];
                 return result;
+            case 'pups':
+                result.hasMessage = true;
+                result.isAction = true;
+                result.items = [...result.items, `Commands for betting on buttMonty and buttReggie !breeds !mybets !allbets`]
             default:
         }
         
