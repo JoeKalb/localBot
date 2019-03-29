@@ -1,1 +1,116 @@
-{"amount":19235,"montyAmount":6197,"reggieAmount":13038,"minovskyflight":{"monty":{"yorkie":100},"reggie":{"butt_mastiff":300}},"popthatbabymaker":{"monty":{"lab":2229}},"makeetea":{"monty":{"lab":275}},"patrioticgrizzly":{"reggie":{"bordador":10000}},"eladolo":{"monty":{"xoloitzcuintle":1000}},"joefish5":{"monty":{"chihuahua":5,"pug":2,"batdog":50,"vengeance":50,"lab":10},"reggie":{"border_collie":1,"lab":12}},"thabuttress":{"monty":{"dachshund":20},"reggie":{"border_collie":20}},"grantypants":{"reggie":{"border_collie":1000},"monty":{"chihuahua_dachshund":1000}},"henrynighthawk":{"reggie":{"blue_heeler_border_collie":100,"velociraptor":20,"australian_shepherd":50},"monty":{"secret_vampire":20}},"drdrinks420":{"monty":{"good_pupper":300},"reggie":{"good_pupper":300}},"jousterpc2mc4":{"monty":{"rottweiler":50,"poodle":70}},"vidgrod4567":{"monty":{"jack_russell":100},"reggie":{"border_collie":100}},"donutscurecancer":{"monty":{"chihuahua":100},"reggie":{"border_collie":100}},"aofool":{"monty":{"bat":500,"the_night":300},"reggie":{"border-collie":1000}},"benefitoftheclout":{"monty":{"lab":10}}}
+{
+    "amount": 19235,
+    "montyAmount": 6197,
+    "reggieAmount": 13038,
+    "minovskyflight": {
+        "monty": {
+            "yorkie": 100
+        },
+        "reggie": {
+            "butt_mastiff": 300
+        }
+    },
+    "popthatbabymaker": {
+        "monty": {
+            "lab": 2229
+        }
+    },
+    "makeetea": {
+        "monty": {
+            "lab": 275
+        }
+    },
+    "patrioticgrizzly": {
+        "reggie": {
+            "bordador": 10000
+        }
+    },
+    "eladolo": {
+        "monty": {
+            "xoloitzcuintle": 1000
+        }
+    },
+    "joefish5": {
+        "monty": {
+            "chihuahua": 5,
+            "pug": 2,
+            "batdog": 50,
+            "vengeance": 50,
+            "lab": 10
+        },
+        "reggie": {
+            "border_collie": 1,
+            "lab": 12
+        }
+    },
+    "thabuttress": {
+        "monty": {
+            "dachshund": 20
+        },
+        "reggie": {
+            "border_collie": 20
+        }
+    },
+    "grantypants": {
+        "reggie": {
+            "border_collie": 1000
+        },
+        "monty": {
+            "chihuahua_dachshund": 1000
+        }
+    },
+    "henrynighthawk": {
+        "reggie": {
+            "blue_heeler_border_collie": 100,
+            "velociraptor": 20,
+            "australian_shepherd": 50
+        },
+        "monty": {
+            "secret_vampire": 20
+        }
+    },
+    "drdrinks420": {
+        "monty": {
+            "good_pupper": 300
+        },
+        "reggie": {
+            "good_pupper": 300
+        }
+    },
+    "jousterpc2mc4": {
+        "monty": {
+            "rottweiler": 50,
+            "poodle": 70
+        }
+    },
+    "vidgrod4567": {
+        "monty": {
+            "jack_russell": 100
+        },
+        "reggie": {
+            "border_collie": 100
+        }
+    },
+    "donutscurecancer": {
+        "monty": {
+            "chihuahua": 100
+        },
+        "reggie": {
+            "border_collie": 100
+        }
+    },
+    "aofool": {
+        "monty": {
+            "bat": 500,
+            "the_night": 300
+        },
+        "reggie": {
+            "border-collie": 1000
+        }
+    },
+    "benefitoftheclout": {
+        "monty": {
+            "lab": 10
+        }
+    }
+}
