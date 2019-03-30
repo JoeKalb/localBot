@@ -3,6 +3,17 @@ let fs = require("fs")
 
 let currentBets = JSON.parse(fs.readFileSync('dogbets.json'))
 
+let finalPayouts = {
+    joefish5:68,
+    grantypants:6874,
+    donutscurecancer:1232,
+    patrioticgrizzly:8965,
+    thabuttress:35,
+    henrynighthawk:89,
+    vidgrod4567:179,
+    aofool:1793
+}
+
 module.exports = {
     placeBet: (msg) => {
         const parse = msg.split(' ')
@@ -81,7 +92,24 @@ module.exports = {
         }
         return false
     },
-    winnings:() => {
-        return `Total !breeds Bets: ${currentBets.amount} [ buttMonty : ${currentBets.montyAmount}] [ buttReggie : ${currentBets.reggieAmount}]`
+    winnings:(name) => {
+        if(currentBets.hasOwnProperty(name)){
+            let dogs = Object.keys(currentBets[name])
+            let totalBets = 0;
+            for(dog of dogs){
+                let guesses = Object.keys(currentBets[name][dog])
+                for(guess of guesses){
+                    totalBets += currentBets[name][dog][guess]
+                }
+            }
+
+            return (finalPayouts.hasOwnProperty(name)) ?
+                `${houses.getDisplayName(name)} bet ${totalBets} buttcoins and won ${finalPayouts[name]}! buttOMG`:
+                `${houses.getDisplayName(name)} lost ${totalBets} buttcoins buttThump`
+        }
+        return `You didn't place any bets ${houses.getDisplayName(name)}`;
+    },
+    payouts:() => {
+        return finalPayouts;
     }
 }

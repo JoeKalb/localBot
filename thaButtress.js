@@ -165,16 +165,11 @@ module.exports = {
                     result.items = [... result.items, bets];
                     return result;
                 }
-            case 'allbets':
-                let allbets = dogbets.winnings();
-                result.hasMessage = true;
-                result.isAction = true;
-                result.items = [...result.items, allbets];
-                return result;
             case 'pups':
                 result.hasMessage = true;
                 result.isAction = true;
-                result.items = [...result.items, `Commands for betting on buttMonty and buttReggie !breeds !mybets !allbets`]
+                result.items = [...result.items, dogbets.winnings(context.username)]
+                return result;
             default:
         }
         
