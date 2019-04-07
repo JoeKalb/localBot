@@ -64,7 +64,7 @@ module.exports = {
         case 'earn':
           return `Ways to earn points for your house: Donations - $1=5pts Bits - 100=5pts Gifted Subs - 1=25pts Community Games buttHouse`
         case 'current':
-          return `Butt's currently building the Hexa Gear Rayblade Impulse buttOMG https://amzn.to/2M3RYnr`
+          return `Currently hanging around outside!`
         case 'twitter':
           return `Butt's twitter: https://twitter.com/thaButtress`
         case 'socials':
