@@ -1,4 +1,4 @@
-let bottressDown = false;
+let bottressDown = true;
 const fs = require('fs');
 const fetch = require('node-fetch');
 const co = require('co');
@@ -52,7 +52,7 @@ module.exports = {
         case 'gundam':
           return `If you're planning on buying a kit check out https://www.gundamplanet.com/ and use coupon code "THABUTTRESS" to get 10% off all regularly priced items!`
         case 'imgur':
-          return `Look at all these cool items that thaButtress has built and customized! https://thabuttress.imgur.com/ buttOMG`
+          return `Look at all these cool gundams that thaButtress has built and customized! https://thabuttress.imgur.com/ buttOMG`
         case 'built':
           return `Check out Butt's built list and backlog!!! https://goo.gl/7DxzVX buttDab`
         case 'playlist':
