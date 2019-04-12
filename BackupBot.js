@@ -37,7 +37,7 @@ module.exports = {
     clearTimeout(pendingStatus)
     bottressDown = false;
   },
-  BotHandler: (target, mod, commandName, parse) => {
+  BotHandler: (target, mod, commandName, parse, context) => {
     if(bottressDown && target == '#thabuttress'){
       console.log(commandName)
       switch(commandName){
@@ -87,6 +87,18 @@ module.exports = {
           return `The largest single donation by the 27th will get the chance to pick Butt's next Gundam + 500 points towards their house!`
         case 'breed':
           return `buttMonty Bet on the dog breeds! (Ex Monty: !monty pug 10) (Ex. Reggie: !reggie border_collie 10) **if the breed you want is more that one word use an "_" rather than a space! buttReggie`
+        case 'followage':
+          return co(function*(){
+            try{
+              let followage = yield fetch(`https://decapi.me/twitch/followage/thabuttress/${context.username}`)
+              let response = yield followage.text()
+              return `${context['display-name']} has been following thaButtress for ${response}`
+            }
+            catch(err){
+              console.log(err)
+              return `${context['display-name']} is not following buttThump`
+            }
+          })
         default:
           if(!mod)
             return false;

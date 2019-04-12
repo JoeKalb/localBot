@@ -134,7 +134,7 @@ module.exports = {
 
         // backup bot commands
         if(backupBot.isBottressDown()){
-            let message = backupBot.BotHandler('#thabuttress', context.mod, commandName, parse)
+            let message = backupBot.BotHandler('#thabuttress', context.mod, commandName, parse, context)
             if(message === false)
                 return result;
 
