@@ -10,7 +10,7 @@ const houses = require('./Houses')
 let CONFIG;
 
 let thabuttress = require('./thaButtress')
-//let backupBot = require('./BackupBot')
+let ttsp = require('./ttsp')
 
 if(process.env.OAUTH === undefined) {
   let localConfig = require('./config.js')
@@ -105,7 +105,7 @@ let opts = {
     'joefish5',
     'thabuttress',
     //'oooskittles',
-    //'thethingssheplays',
+    'thethingssheplays',
    ]
 }
 
@@ -126,6 +126,7 @@ client.delayedWinnings = (target, messages) => {
 client.on('message', onMessageHandler)
 client.on('connected', onConnectedHandler)
 client.on('disconnected', onDisconnectedHandler)
+client.on('cheer', onCheerHandler)
 
 // Connect to Twitch:
 client.connect()
@@ -138,6 +139,9 @@ function onMessageHandler (target, context, msg, self) {
   // buttress items
   if(target == '#thabuttress'){
     handleResponses(target, thabuttress.handleMessage(context, msg))
+  }
+  else if(target == ttsp.channel){
+    handleResponses(target, ttsp.handelMessage(context, msg))
   }
   
   // wizard duel logic
@@ -485,6 +489,13 @@ function onMessageHandler (target, context, msg, self) {
       // this shows unknows commands
       //console.log(`* Unknown command ${commandName}`)
   }
+}
+
+function onCheerHandler(channel, userstate, message){
+  if(channel == ttsp.channel)
+    ttsp.cheerHandler(userstate, message)
+  else if(channel == thabuttress.channel)
+    thabuttress.cheerHandler(userstate, message)
 }
 
 function onConnectedHandler (addr, port) {

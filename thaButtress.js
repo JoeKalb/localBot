@@ -305,6 +305,10 @@ module.exports = {
 
         // catch any final values and return them
     },
+    cheerHandler:(userstate, msg) => {
+        console.log(userstate)
+        console.log(msg)
+    },
     // commands to handle games
     startHangman: (info) => {
         hangman.start(info)
