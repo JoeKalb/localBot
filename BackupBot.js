@@ -87,6 +87,8 @@ module.exports = {
           return `The largest single donation by the 27th will get the chance to pick Butt's next Gundam + 500 points towards their house!`
         case 'breed':
           return `buttMonty Bet on the dog breeds! (Ex Monty: !monty pug 10) (Ex. Reggie: !reggie border_collie 10) **if the breed you want is more that one word use an "_" rather than a space! buttReggie`
+        case 'job':
+          return `Butt works at Twitch now! So she's livin' that Cali lifestyle!`
         case 'followage':
           return co(function*(){
             try{
