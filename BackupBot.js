@@ -89,6 +89,8 @@ module.exports = {
           return `buttMonty Bet on the dog breeds! (Ex Monty: !monty pug 10) (Ex. Reggie: !reggie border_collie 10) **if the breed you want is more that one word use an "_" rather than a space! buttReggie`
         case 'job':
           return `Butt works at Twitch now! So she's livin' that Cali lifestyle!`
+        case 'vote':
+          return `Gunpla Fusion Community Vote: http://bit.ly/2DDHokc`
         case 'followage':
           return co(function*(){
             try{
