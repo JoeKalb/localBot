@@ -335,6 +335,10 @@ module.exports = {
     clearHangman:() => {
         hangman.clear();
     },
+    eachWordLength:() => {
+        let result = hangman.eachWordLength(hangman.answer);
+        return result;
+    },
     startGiveaway:() => {
         giveaway.start('thabuttress')
     },

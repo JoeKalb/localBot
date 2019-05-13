@@ -21,7 +21,7 @@ module.exports = {
         return result;
     },
     cheerHandler:(userstate, msg) => {
-        console.log(userstate)
-        console.log(msg)
+        //console.log(userstate)
+        //console.log(msg)
     }
 }

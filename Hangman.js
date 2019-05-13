@@ -74,6 +74,14 @@ module.exports = {
 
     return allLetters
   },
+  eachWordLength: function(answer){
+    let result = new Array(this.wordCount)
+    let words = answer.split(" ")
+    for(let i = 0; i < this.wordCount; ++i)
+      result[i] = words[i].length
+
+    return result
+  },
   clear: function(){
     this.pause = true
     this.found = false
