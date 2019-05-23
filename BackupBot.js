@@ -1,4 +1,4 @@
-let bottressDown = false;
+let bottressDown = true;
 const fs = require('fs');
 const fetch = require('node-fetch');
 const co = require('co');
@@ -60,7 +60,7 @@ module.exports = {
         case 'tats':
           return `Here are all of butt's tattoos! https://imgur.com/a/Vd1iAMF`
         case 'subnight':
-          return `IF YOU ARE A SUB...Subnights will be held every other Thursday!!! We'll be watching all the Fantastic Beasts movies at around 7pm so make sure to join the !discord and link it with your twitch account!!! buttHouse`
+          return `IF YOU ARE A SUB...Subnights will be held every Friday!!!  buttHouse`
         case 'earn':
           return `Ways to earn points for your house: Donations - $1=5pts Bits - 100=5pts Gifted Subs - 1=25pts Community Games buttHouse`
         case 'current':
@@ -89,8 +89,8 @@ module.exports = {
           return `buttMonty Bet on the dog breeds! (Ex Monty: !monty pug 10) (Ex. Reggie: !reggie border_collie 10) **if the breed you want is more that one word use an "_" rather than a space! buttReggie`
         case 'job':
           return `Butt works at Twitch now! So she's livin' that Cali lifestyle!`
-        case 'vote':
-          return `Gunpla Fusion Community Vote: http://bit.ly/2DDHokc`
+        case 'schedule':
+          return `New Stream Schedule buttOMG Tuesday/Wednesday Evenings, weekends TBA! Subnight are now every Friday!!!`
         case 'followage':
           return co(function*(){
             try{
