@@ -60,7 +60,7 @@ module.exports = {
         case 'tats':
           return `Here are all of butt's tattoos! https://imgur.com/a/Vd1iAMF`
         case 'subnight':
-          return `IF YOU ARE A SUB...Subnights will be held every Friday!!!  buttHouse`
+          return `IF YOU ARE A SUB...Subnights will be held every Friday!!! buttSmug https://clips.twitch.tv/AbstemiousDeterminedSageFunRun`
         case 'earn':
           return `Ways to earn points for your house: Donations - $1=5pts Bits - 100=5pts Gifted Subs - 1=25pts Community Games buttHouse`
         case 'current':
