@@ -5,10 +5,14 @@ let randNum = new require('./RandNumber')
 let quidditch = new require('./Quidditch')
 let wizardDuel = new require('./WizardDuel')
 let search = new require('./Search')
+let blackJack = new require('./BlackJack')
 
 let dogbets = require('./dogbets')
 let backupBot = require('./BackupBot')
 
+let blackJackGame = new blackJack('thaButtress')
+blackJackGame.deal()
+blackJackGame.dealerScore()
 const response = {
     hasMessage:false,
     hasDelay:false,
