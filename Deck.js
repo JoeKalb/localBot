@@ -1,6 +1,6 @@
 
 const cards = [2,3,4,5,6,7,8,9,10,'A', 'J', 'Q', 'K']
-
+const suits = ['Clubs', 'Diamonds', 'Hearts', 'Spades']
 class Deck{
     constructor(){
         this._cards = []

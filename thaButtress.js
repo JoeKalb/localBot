@@ -11,8 +11,7 @@ let dogbets = require('./dogbets')
 let backupBot = require('./BackupBot')
 
 let blackJackGame = new blackJack('thaButtress')
-blackJackGame.deal()
-blackJackGame.dealerScore()
+
 const response = {
     hasMessage:false,
     hasDelay:false,
@@ -216,7 +215,28 @@ module.exports = {
             default:
         }
 
-        // game start and ending mod commands
+        //blackjack commands
+        if(blackJackGame.getGameOn()){
+            switch(commandName){
+                case 'ante':
+                    let bet = (parse.length > 1) ? (parse[1] > 100? 100 : parse[1]) : 10
+                    blackJackGame.addPlayer(context.username, bet)
+                    return result;
+                case 'hand':
+                    result.items = [blackJackGame.playerHand(context.username)]
+                    result.hasMessage = true;
+                    return result
+                case 'hit':
+                    if(blackJackGame.hit(context.username)){
+                        result.items = [blackJackGame.playerHand(context.username)]
+                        result.hasMessage = true;
+                        return result;
+                    }
+                default:
+            }
+        }
+
+        //game start and ending mod commands
         if(context.mod || `#${context.username}` == this.channel){
             switch(commandName){
                 case'startpuptime':
@@ -293,6 +313,29 @@ module.exports = {
                         randNum.clear();
                         return result;
                     }
+                case 'startblackjack':
+                    console.log('Blackjack game started')
+                    blackJackGame.clear()
+                    blackJackGame.startGame()
+                    result.hasMessage = true;
+                    result.items = [...result.items, 'Want to play some blackjack? Do !ante to join (10 buttcoin minimum, 100 buttcoin maximum Ex. !ante 100)']
+                    return result;
+                case 'deal':
+                    if(blackJackGame.getGameOn()){
+                        blackJackGame.deal()
+                        result.hasMessage = true;
+                        result.hasDelay = true;
+                        result.isAction = true;
+                        result.items = ['All players have been dealt their cards!', blackJackGame.dealerHand()]
+                    }
+                    return result;
+                case 'stopblackjack':
+                    blackJackGame.stopGame()
+                    blackJackGame.dealerFinal()
+                    result.hasMessage = true;
+                    result.isAction = true;
+                    result.items = [...result.items, blackJackGame.dealerHand()]
+                    return result;
                 default:
             }
         }

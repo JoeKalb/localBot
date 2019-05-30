@@ -1,5 +1,4 @@
-let fs = require('fs')
-let disNames = JSON.parse(fs.readFileSync('displayNames.json'))
+let houses = new require('./Houses')
 let deck = new require('./Deck')
 
 class BlackJack{
@@ -8,8 +7,29 @@ class BlackJack{
         this._deck = new deck()
         this._players = {}
         this._dealer = []
+        this._gameOn = false;
 
         this._deck.newDeck()
+    }
+
+    clear(){
+        this._players = {}
+        this._dealer = []
+        this._gameOn = false;
+
+        this._deck.newDeck()
+    }
+
+    getGameOn(){
+        return this._gameOn;
+    }
+
+    startGame(){
+        this._gameOn = true;
+    }
+
+    stopGame(){
+        this._gameOn = false;
     }
 
     getChannel(){
@@ -24,9 +44,12 @@ class BlackJack{
         return this._players;
     }
 
-    addPlayer(name){
+    addPlayer(name, bet){
         if(!this._players.hasOwnProperty(name))
-            this._players[name] = []
+            this._players[name] = {
+                'hand':[],
+                bet
+            }
     }
 
     deal(){
@@ -34,7 +57,7 @@ class BlackJack{
 
         for(let i = 0; i < 2; ++i){
             for(let j = 0; j < players.length; ++j){
-                this._players[players[j]].push(this._deck.drawCard())
+                this._players[players[j]].hand.push(this._deck.drawCard())
             }
             this._dealer.push(this._deck.drawCard())
         }
@@ -42,19 +65,29 @@ class BlackJack{
 
     hit(name){
         if(this._players.hasOwnProperty(name) 
-        && getHandTotal(this._players[name]) <= 21){
-            this._players[name].push(this._deck.drawCard())
+        && getHandTotal(this._players[name].hand) <= 21){
+            this._players[name].hand.push(this._deck.drawCard())
+            return true;
         }
+        return false;
     }
 
-    dealerScore(){
+    dealerFinal(){
         let currentScore = getHandTotal(this._dealer);
         while(currentScore < 17){
             this._dealer.push(this._deck.drawCard())
             currentScore = getHandTotal(this._dealer)
         }
-        console.log(this._dealer)
-        console.log(currentScore)
+    }
+
+    playerHand(name){
+        return (this._players.hasOwnProperty(name)) ? 
+            `${houses.getDisplayName(name)}'s hand: ${this._players[name].hand} Score: ${getHandTotal(this._players[name].hand)} ${(getHandTotal(this._players[name].hand) > 21) ? 'BUST!': `${(getHandTotal(this._players[name].hand) == 21)? 'BLACKJACK!':''}`}` :
+            `Sorry ${houses.getDisplayName(name)}, you didn't ante up!`
+    }
+
+    dealerHand(){
+        return `Dealers current hand: ${this._dealer} Score: ${getHandTotal(this._dealer)}`
     }
 }
 
