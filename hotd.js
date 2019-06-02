@@ -30,7 +30,7 @@ module.exports = {
             case 'speak':
                 result.hasMessage = true;
                 result.isAction = true;
-                result.items = ['BARK BARK']
+                result.items = ['BORK BORK']
                 return result
             default:
                 return result
