@@ -11,6 +11,7 @@ let CONFIG;
 
 let thabuttress = require('./thaButtress')
 let ttsp = require('./ttsp')
+let hotd = require('./hotd')
 
 if(process.env.OAUTH === undefined) {
   let localConfig = require('./config.js')
@@ -106,6 +107,7 @@ let opts = {
     'thabuttress',
     //'oooskittles',
     'thethingssheplays',
+    'hairofthedogpodcast'
    ]
 }
 
@@ -144,6 +146,9 @@ function onMessageHandler (target, context, msg, self) {
   }
   else if(target == ttsp.channel){
     handleResponses(target, ttsp.handelMessage(context, msg))
+  }
+  else if(target == '#hairofthedogpodcast'){
+    handleResponses(target, hotd.handleMessage(context, msg))
   }
   
   // wizard duel logic
