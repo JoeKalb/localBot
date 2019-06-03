@@ -284,3 +284,45 @@ clickBtnBindChannel(puptimeStopBtn)
 
 const puptimeClearBtn = document.getElementById('puptimeClearBtn')
 clickBtnBindChannel(puptimeClearBtn)
+
+// trivia controls and setup
+const triviaDropDown = document.getElementById("triviaDropDown");
+
+(async () => {
+  let response = await fetch("https://opentdb.com/api_category.php")
+  let json = await response.json();
+  json.trivia_categories.forEach(element => {
+    let op = document.createElement("option")
+    op.innerText = element.name
+    op.value = element.id
+    triviaDropDown.appendChild(op)
+  });
+})();
+
+const triviaStartBtn = document.getElementById('triviaStartBtn')
+async function startTrivia(){
+  let data = JSON.stringify({
+    channel:dropDown.value,
+    category:triviaDropDown.value
+  })
+  let response = await fetch(window.location + 'trivia',{
+    method: "POST",
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: data
+  })
+  let json = await response.json()
+  console.log(json)
+}
+triviaStartBtn.addEventListener('click', startTrivia)
+
+const triviaNextBtn = document.getElementById('triviaNextBtn')
+clickBtnBindChannel(triviaNextBtn)
+
+const triviaStopBtn = document.getElementById('triviaStopBtn')
+clickBtnBindChannel(triviaStopBtn)
+
+const triviaResetBtn = document.getElementById('triviaResetBtn')
+clickBtnBindChannel(triviaResetBtn)

@@ -484,6 +484,8 @@ router.get('/puptime/game/clear/:channel', (req, res) => {
   }
 })
 
+// add router methods for trivia
+
 // clear all info
 router.get('/clear/all', (req, res) => {
   giveaway.clear();
