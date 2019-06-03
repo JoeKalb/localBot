@@ -485,6 +485,11 @@ router.get('/puptime/game/clear/:channel', (req, res) => {
 })
 
 // add router methods for trivia
+router.post('/trivia', (req, res) => {
+  console.log(req.body.channel)
+  console.log(req.body.category)
+  res.status(200).json(`Trivia Started\nChannel: ${req.body.channel}\nCategory#: ${req.body.category}`)
+})
 
 // clear all info
 router.get('/clear/all', (req, res) => {

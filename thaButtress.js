@@ -9,8 +9,11 @@ let blackJack = new require('./BlackJack')
 
 let dogbets = require('./dogbets')
 let backupBot = require('./BackupBot')
+const trivia = require('./Trivia')
 
 let blackJackGame = new blackJack('thaButtress')
+let triviaGame = new trivia('thabuttress')
+console.log(triviaGame.token)
 
 const response = {
     hasMessage:false,
@@ -69,7 +72,7 @@ module.exports = {
             }
             else if (msg.length == 1){
                 let letter = msg.toUpperCase();
-                let numCount = hangman.isNewLetter(letter)
+                let numCount = hangman.isNewLetter(letter, context.username)
                 if(numCount > 0){
                     result.hasMessage = true;
                     
@@ -435,6 +438,7 @@ module.exports = {
         puptimeGame.clear();
         giveaway.clear();
         randNum.clear();
+        blackJackGame.clear();
     }
 }
 

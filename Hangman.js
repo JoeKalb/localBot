@@ -7,6 +7,7 @@ module.exports = {
   display:"",
   winner:"",
   channel: "",
+  prevGuesser:"",
   wordCount: 0,
   lettersCount:{},
   guessed: new Set(),
@@ -28,14 +29,17 @@ module.exports = {
   getPause: function(){
     return this.pause
   },
-  isNewLetter: function(newLetter){
-    if(!this.guessed.has(newLetter) && /[a-zA-Z]/.test(newLetter)){
+  isNewLetter: function(newLetter, guesser){
+    if(!this.guessed.has(newLetter) 
+      && this.prevGuesser !== guesser
+      && /[a-zA-Z]/.test(newLetter)){
       this.guessed.add(newLetter)
+      this.prevGuesser = guesser
       if(this.lettersCount[newLetter])
         return this.lettersCount[newLetter]
       return 0
     }
-    return -1 // letter already guessed
+    return -1 // letter already guessed or same guesser twice
   },
   isAnswer:function(guess){
     let reg = new RegExp(this.answer, 'i')
