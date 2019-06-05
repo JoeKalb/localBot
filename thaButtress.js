@@ -127,6 +127,11 @@ module.exports = {
             }
         }
 
+        // trivia game logic
+        if(triviaGame.play && msg.length === 1){
+            triviaGame.answerSubmitted(context.username, msg)
+        }
+
         // giveaway logic
         if(giveaway.allowEntries)
             giveaway.isNewName(context['display-name'])
@@ -158,6 +163,17 @@ module.exports = {
                 result.items = [...result.items, message]
                 return result;
             }
+        }
+
+        // trivia commands
+        switch(commandName){
+            case 'current':
+                if(trivia.play){
+                    result.hasMessage = true;
+                    result.items = [trivia.getCurrentQuestion()]
+                    return result;
+                }
+            default:
         }
 
         // dog bets commands!
@@ -432,6 +448,9 @@ module.exports = {
     },
     clearRandNum:() => {
         randNum.clear()
+    },
+    startTrivia:(data) => {
+        triviaGame.getQuestions(data.amount, data.category)
     },
     clear:() => {
         hangman.clear();

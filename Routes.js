@@ -488,6 +488,8 @@ router.get('/puptime/game/clear/:channel', (req, res) => {
 router.post('/trivia', (req, res) => {
   console.log(req.body.channel)
   console.log(req.body.category)
+  if(req.body.channel === 'thabuttress')
+    thabuttress.startTrivia(req.body)
   res.status(200).json(`Trivia Started\nChannel: ${req.body.channel}\nCategory#: ${req.body.category}`)
 })
 

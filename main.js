@@ -303,7 +303,8 @@ const triviaStartBtn = document.getElementById('triviaStartBtn')
 async function startTrivia(){
   let data = JSON.stringify({
     channel:dropDown.value,
-    category:triviaDropDown.value
+    category:triviaDropDown.value,
+    amount:5
   })
   let response = await fetch(window.location + 'trivia',{
     method: "POST",
