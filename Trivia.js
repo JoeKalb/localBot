@@ -46,16 +46,18 @@ function Trivia(channel) {
     }
 
     this.getQuestions = (amount, category) => {
+        let self = this;
         co(function*() {
             try{
                 let res = yield fetch(`${questionURL}amount=${amount}&category=${category}`)
                 let json = yield res.json();
-                this.questions = yield json.results;
-                this.play = true;
-                this.questions.forEach((e) => decode(e))
-                this.questions.forEach((e) => {
+                self.questions = yield json.results;
+                self.play = true;
+                self.questions.map((e) => decode(e))
+                self.questions.forEach((e) => {
                     e.formated = getOptionsArr(e)
                 })
+                console.log(self.questions)
             }
             catch(err){
                 console.log(err)
@@ -79,10 +81,17 @@ function Trivia(channel) {
     }
 
     this.getCurrentQuestion = () => {
-        let result = this.questions[this.currentQuest].questions
+        let result = this.questions[this.currentQuest].question
         return result;
     }
 
+    this.nextQuestion = () => {
+        if(this.play){
+            console.log(`Sending Question #: ${this.currentQuest}`)
+            sendQuestion(this.channel, this.questions[this.currentQuest])
+            ++this.currentQuest;
+        }
+    }
 }
 
 function decode(info) {
@@ -99,7 +108,31 @@ function getOptionsArr(info) {
     let result = [info.correct_answer, ...info.incorrect_answers].sort()
     result = [result.indexOf(info.correct_answer) + 1, ...result]
     return result;
-    
+}
+
+function sendQuestion(channel, question) {
+    const body = {
+        question,
+        channel,
+    }
+    console.log(body)
+    co(function*() {
+        try{
+            let res = yield fetch('http://localhost:8001/trivia/question',{
+                method:'post',
+                body:JSON.stringify(body),
+                headers: { 
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json' 
+                }
+            })
+            let json = yield res.json()
+            console.log(json)
+        }
+        catch(err){
+            console.log(err)
+        }
+    })
 }
 
 module.exports = Trivia;

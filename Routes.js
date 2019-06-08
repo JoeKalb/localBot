@@ -493,6 +493,17 @@ router.post('/trivia', (req, res) => {
   res.status(200).json(`Trivia Started\nChannel: ${req.body.channel}\nCategory#: ${req.body.category}`)
 })
 
+router.get('/trivia/next/:channel', (req, res) => {
+  if(req.params.channel == 'thabuttress'){
+    let q = thabuttress.getCurrentQuestion()
+    thabuttress.nextQuestion()
+    res.status(200).json(`Trivia Question Sent: ${q}`)
+  }
+  else{
+    res.status(404).json(`Channel not added to trivia ${req.params.channel}`)
+  }
+})
+
 // clear all info
 router.get('/clear/all', (req, res) => {
   giveaway.clear();

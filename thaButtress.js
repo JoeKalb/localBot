@@ -452,6 +452,12 @@ module.exports = {
     startTrivia:(data) => {
         triviaGame.getQuestions(data.amount, data.category)
     },
+    nextQuestion:() => {
+        triviaGame.nextQuestion();
+    },
+    getCurrentQuestion: () => {
+        return triviaGame.getCurrentQuestion();
+    },
     clear:() => {
         hangman.clear();
         puptimeGame.clear();
