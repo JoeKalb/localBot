@@ -57,6 +57,7 @@ function Trivia(channel) {
                 self.questions.forEach((e) => {
                     e.formated = getOptionsArr(e)
                 })
+                startTrivia(this.channel, category, amount)
                 console.log(self.questions)
             }
             catch(err){
@@ -108,6 +109,31 @@ function getOptionsArr(info) {
     let result = [info.correct_answer, ...info.incorrect_answers].sort()
     result = [result.indexOf(info.correct_answer) + 1, ...result]
     return result;
+}
+
+function startTrivia(channel, category, amount) {
+    const body = {
+        channel,
+        category,
+        amount
+    }
+    console.log(body)
+    co(function*() {
+        try{
+            let res = yield fetch('http://localhost:8001/trivia',{
+                method:'post',
+                body:JSON.stringify(body),
+                headers: { 
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json' 
+                }
+            })
+            let json = yield res.json()
+            console.log(json)
+        }catch(err){
+            console.log(err)
+        }
+    })
 }
 
 function sendQuestion(channel, question) {
