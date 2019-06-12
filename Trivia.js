@@ -57,8 +57,8 @@ function Trivia(channel) {
                 self.questions.forEach((e) => {
                     e.formated = getOptionsArr(e)
                 })
-                startTrivia(this.channel, category, amount)
-                console.log(self.questions)
+                startTrivia(self.channel, category, amount)
+                //console.log(self.questions)
             }
             catch(err){
                 console.log(err)
