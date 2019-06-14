@@ -82,7 +82,7 @@ function Trivia(channel) {
     }
 
     this.getCurrentQuestion = () => {
-        let result = this.questions[this.currentQuest].question
+        let result = this.questions[this.currentQuest]
         return result;
     }
 
