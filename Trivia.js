@@ -53,9 +53,10 @@ function Trivia(channel) {
                 let json = yield res.json();
                 self.questions = yield json.results;
                 self.play = true;
+                self.currentQuest = 0;
                 self.questions.map((e) => decode(e))
                 self.questions.forEach((e) => {
-                    e.formated = getOptionsArr(e)
+                    e.formatted = getOptionsArr(e)
                 })
                 startTrivia(self.channel, category, amount)
                 //console.log(self.questions)
