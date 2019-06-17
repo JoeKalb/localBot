@@ -52,7 +52,6 @@ function Trivia(channel) {
                 let res = yield fetch(`${questionURL}amount=${amount}&category=${category}`)
                 let json = yield res.json();
                 self.questions = yield json.results;
-                self.play = true;
                 self.currentQuest = 0;
                 self.questions.map((e) => decode(e))
                 self.questions.forEach((e) => {
@@ -69,6 +68,8 @@ function Trivia(channel) {
 
     this.answerSubmitted = (name, answer) => {
         if(this.play){
+            console.log(answer)
+
             if(this.players.hasOwnProperty(name)){
                 this.players[name][this.currentQuest] = answer;
             }
@@ -88,11 +89,21 @@ function Trivia(channel) {
     }
 
     this.nextQuestion = () => {
+        this.play = this.currentQuest <= this.questions.length;
         if(this.play){
             console.log(`Sending Question #: ${this.currentQuest}`)
             sendQuestion(this.channel, this.questions[this.currentQuest])
             ++this.currentQuest;
         }
+        else{
+            console.log("Calculate final scores here")
+        }
+    }
+
+    this.isAnswerInRange = (answer) => {
+        console.log(answer)
+        const max = (this.questions[this.currentQuest - 1].type === 'boolean') ? 2:4
+        return answer <= max && answer > 0;
     }
 }
 
@@ -118,7 +129,6 @@ function startTrivia(channel, category, amount) {
         category,
         amount
     }
-    console.log(body)
     co(function*() {
         try{
             let res = yield fetch('http://localhost:8001/trivia',{

@@ -26,6 +26,7 @@ const response = {
 }
 
 const commandPrefix = '!';
+const gamePrefix = '#';
 const standardPayout = 100;
 
 module.exports = {
@@ -253,6 +254,12 @@ module.exports = {
                     }
                 default:
             }
+        }
+
+        //trivia submit answer
+        if(triviaGame.play 
+            && triviaGame.isAnswerInRange(parseInt(commandName))){
+            triviaGame.answerSubmitted(context.username, parseInt(commandName))
         }
 
         //game start and ending mod commands
