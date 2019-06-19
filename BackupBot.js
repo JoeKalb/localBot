@@ -44,7 +44,7 @@ module.exports = {
       console.log(commandName)
       switch(commandName){
         case 'discord':
-          return `Join our offline Discord chat! Subs: Link your discord to your twitch account for bonus channels! https://discord.gg/rWnczNe`
+          return `Join our offline Discord chat! Subs: Link your discord to your twitch account for bonus channels! https://discordapp.com/invite/YbdqmZG`
         case 'house':
           return `buttHouse If you want to join in on the Harry Potter fun go the the pottermore website http://bit.ly/2ETyXDB and post a screenshot your house in the #sorting_hat channel of the discord! https://discord.gg/j3G5bx3 buttHouse`
         case 'lego':
@@ -90,7 +90,7 @@ module.exports = {
         case 'breed':
           return `buttMonty Bet on the dog breeds! (Ex Monty: !monty pug 10) (Ex. Reggie: !reggie border_collie 10) **if the breed you want is more that one word use an "_" rather than a space! buttReggie`
         case 'job':
-          return `Butt works at Twitch now! So she's livin' that Cali lifestyle!`
+          return `Butt works at Twitch now! So she's livin' that SoCal lifestyle!`
         case 'schedule':
           return `New Stream Schedule buttOMG Tuesday/Wednesday Evenings, weekends TBA! Subnight are now every Friday!!!`
         case 'followage':
