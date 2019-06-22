@@ -184,7 +184,8 @@ module.exports = {
     thedrummergirl:1,
     cloudsavegaming:1,
     crelca:0,
-    samasulee:0
+    samasulee:0,
+    pgdmystic:2
     //gryf = 0, huff = 1, sly = 2, raven = 3
   },
   getHouse: function(name){
