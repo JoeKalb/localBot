@@ -327,3 +327,39 @@ clickBtnBindChannel(triviaStopBtn)
 
 const triviaResetBtn = document.getElementById('triviaResetBtn')
 clickBtnBindChannel(triviaResetBtn)
+
+// edit display values
+const streamDisplay = document.getElementById('streamDisplay')
+const streamDisplayInput = document.getElementById('streamDisplayInput')
+const streamDisplaySubmit = document.getElementById('streamDisplaySubmit')
+const streamDisplayClear = document.getElementById('streamDisplayClear')
+
+postStreamDisplay = async (val) => {
+  const pass = dropDown.value;
+  let res = await fetch(`https://buttress-live-display.herokuapp.com?password=${pass}&value=${val}`, {
+    method: 'POST'
+  })
+  let json = res.json()
+  return json
+}
+
+streamDisplayInput.addEventListener('keypress', async (e) => {
+  const key = e.which || e.keyCode;
+  if(key === 13){
+    let result = await postStreamDisplay(streamDisplayInput.value)
+    if(result.value)
+      streamDisplay.innerText = result.value
+  }
+})
+
+streamDisplaySubmit.addEventListener('click', async () => {
+  let result = await postStreamDisplay(streamDisplayInput.value)
+  if(result.value)
+    streamDisplay.innerText = result.value
+})
+
+streamDisplayClear.addEventListener('click', async () => {
+  let result = await postStreamDisplay('')
+  streamDisplayInput.value = ''
+  streamDisplay.innerText = ''
+})
