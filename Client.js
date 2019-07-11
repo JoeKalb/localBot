@@ -129,6 +129,7 @@ client.on('message', onMessageHandler)
 client.on('connected', onConnectedHandler)
 client.on('disconnected', onDisconnectedHandler)
 client.on('cheer', onCheerHandler)
+client.on('whisper', onWhisperHandler)
 
 // Connect to Twitch:
 client.connect()
@@ -503,6 +504,13 @@ function onCheerHandler(channel, userstate, message){
     ttsp.cheerHandler(userstate, message)
   else if(channel == thabuttress.channel)
     thabuttress.cheerHandler(userstate, message)
+}
+
+function onWhisperHandler(from, userstate, message, self){
+  if(self) return
+
+  console.log(from, message)
+  console.log(userstate)
 }
 
 function onConnectedHandler (addr, port) {
