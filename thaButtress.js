@@ -6,6 +6,7 @@ let quidditch = new require('./Quidditch')
 let wizardDuel = new require('./WizardDuel')
 let search = new require('./Search')
 let blackJack = new require('./BlackJack')
+let fetch = require('node-fetch')
 
 let dogbets = require('./dogbets')
 let backupBot = require('./BackupBot')
@@ -28,6 +29,7 @@ const response = {
 const commandPrefix = '!';
 const gamePrefix = '#';
 const standardPayout = 100;
+const channelName = 'thabuttress';
 
 module.exports = {
     channel:"#thabuttress",
@@ -263,8 +265,13 @@ module.exports = {
         }
 
         //game start and ending mod commands
-        if(context.mod || `#${context.username}` == this.channel){
+        if(context.mod || `#${context.username}` == this.channel || context.username === channelName){
             switch(commandName){
+                case 'clear':
+                    result.hasMessage = true;
+                    result.items = [...result.items, 'Clearing Stream Display']
+                    updateStreamDisplay('')
+                    return result;
                 case'startpuptime':
                     puptimeGame.start('thabuttress')
                     result.hasMessage = true;
@@ -481,4 +488,12 @@ function buttcoinPayout(user, amount){
 
 function buttcoinRemove(user, amount){
     return `!buttcoins remove ${user} ${amount}`
+}
+
+updateStreamDisplay = async (val) => {
+    let res = await fetch(`https://buttress-live-display.herokuapp.com?password=${channelName}&value=${val}`, {
+        method:"POST"
+    })
+    let json = await res.json()
+    console.log(json)
 }
