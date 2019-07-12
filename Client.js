@@ -103,8 +103,8 @@ let opts = {
     password: CONFIG.OAUTH
    },
    channels: [
-    'joefish5',
     'thabuttress',
+    'joefish5',
     //'oooskittles',
     'thethingssheplays',
     'hairofthedogpodcast'
