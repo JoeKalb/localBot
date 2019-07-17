@@ -95,6 +95,7 @@ module.exports = {
     this.channel = ""
     this.wordCount = 0;
     this.lettersCount = {}
+    this.prevGuesser = ""
     this.guessed.clear()
   }
 }

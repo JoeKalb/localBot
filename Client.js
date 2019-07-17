@@ -509,8 +509,8 @@ function onCheerHandler(channel, userstate, message){
 function onWhisperHandler(from, userstate, message, self){
   if(self) return
 
-  console.log(from, message)
-  console.log(userstate)
+  //console.log(from, message)
+  //console.log(userstate)
 }
 
 function onConnectedHandler (addr, port) {
