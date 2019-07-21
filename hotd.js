@@ -32,6 +32,11 @@ module.exports = {
                 result.isAction = true;
                 result.items = ['BORK BORK']
                 return result
+            case 'lurk':
+                result.hasMessage = true;
+                result.isAction = true;
+                result.items = [`${context.username} plops down on their doggy bed to take a nap.`]
+                return result
             default:
                 return result
         }
