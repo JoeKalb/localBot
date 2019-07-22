@@ -331,35 +331,55 @@ clickBtnBindChannel(triviaResetBtn)
 // edit display values
 const streamDisplay = document.getElementById('streamDisplay')
 const streamDisplayInput = document.getElementById('streamDisplayInput')
+const streamDisplayInputFontSize = document.getElementById('streamDisplayInputFontSize')
 const streamDisplaySubmit = document.getElementById('streamDisplaySubmit')
 const streamDisplayClear = document.getElementById('streamDisplayClear')
 
-postStreamDisplay = async (val) => {
+postStreamDisplay = async (val, font) => {
   const pass = dropDown.value;
-  let res = await fetch(`https://buttress-live-display.herokuapp.com?password=${pass}&value=${val}`, {
-    method: 'POST'
+  const body = JSON.stringify({
+    value:val,
+    font:font
+  })
+  const actual = `https://buttress-live-display.herokuapp.com?password=${pass}`
+  let res = await fetch(actual, {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body
   })
   let json = res.json()
   return json
 }
 
+let displayCall = async () => {
+  let result = await postStreamDisplay(streamDisplayInput.value, parseInt(streamDisplayInputFontSize.value))
+  if(result.value)
+    streamDisplay.innerText = `${result.value} | Font: ${result.font}`
+}
+
 streamDisplayInput.addEventListener('keypress', async (e) => {
   const key = e.which || e.keyCode;
   if(key === 13){
-    let result = await postStreamDisplay(streamDisplayInput.value)
-    if(result.value)
-      streamDisplay.innerText = result.value
+    displayCall();
+  }
+})
+
+streamDisplayInputFontSize.addEventListener('keypress', async (e) => {
+  const key = e.which || e.keyCode;
+  if(key === 13){
+    displayCall();
   }
 })
 
 streamDisplaySubmit.addEventListener('click', async () => {
-  let result = await postStreamDisplay(streamDisplayInput.value)
-  if(result.value)
-    streamDisplay.innerText = result.value
+  displayCall();
 })
 
 streamDisplayClear.addEventListener('click', async () => {
-  let result = await postStreamDisplay('')
+  let result = await postStreamDisplay('', 0)
   streamDisplayInput.value = ''
   streamDisplay.innerText = ''
 })
