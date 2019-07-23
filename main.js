@@ -332,14 +332,25 @@ clickBtnBindChannel(triviaResetBtn)
 const streamDisplay = document.getElementById('streamDisplay')
 const streamDisplayInput = document.getElementById('streamDisplayInput')
 const streamDisplayInputFontSize = document.getElementById('streamDisplayInputFontSize')
+const streamDisplayColor = document.getElementById('streamDisplayColor')
+const streamDisplayColorList = document.getElementById('streamDisplayColorList')
 const streamDisplaySubmit = document.getElementById('streamDisplaySubmit')
 const streamDisplayClear = document.getElementById('streamDisplayClear')
 
-postStreamDisplay = async (val, font) => {
+const CSS_COLOR_NAMES = ["AliceBlue","AntiqueWhite","Aqua","Aquamarine","Azure","Beige","Bisque","Black","BlanchedAlmond","Blue","BlueViolet","Brown","BurlyWood","CadetBlue","Chartreuse","Chocolate","Coral","CornflowerBlue","Cornsilk","Crimson","Cyan","DarkBlue","DarkCyan","DarkGoldenRod","DarkGray","DarkGrey","DarkGreen","DarkKhaki","DarkMagenta","DarkOliveGreen","DarkOrange","DarkOrchid","DarkRed","DarkSalmon","DarkSeaGreen","DarkSlateBlue","DarkSlateGray","DarkSlateGrey","DarkTurquoise","DarkViolet","DeepPink","DeepSkyBlue","DimGray","DimGrey","DodgerBlue","FireBrick","FloralWhite","ForestGreen","Fuchsia","Gainsboro","GhostWhite","Gold","GoldenRod","Gray","Grey","Green","GreenYellow","HoneyDew","HotPink","IndianRed","Indigo","Ivory","Khaki","Lavender","LavenderBlush","LawnGreen","LemonChiffon","LightBlue","LightCoral","LightCyan","LightGoldenRodYellow","LightGray","LightGrey","LightGreen","LightPink","LightSalmon","LightSeaGreen","LightSkyBlue","LightSlateGray","LightSlateGrey","LightSteelBlue","LightYellow","Lime","LimeGreen","Linen","Magenta","Maroon","MediumAquaMarine","MediumBlue","MediumOrchid","MediumPurple","MediumSeaGreen","MediumSlateBlue","MediumSpringGreen","MediumTurquoise","MediumVioletRed","MidnightBlue","MintCream","MistyRose","Moccasin","NavajoWhite","Navy","OldLace","Olive","OliveDrab","Orange","OrangeRed","Orchid","PaleGoldenRod","PaleGreen","PaleTurquoise","PaleVioletRed","PapayaWhip","PeachPuff","Peru","Pink","Plum","PowderBlue","Purple","RebeccaPurple","Red","RosyBrown","RoyalBlue","SaddleBrown","Salmon","SandyBrown","SeaGreen","SeaShell","Sienna","Silver","SkyBlue","SlateBlue","SlateGray","SlateGrey","Snow","SpringGreen","SteelBlue","Tan","Teal","Thistle","Tomato","Turquoise","Violet","Wheat","White","WhiteSmoke","Yellow","YellowGreen"];
+CSS_COLOR_NAMES.forEach((color) => {
+  let option = document.createElement("option")
+  option.value = color;
+  option.innerText = color;
+  streamDisplayColorList.appendChild(option)
+})
+
+postStreamDisplay = async (val, font, color) => {
   const pass = dropDown.value;
   const body = JSON.stringify({
     value:val,
-    font:font
+    font:font,
+    color
   })
   const actual = `https://buttress-live-display.herokuapp.com?password=${pass}`
   let res = await fetch(actual, {
@@ -355,31 +366,30 @@ postStreamDisplay = async (val, font) => {
 }
 
 let displayCall = async () => {
-  let result = await postStreamDisplay(streamDisplayInput.value, parseInt(streamDisplayInputFontSize.value))
+  let result = await postStreamDisplay(
+    streamDisplayInput.value, 
+    parseInt(streamDisplayInputFontSize.value), 
+    streamDisplayColor.value)
   if(result.value)
-    streamDisplay.innerText = `${result.value} | Font: ${result.font}`
+    streamDisplay.innerText = `${result.value} | Font: ${result.font} | Color: ${result.color}`
 }
 
-streamDisplayInput.addEventListener('keypress', async (e) => {
-  const key = e.which || e.keyCode;
-  if(key === 13){
-    displayCall();
-  }
-})
-
-streamDisplayInputFontSize.addEventListener('keypress', async (e) => {
-  const key = e.which || e.keyCode;
-  if(key === 13){
-    displayCall();
-  }
-})
+const streamDisplayInputs = document.getElementsByClassName('input is-small streamDisplay')
+for (let input of streamDisplayInputs){
+  input.addEventListener('keypress', async (e) => {
+    const key = e.which || e.keyCode;
+    if(key === 13){
+      displayCall();
+    }
+  })
+}
 
 streamDisplaySubmit.addEventListener('click', async () => {
   displayCall();
 })
 
 streamDisplayClear.addEventListener('click', async () => {
-  let result = await postStreamDisplay('', 0)
+  let result = await postStreamDisplay('', 0, 'white')
   streamDisplayInput.value = ''
   streamDisplay.innerText = ''
 })
