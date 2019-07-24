@@ -52,6 +52,18 @@ class WordBan{
         this.saveAll()
     }
 
+    getwordChatCount(){
+        return this._wordChatCount
+    }
+
+    getWordSaidCount(){
+        return this._wordSaidCount
+    }
+
+    getWordDisplay(){
+        return `${this._channel} = ${this._wordSaidCount} | Chat = ${this._wordChatCount}`
+    }
+
     wordCheck(msg){
         let isWord = new RegExp(this._word, "i")
         let check = isWord.test(msg)
@@ -60,6 +72,12 @@ class WordBan{
             this.saveAll()
         }
         return check;
+    }
+
+    wordStreamerSaid(){
+        ++this._wordSaidCount
+        this.saveAll()
+        return this._wordSaidCount
     }
 
     editPlayer(name, isPlaying){
