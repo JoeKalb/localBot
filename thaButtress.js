@@ -390,12 +390,18 @@ module.exports = {
         //console.log(userstate)
         //console.log(msg)
     },
-    subHandler: (channel, username, method, message, userstate) => {
-        console.log(channel, username, method, message, userstate)
+    subHandler: (username, method, message, userstate) => {
         let result = Object.assign({}, response)
         result.hasMessage = true;
         result.timedMessage = 3;
         result.items = ['buttHella buttHype buttHella buttHype buttHella buttHype buttHella buttHype buttHella buttHype buttHella buttHype']
+        return result;
+    },
+    subMysteryGiftHandler: (username, numbOfSubs, methods, userstate) => {
+        let result = Object.assign({}, response)
+        result.hasMessage = true;
+        result.hasPayout = true;
+        result.items = [multiGiftPayout(username, numbOfSubs, methods)]
         return result;
     },
     // commands to handle games
@@ -497,6 +503,11 @@ function buttcoinPayout(user, amount){
 
 function buttcoinRemove(user, amount){
     return `!buttcoins remove ${user} ${amount}`
+}
+
+function multiGiftPayout(user, numOfSubs, methods){
+    const plan = parseInt(methods.plan) / 1000;
+    return buttcoinPayout(user, numOfSubs * plan)
 }
 
 updateStreamDisplay = async (val) => {

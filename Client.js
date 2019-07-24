@@ -112,7 +112,8 @@ let opts = {
     'joefish5',
     //'oooskittles',
     'thethingssheplays',
-    'hairofthedogpodcast'
+    'hairofthedogpodcast',
+    'lunalyrik'
    ]
 }
 
@@ -136,6 +137,8 @@ client.on('disconnected', onDisconnectedHandler)
 client.on('cheer', onCheerHandler)
 client.on('whisper', onWhisperHandler)
 client.on('subscription', onSubHandler)
+client.on('subgift', onSubGiftHandler)
+client.on('submysterygift', onSubMysteryGiftHandler)
 
 // Connect to Twitch:
 client.connect()
@@ -520,9 +523,19 @@ function onWhisperHandler(from, userstate, message, self){
 }
 
 function onSubHandler(channel, username, method, message, userstate){
-  console.log(`channel: ${channel}`)
-  if(`#${channel}` === thabuttress.channel)
-    handleResponses(channel, thabuttress.subHandler(channel, username, method, message, userstate))
+  if(channel == thabuttress.channel)
+    handleResponses(channel, thabuttress.subHandler(username, method, message, userstate))
+}
+
+function onSubGiftHandler(channel, username, streakMonths, recipient, methods, userstate){
+  console.log(userstate)
+}
+
+function onSubMysteryGiftHandler(channel, username, numbOfSubs, methods, userstate) {
+  console.log(methods)
+  console.log(numbOfSubs)
+  if(channel == thabuttress.channel)
+    handleResponses(channel, thabuttress.subMysteryGiftHandler(username, numbOfSubs, methods, userstate))
 }
 
 function onConnectedHandler (addr, port) {
