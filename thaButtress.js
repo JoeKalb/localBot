@@ -23,6 +23,7 @@ const response = {
     hasMultiPayout:false,
     isAction:false,
     hasPromise:false,
+    timedMessage:0,
     items:[]
 }
 
@@ -388,6 +389,14 @@ module.exports = {
     cheerHandler:(userstate, msg) => {
         //console.log(userstate)
         //console.log(msg)
+    },
+    subHandler: (channel, username, method, message, userstate) => {
+        console.log(channel, username, method, message, userstate)
+        let result = Object.assign({}, response)
+        result.hasMessage = true;
+        result.timedMessage = 3;
+        result.items = ['buttHella buttHype buttHella buttHype buttHella buttHype buttHella buttHype buttHella buttHype buttHella buttHype']
+        return result;
     },
     // commands to handle games
     startHangman: (info) => {

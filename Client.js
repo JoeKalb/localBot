@@ -59,7 +59,12 @@ function delaySayMessage(target, msg, seconds){
 function handleResponses(target, response){
   if(response.hasMessage){
     let len = response.items.length
-    if(len == 1){
+    if(response.timedMessage && response.timedMessage > 0){
+      setTimeout(() => {
+        client.say(target, response.items[0])
+      }, 1000*response.timedMessage)
+    }
+    else if(len == 1){
       if(typeof response.items[0] == 'object'){
         response.items[0].then((res) => {
           (response.isAction) ? client.action(target, res)
@@ -130,6 +135,7 @@ client.on('connected', onConnectedHandler)
 client.on('disconnected', onDisconnectedHandler)
 client.on('cheer', onCheerHandler)
 client.on('whisper', onWhisperHandler)
+client.on('subscription', onSubHandler)
 
 // Connect to Twitch:
 client.connect()
@@ -511,6 +517,12 @@ function onWhisperHandler(from, userstate, message, self){
 
   //console.log(from, message)
   //console.log(userstate)
+}
+
+function onSubHandler(channel, username, method, message, userstate){
+  console.log(`channel: ${channel}`)
+  if(`#${channel}` === thabuttress.channel)
+    handleResponses(channel, thabuttress.subHandler(channel, username, method, message, userstate))
 }
 
 function onConnectedHandler (addr, port) {
