@@ -1,0 +1,9 @@
+{
+    "players":{},
+    "wordInfo":{
+        "word":"",
+        "wordSaidCount":0,
+        "wordChatCount":0,
+        "on_game":false
+    }
+}

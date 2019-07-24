@@ -6,15 +6,18 @@ let quidditch = new require('./Quidditch')
 let wizardDuel = new require('./WizardDuel')
 let search = new require('./Search')
 let blackJack = new require('./BlackJack')
+let WordBan = new require('./WordBan')
 let fetch = require('node-fetch')
 
 let dogbets = require('./dogbets')
 let backupBot = require('./BackupBot')
 const trivia = require('./Trivia')
 
-let blackJackGame = new blackJack('thaButtress')
+let blackJackGame = new blackJack('thabuttress')
 let triviaGame = new trivia('thabuttress')
 console.log(triviaGame.token)
+
+let wordBanGame = new WordBan('thabuttress')
 
 const response = {
     hasMessage:false,

@@ -23,7 +23,8 @@
   "nodemonConfig": {
     "ignore": [
       "displayNames.json",
-      "dogbets.json"
+      "dogbets.json",
+      "WordBan.json"
     ]
   },
   "repository": {
