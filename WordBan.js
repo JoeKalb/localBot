@@ -43,6 +43,18 @@ class WordBan{
         this.saveAll()
     }
 
+    setGameOnTrue(){
+        this._gameOn = true;
+        this.saveAll()
+        return this._gameOn
+    }
+
+    setGameOnFalse(){
+        this._gameOn = false;
+        this.saveAll()
+        return this._gameOn;
+    }
+
     getWord(){
         return this._word
     }
@@ -65,12 +77,16 @@ class WordBan{
     }
 
     wordCheck(msg){
-        let isWord = new RegExp(this._word, "i")
-        let check = isWord.test(msg)
-        if(check){
-            ++this._wordChatCount;
-            this.saveAll()
-        }
+        const words = msg.split(' ')
+        let check = false
+        words.forEach(word => {
+            check = word.toLowerCase() === this._word
+            if(check){
+                ++this._wordChatCount;
+                this.saveAll()
+                return check;
+            }
+        })
         return check;
     }
 
@@ -84,6 +100,11 @@ class WordBan{
         this._players[name] = isPlaying;
         this.saveAll()
         return isPlaying;
+    }
+
+    checkPlayer(name){
+        return (this._players.hasOwnProperty(name))?
+            this._players[name] : false;
     }
 }
 

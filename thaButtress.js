@@ -139,6 +139,19 @@ module.exports = {
             triviaGame.answerSubmitted(context.username, msg)
         }
 
+        // wordban game logic
+        if(wordBanGame.getGameOn() && wordBanGame.checkPlayer(context.username)){
+            if(wordBanGame.wordCheck(msg)){
+                /* result.hasMessage = true;
+                result.items = [
+                    `${context['display-name']} said the banned word and looses 5 buttcoins!`,
+                    wordBanGame.getWordDisplay()
+                ] */
+                console.log(msg)
+                return result;
+            }
+        }
+
         // giveaway logic
         if(giveaway.allowEntries)
             giveaway.isNewName(context['display-name'])
@@ -170,6 +183,36 @@ module.exports = {
                 result.items = [...result.items, message]
                 return result;
             }
+        }
+
+        // wordban commands
+        switch(commandName){
+            case 'join':
+                wordBanGame.editPlayer(context.username, true)
+                result.hasMessage = true;
+                result.items = [
+                    `${context['display-name']} has opted into the word ban.`
+                ]
+                return result;
+            case 'leave':
+                wordBanGame.editPlayer(context.username, false)
+                result.hasMessage = true;
+                result.items = [
+                    `${context['display-name']} has opted out of the word ban.`
+                ]
+                return result;
+            case 'wordban':
+                result.hasMessage = true;
+                result.items = [
+                    `Commands for the wordban game: !join !leave !score`
+                ]
+                return result;
+            case 'score':
+                result.hasMessage = true;
+                result.items = [
+                    wordBanGame.getWordDisplay()
+                ]
+            default:
         }
 
         // trivia commands
@@ -275,6 +318,29 @@ module.exports = {
                     result.hasMessage = true;
                     result.items = [...result.items, 'Clearing Stream Display']
                     updateStreamDisplay('')
+                    return result;
+                case 'setword':
+                    if(parse[1]){
+                        wordBanGame.clear()
+                        wordBanGame.setWord(parse[1].toLowerCase())
+                        result.hasMessage = true;
+                        result.items = [
+                            `Banned Word: ${wordBanGame.getWord()}`
+                        ]
+                        wordBanGame.setGameOnTrue()
+                        return result;
+                    }
+                case 'clearword':
+                    wordBanGame.clear()
+                    return result;
+                case 'word':
+                    if(wordBanGame.getGameOn())
+                        wordBanGame.wordStreamerSaid()
+                    const count = wordBanGame.getWordSaidCount();
+                    result.hasMessage = true
+                    result.items = [
+                        `thaButtress has said ${wordBanGame.getWord()} ${count} time${(count > 1)? 's':''}.`
+                    ]
                     return result;
                 case'startpuptime':
                     puptimeGame.start('thabuttress')
@@ -510,7 +576,12 @@ function buttcoinRemove(user, amount){
 
 function multiGiftPayout(user, numOfSubs, methods){
     const plan = parseInt(methods.plan) / 1000;
-    return buttcoinPayout(user, numOfSubs * plan)
+    let value = 25
+    if(plan === 2)
+        value = 50
+    else if(plan === 3)
+        value = 125
+    return buttcoinPayout(user, numOfSubs * value)
 }
 
 updateStreamDisplay = async (val) => {

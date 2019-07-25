@@ -438,7 +438,7 @@ function onMessageHandler (target, context, msg, self) {
         client.action(target, `Sorry ${context['display-name']}, you need a !house to cheer.`)
       }
       break;
-    case 'raid':
+    /* case 'raid':
       if(houses.isEnrolled(context.username)){
         let houseNum = houses.students[context.username]
         client.action(target, `buttButt buttCrew ${houses.houseNames[houseNum].toUpperCase()} RAID buttBest buttCrew`)
@@ -461,7 +461,7 @@ function onMessageHandler (target, context, msg, self) {
       break;
     case 'rav':
       client.say(target, houses.specificHouseStudents(3))
-      break;
+      break; */
     /* case 'commands':
       let commands = "Current list of all Harry Potter commands:";
       commands += " House info [!house !houses !whathouse !myhouse !earn !cheer !raid !gry !huff !sly !rav] |";
@@ -528,14 +528,15 @@ function onSubHandler(channel, username, method, message, userstate){
 }
 
 function onSubGiftHandler(channel, username, streakMonths, recipient, methods, userstate){
-  console.log(userstate)
+  console.log(methods)
 }
 
 function onSubMysteryGiftHandler(channel, username, numbOfSubs, methods, userstate) {
-  console.log(methods)
-  console.log(numbOfSubs)
-  if(channel == thabuttress.channel)
-    handleResponses(channel, thabuttress.subMysteryGiftHandler(username, numbOfSubs, methods, userstate))
+  if(channel == thabuttress.channel){
+    setTimeout(() => {
+      handleResponses(channel, thabuttress.subMysteryGiftHandler(username, numbOfSubs, methods, userstate))
+    }, 5000)
+  }
 }
 
 function onConnectedHandler (addr, port) {
