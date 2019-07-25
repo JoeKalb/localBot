@@ -37,6 +37,7 @@ const channelName = 'thabuttress';
 
 module.exports = {
     channel:"#thabuttress",
+    bot:"thabottress",
     handleMessage: (context, msg) => {
         // all messages will choose to return through this object
         let result = Object.assign({}, response)
@@ -141,13 +142,14 @@ module.exports = {
 
         // wordban game logic
         if(wordBanGame.getGameOn() && wordBanGame.checkPlayer(context.username)){
-            if(wordBanGame.wordCheck(msg)){
-                /* result.hasMessage = true;
+            wordBanGame.chatterInGame(context.username)
+            let check = wordBanGame.wordCheck(msg)
+            if(check){
+                wordBanGame.chatterSaidWord(context.username)
+                result.hasMessage = true;
                 result.items = [
-                    `${context['display-name']} said the banned word and looses 5 buttcoins!`,
-                    wordBanGame.getWordDisplay()
-                ] */
-                console.log(msg)
+                    `${buttcoinRemove(context.username, 5)} "${wordBanGame.getWord()}" is the current banned word!`
+                ]
                 return result;
             }
         }
@@ -317,9 +319,9 @@ module.exports = {
                 case 'clear':
                     result.hasMessage = true;
                     result.items = [...result.items, 'Clearing Stream Display']
-                    updateStreamDisplay('')
+                    updateStreamDisplay('', 100, 'white')
                     return result;
-                case 'setword':
+                case 'wordset':
                     if(parse[1]){
                         wordBanGame.clear()
                         wordBanGame.setWord(parse[1].toLowerCase())
@@ -330,17 +332,27 @@ module.exports = {
                         wordBanGame.setGameOnTrue()
                         return result;
                     }
-                case 'clearword':
+                case 'wordclear':
                     wordBanGame.clear()
                     return result;
-                case 'word':
+                case 'said':
                     if(wordBanGame.getGameOn())
                         wordBanGame.wordStreamerSaid()
                     const count = wordBanGame.getWordSaidCount();
-                    result.hasMessage = true
+                    console.log(`${wordBanGame.getWordDisplay()}`)
+                    /* result.hasMessage = true
                     result.items = [
                         `thaButtress has said ${wordBanGame.getWord()} ${count} time${(count > 1)? 's':''}.`
-                    ]
+                    ] */
+                    return result;
+                case 'wordhard':
+                    wordBanGame.setLevelHard()
+                    return result;
+                case 'wordeasy':
+                    wordBanGame.setLevelEasy()
+                    return result;
+                case 'wordend':
+                    wordBanGame.setGameOnFalse()
                     return result;
                 case'startpuptime':
                     puptimeGame.start('thabuttress')
@@ -584,9 +596,15 @@ function multiGiftPayout(user, numOfSubs, methods){
     return buttcoinPayout(user, numOfSubs * value)
 }
 
-updateStreamDisplay = async (val) => {
-    let res = await fetch(`https://buttress-live-display.herokuapp.com?password=${channelName}&value=${val}`, {
-        method:"POST"
+let updateStreamDisplay = async (val, font, color) => {
+    const body = JSON.stringify({
+        value:val,
+        font,
+        color
+    })
+    let res = await fetch(`https://buttress-live-display.herokuapp.com?password=${channelName}`, {
+        method:"POST",
+        body
     })
     let json = await res.json()
     console.log(json)

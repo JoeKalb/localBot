@@ -5,20 +5,24 @@ class WordBan{
         this._channel = channel
         this._file = JSON.parse(fs.readFileSync('WordBan.json'));
         this._players = this._file.players;
+        this._played = this._file.played;
         this._word = this._file.wordInfo.word;
         this._wordSaidCount = this._file.wordInfo.wordSaidCount;
         this._wordChatCount = this._file.wordInfo.wordChatCount;
         this._gameOn = this._file.wordInfo.on_game;
+        this._hard = this._file.wordInfo.hard;
     }
 
     saveAll(){
         this._file = {
             "players":this._players,
+            "played":this._played,
             "wordInfo":{
                 "word":this._word,
                 "wordSaidCount":this._wordSaidCount,
                 "wordChatCount":this._wordChatCount,
-                "on_game":this._gameOn
+                "on_game":this._gameOn,
+                "hard":this._hard
             }
         }
         fs.writeFileSync('WordBan.json', JSON.stringify(this._file))
@@ -29,6 +33,7 @@ class WordBan{
         this._word = ''
         this._wordSaidCount = 0;
         this._wordChatCount = 0;
+        this._played = {}
         this.saveAll();
     }
 
@@ -77,23 +82,41 @@ class WordBan{
     }
 
     wordCheck(msg){
-        const words = msg.split(' ')
-        let check = false
-        words.forEach(word => {
-            check = word.toLowerCase() === this._word
-            if(check){
-                ++this._wordChatCount;
-                this.saveAll()
-                return check;
-            }
-        })
-        return check;
+        if(this._hard){
+            let reg = new RegExp(this._word, "i")
+            return reg.test(msg)
+        }
+        else{
+            const words = msg.split(' ')
+            let check = false
+            words.forEach(word => {
+                check = word.toLowerCase() === this._word
+                if(check){
+                    ++this._wordChatCount;
+                    this.saveAll()
+                    return check;
+                }
+            })
+            return check;
+        }
     }
 
     wordStreamerSaid(){
         ++this._wordSaidCount
         this.saveAll()
         return this._wordSaidCount
+    }
+
+    chatterInGame(name){
+        if(!this._played.hasOwnProperty(name)){
+            this._played[name] = 0
+            this.saveAll()
+        }
+    }
+
+    chatterSaidWord(name){
+        ++this._played[name];
+        this.saveAll();
     }
 
     editPlayer(name, isPlaying){
@@ -105,6 +128,20 @@ class WordBan{
     checkPlayer(name){
         return (this._players.hasOwnProperty(name))?
             this._players[name] : false;
+    }
+
+    getLevel(){
+        return this._hard
+    }
+
+    setLevelHard(){
+        this._hard = true;
+        this.saveAll()
+    }
+
+    setLevelEasy(){
+        this._hard = false;
+        this.saveAll()
     }
 }
 
