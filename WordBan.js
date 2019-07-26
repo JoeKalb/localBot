@@ -84,7 +84,12 @@ class WordBan{
     wordCheck(msg){
         if(this._hard){
             let reg = new RegExp(this._word, "i")
-            return reg.test(msg)
+            if(reg.test(msg)){
+                ++this._wordChatCount;
+                this.saveAll()
+                return true;
+            }
+            return false;
         }
         else{
             const words = msg.split(' ')
