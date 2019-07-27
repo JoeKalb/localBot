@@ -34,6 +34,7 @@ const commandPrefix = '!';
 const gamePrefix = '#';
 const standardPayout = 100;
 const channelName = 'thabuttress';
+const userID = '82523255';
 
 module.exports = {
     channel:"#thabuttress",
@@ -608,4 +609,93 @@ let updateStreamDisplay = async (val, font, color) => {
     })
     let json = await res.json()
     console.log(json)
+}
+
+const CLIENT_ID = 'q9qpitg0qv8dujukht7g581ds0n5hx'
+
+let getStreamData = async (arr) => {
+    try{
+        let allUserIDs = `user_id=${arr[0]}`
+
+        if(arr.length <= 100){
+            for(let i = 1; i < arr.length; ++i)
+                allUserIDs += `&user_id=${arr[i]}`
+        
+            let res = await fetch(`https://api.twitch.tv/helix/streams?${allUserIDs}`, {
+                headers:{
+                    'Client-ID':`${CLIENT_ID}`,
+                    'Accept':'application/vnd.twitchtv.v5+json'
+                }
+            })
+            let json = await res.json()
+            return json.data;
+        }
+        else{
+            const calls = Math.ceil(arr.length/100)
+            let allUserIDsArr = new Array(calls)
+
+            for(let i = 0; i < calls; ++i){
+                let idCall = ''
+
+                const length = (i === calls - 1) 
+                    ? arr.length%100 : (i*100) + 100
+                for(let j = i*100; j < length; ++j){
+                    idCall += `user_id=${arr[j]}&`
+                }
+
+                allUserIDsArr[i] = idCall
+            }
+
+            let data = []
+
+            for(let i = 0; i < calls; ++i){
+                try{
+                    let res = await fetch(`https://api.twitch.tv/helix/streams?${allUserIDsArr[i]}`, {
+                        headers:{
+                            'Client-ID':`${CLIENT_ID}`,
+                            'Accept':'application/vnd.twitchtv.v5+json'
+                        }
+                    })
+
+                    let json = await res.json()
+
+                    if(json.data.length > 0)
+                        data = [...data, ...json.data]
+                }
+                catch(err){
+                    console.log(err)
+                }
+            }
+
+            return data;
+        }
+        
+    }
+    catch(err){
+        console.log(err)
+        return false;
+    }
+}
+
+let getTwitchStaffTeamIDArr = async () => {
+    try{
+        let res = await fetch(`https://api.twitch.tv/kraken/teams/staff`, {
+            headers:{
+                'Client-ID':`${CLIENT_ID}`,
+                'Accept':'application/vnd.twitchtv.v5+json'
+            }
+        })
+        let json = await res.json()
+    
+        let result = []
+    
+        for(let i = 0; i < json.users.length; ++i)
+            result = [...result, json.users[i]._id]
+    
+        return result;
+    }
+    catch(err){
+        console.log(err)
+        return false;
+    }
 }
