@@ -337,14 +337,24 @@ module.exports = {
                     wordBanGame.clear()
                     return result;
                 case 'said':
-                    if(wordBanGame.getGameOn())
-                        wordBanGame.wordStreamerSaid()
-                    const count = wordBanGame.getWordSaidCount();
+                    if(wordBanGame.getGameOn()){
+                        (parse[1])?
+                            wordBanGame.wordStreamerSaid(parseInt(parse[1])) :
+                            wordBanGame.wordStreamerSaid()
+                    }
                     console.log(`${wordBanGame.getWordDisplay()}`)
                     /* result.hasMessage = true
                     result.items = [
                         `thaButtress has said ${wordBanGame.getWord()} ${count} time${(count > 1)? 's':''}.`
                     ] */
+                    return result;
+                case 'unsaid':
+                    if(wordBanGame.getGameOn()){
+                        (parse[1])?
+                            wordBanGame.wordStreamerSaidDecrease(parseInt(parse[1])) :
+                            wordBanGame.wordBanGame()
+                    }
+                    console.log(wordBanGame.getWordDisplay())
                     return result;
                 case 'wordhard':
                     wordBanGame.setLevelHard()
@@ -354,6 +364,10 @@ module.exports = {
                     return result;
                 case 'wordend':
                     wordBanGame.setGameOnFalse()
+                    result.hasMessage = true;
+                    result.items = [
+                        `Final Score for WordBan: ${wordBanGame.getWordDisplay()}`
+                    ]
                     return result;
                 case'startpuptime':
                     puptimeGame.start('thabuttress')
@@ -475,7 +489,7 @@ module.exports = {
     subHandler: (username, method, message, userstate) => {
         let result = Object.assign({}, response)
         result.hasMessage = true;
-        result.timedMessage = 3;
+        result.timedMessage = 4;
         result.items = ['buttHella buttHype buttHella buttHype buttHella buttHype buttHella buttHype buttHella buttHype buttHella buttHype']
         return result;
     },
