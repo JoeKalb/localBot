@@ -3,7 +3,17 @@ let fs = require('fs')
 class WordBan{
     constructor(channel){
         this._channel = channel
-        this._file = JSON.parse(fs.readFileSync(`./gameFiles/${channel}/WordBan.json`));
+        this._file = JSON.parse(fs.readFileSync(`./gameFiles/${channel}/WordBan.json`)) || {
+                "players":{},
+                "played":{},
+                "wordInfo":{
+                    "word":"",
+                    "wordSaidCount":0,
+                    "wordChatCount":0,
+                    "on_game":false,
+                    "hard":false
+                }
+            }
         this._players = this._file.players;
         this._played = this._file.played;
         this._word = this._file.wordInfo.word;
@@ -117,6 +127,8 @@ class WordBan{
 
     wordStreamerSaidDecrease(num=1){
         this._wordSaidCount -= num
+        if(this._wordSaidCount < 0)
+            this._wordSaidCount = 0
         this.saveAll()
         return this._wordSaidCount
     }

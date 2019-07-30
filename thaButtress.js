@@ -352,7 +352,7 @@ module.exports = {
                     if(wordBanGame.getGameOn()){
                         (parse[1])?
                             wordBanGame.wordStreamerSaidDecrease(parseInt(parse[1])) :
-                            wordBanGame.wordBanGame()
+                            wordBanGame.wordStreamerSaidDecrease()
                     }
                     console.log(wordBanGame.getWordDisplay())
                     return result;
@@ -722,5 +722,6 @@ let getTwitchStaffTeamIDArr = async () => {
     }
     let arr = await getTwitchStaffTeamIDArr()
     let result = await getStreamData(arr)
-    console.log(result.length)
+    for(let stream of result)
+        console.log(stream.user_name)
 })();
