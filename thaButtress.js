@@ -699,3 +699,14 @@ let getTwitchStaffTeamIDArr = async () => {
         return false;
     }
 }
+
+(async() => {
+    let streamInfo = await getStreamData([userID])
+    console.log(streamInfo)
+    if(streamInfo.length > 0){
+        return
+    }
+    let arr = await getTwitchStaffTeamIDArr()
+    let result = await getStreamData(arr)
+    console.log(result.length)
+})();
