@@ -10,7 +10,7 @@ class WordBan{
         this._wordSaidCount = this._file.wordInfo.wordSaidCount;
         this._wordChatCount = this._file.wordInfo.wordChatCount;
         this._gameOn = this._file.wordInfo.on_game;
-        this._hard = this._file.wordInfo.hard;
+        this._hard = this._file.wordInfo.hard || false;
     }
 
     saveAll(){
@@ -34,6 +34,7 @@ class WordBan{
         this._wordSaidCount = 0;
         this._wordChatCount = 0;
         this._played = {}
+        this._hard = false;
         this.saveAll();
     }
 
@@ -108,8 +109,14 @@ class WordBan{
         }
     }
 
-    wordStreamerSaid(){
-        ++this._wordSaidCount
+    wordStreamerSaid(num=1){
+        this._wordSaidCount += num
+        this.saveAll()
+        return this._wordSaidCount
+    }
+
+    wordStreamerSaidDecrease(num=1){
+        this._wordSaidCount -= num
         this.saveAll()
         return this._wordSaidCount
     }
