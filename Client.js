@@ -113,7 +113,8 @@ let opts = {
     //'oooskittles',
     'thethingssheplays',
     'hairofthedogpodcast',
-    'lunalyrik'
+    'lunalyrik',
+    'mopgarden'
    ]
 }
 
@@ -523,15 +524,23 @@ function onWhisperHandler(from, userstate, message, self){
 }
 
 function onSubHandler(channel, username, method, message, userstate){
-  if(channel == thabuttress.channel){
+  console.log(channel === thabuttress.channel)
+  if(channel === '#thabuttress'){
     setTimeout(() => {
       handleResponses(channel, thabuttress.subHandler(username, method, message, userstate))
     }, 5000)
   }
+  else{
+    console.log(`sub in ${channel}`)
+    console.log(username)
+    console.log(method)
+    console.log(message)
+    console.log(userstate)
+  }
 }
 
 function onSubGiftHandler(channel, username, streakMonths, recipient, methods, userstate){
-  console.log(methods)
+  //console.log(methods)
 }
 
 function onSubMysteryGiftHandler(channel, username, numbOfSubs, methods, userstate) {

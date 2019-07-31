@@ -330,6 +330,7 @@ module.exports = {
                         result.items = [
                             `Banned Word: ${wordBanGame.getWord()}`
                         ]
+                        updateStreamDisplay(`Banned word: ${wordBanGame.getWord()}`, 60, 'white')
                         wordBanGame.setGameOnTrue()
                         return result;
                     }
