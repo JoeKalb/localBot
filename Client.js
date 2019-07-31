@@ -523,8 +523,11 @@ function onWhisperHandler(from, userstate, message, self){
 }
 
 function onSubHandler(channel, username, method, message, userstate){
-  if(channel == thabuttress.channel)
-    handleResponses(channel, thabuttress.subHandler(username, method, message, userstate))
+  if(channel == thabuttress.channel){
+    setTimeout(() => {
+      handleResponses(channel, thabuttress.subHandler(username, method, message, userstate))
+    }, 5000)
+  }
 }
 
 function onSubGiftHandler(channel, username, streakMonths, recipient, methods, userstate){

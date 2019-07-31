@@ -194,7 +194,7 @@ module.exports = {
                 wordBanGame.editPlayer(context.username, true)
                 result.hasMessage = true;
                 result.items = [
-                    `${context['display-name']} has opted into the word ban.`
+                    `${context['display-name']} has opted into future word ban games. Do !leave if you don't want to play.`
                 ]
                 return result;
             case 'leave':
@@ -487,9 +487,9 @@ module.exports = {
         //console.log(msg)
     },
     subHandler: (username, method, message, userstate) => {
+        console.log(`${username} just subbed with plan ${method.plan}`)
         let result = Object.assign({}, response)
         result.hasMessage = true;
-        result.timedMessage = 4;
         result.items = ['buttHella buttHype buttHella buttHype buttHella buttHype buttHella buttHype buttHella buttHype buttHella buttHype']
         return result;
     },
@@ -714,7 +714,7 @@ let getTwitchStaffTeamIDArr = async () => {
     }
 }
 
-(async() => {
+/* (async() => {
     let streamInfo = await getStreamData([userID])
     console.log(streamInfo)
     if(streamInfo.length > 0){
@@ -724,4 +724,4 @@ let getTwitchStaffTeamIDArr = async () => {
     let result = await getStreamData(arr)
     for(let stream of result)
         console.log(stream.user_name)
-})();
+})(); */
