@@ -524,18 +524,11 @@ function onWhisperHandler(from, userstate, message, self){
 }
 
 function onSubHandler(channel, username, method, message, userstate){
-  console.log(channel === thabuttress.channel)
+  console.log(`${channel} === ${thabuttress.channel} returns ${channel === thabuttress.channel}`)
   if(channel === '#thabuttress'){
     setTimeout(() => {
       handleResponses(channel, thabuttress.subHandler(username, method, message, userstate))
     }, 5000)
-  }
-  else{
-    console.log(`sub in ${channel}`)
-    console.log(username)
-    console.log(method)
-    console.log(message)
-    console.log(userstate)
   }
 }
 

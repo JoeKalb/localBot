@@ -213,7 +213,7 @@ module.exports = {
             case 'score':
                 result.hasMessage = true;
                 result.items = [
-                    wordBanGame.getWordDisplay()
+                    wordBanGame.getScoreDisplay()
                 ]
             default:
         }
@@ -343,11 +343,10 @@ module.exports = {
                             wordBanGame.wordStreamerSaid(parseInt(parse[1])) :
                             wordBanGame.wordStreamerSaid()
                     }
-                    console.log(`${wordBanGame.getWordDisplay()}`)
-                    /* result.hasMessage = true
-                    result.items = [
-                        `thaButtress has said ${wordBanGame.getWord()} ${count} time${(count > 1)? 's':''}.`
-                    ] */
+                    updateStreamDisplay(wordBanGame.getScoreDisplay(), 60, 'black')
+                    setTimeout(() => {
+                        updateStreamDisplay(`Banned Word: ${wordBanGame.getWord()}`, 60, 'black')
+                    }, 5000)
                     return result;
                 case 'unsaid':
                     if(wordBanGame.getGameOn()){
@@ -355,7 +354,7 @@ module.exports = {
                             wordBanGame.wordStreamerSaidDecrease(parseInt(parse[1])) :
                             wordBanGame.wordStreamerSaidDecrease()
                     }
-                    console.log(wordBanGame.getWordDisplay())
+                    console.log(wordBanGame.getScoreDisplay())
                     return result;
                 case 'wordhard':
                     wordBanGame.setLevelHard()
@@ -367,7 +366,7 @@ module.exports = {
                     wordBanGame.setGameOnFalse()
                     result.hasMessage = true;
                     result.items = [
-                        `Final Score for WordBan: ${wordBanGame.getWordDisplay()}`
+                        `Final Score for WordBan: ${wordBanGame.getScoreDisplay()}`
                     ]
                     return result;
                 case'startpuptime':
@@ -612,14 +611,18 @@ function multiGiftPayout(user, numOfSubs, methods){
     return buttcoinPayout(user, numOfSubs * value)
 }
 
-let updateStreamDisplay = async (val, font, color) => {
+let updateStreamDisplay = async (value, font, color) => {
     const body = JSON.stringify({
-        value:val,
+        value,
         font,
         color
     })
     let res = await fetch(`https://buttress-live-display.herokuapp.com?password=${channelName}`, {
         method:"POST",
+        headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+        },
         body
     })
     let json = await res.json()

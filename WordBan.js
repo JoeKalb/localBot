@@ -25,15 +25,15 @@ class WordBan{
 
     saveAll(){
         this._file = {
-            "players":this._players,
-            "played":this._played,
             "wordInfo":{
                 "word":this._word,
                 "wordSaidCount":this._wordSaidCount,
                 "wordChatCount":this._wordChatCount,
                 "on_game":this._gameOn,
                 "hard":this._hard
-            }
+            },
+            "players":this._players,
+            "played":this._played
         }
         fs.writeFileSync(`./gameFiles/${this._channel}/WordBan.json`, JSON.stringify(this._file))
     }
@@ -88,7 +88,7 @@ class WordBan{
         return this._wordSaidCount
     }
 
-    getWordDisplay(){
+    getScoreDisplay(){
         return `${this._channel} = ${this._wordSaidCount} | Chat = ${this._wordChatCount}`
     }
 

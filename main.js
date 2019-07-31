@@ -347,6 +347,7 @@ CSS_COLOR_NAMES.forEach((color) => {
 
 postStreamDisplay = async (val, font, color) => {
   const pass = dropDown.value;
+  console.log(pass)
   const body = JSON.stringify({
     value:val,
     font:font,
