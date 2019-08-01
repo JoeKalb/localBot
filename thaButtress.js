@@ -145,9 +145,7 @@ module.exports = {
         if(wordBanGame.getGameOn() && wordBanGame.checkPlayer(context.username)){
             wordBanGame.chatterInGame(context.username)
             let check = wordBanGame.wordCheck(msg)
-            console.log(check)
             if(check){
-                console.log(context.username)
                 wordBanGame.chatterSaidWord(context.username)
                 result.hasMessage = true;
                 result.items = [

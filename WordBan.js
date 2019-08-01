@@ -105,7 +105,7 @@ class WordBan{
         else{
             const words = msg.split(' ')
             let check = false
-            words.forEach(word => {
+            for(let word of words){
                 let reg = /[\W_]/gi
                 word = word.replace(reg, '');
                 check = word.toLowerCase() === this._word
@@ -114,8 +114,8 @@ class WordBan{
                     this.saveAll()
                     return check;
                 }
-            })
-            return check;
+            }
+            return check
         }
     }
 
