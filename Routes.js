@@ -504,6 +504,20 @@ router.get('/trivia/next/:channel', (req, res) => {
   }
 })
 
+router.get('/wordban/inc/:channel', (req, res) => {
+  if(req.params.channel == 'thabuttress'){
+    res.status(200).json({'game':thabuttress.wordBanInc()})
+  }
+  else res.status(200),json({'channel':req.params.channel})
+})
+
+router.get('/wordban/dec/:channel', (req, res) => {
+  if(req.params.channel == 'thabuttress'){
+    res.status(200).json({'game':thabuttress.wordBanDec()})
+  }
+  else res.status(200),json({'channel':req.params.channel})
+})
+
 // clear all info
 router.get('/clear/all', (req, res) => {
   giveaway.clear();

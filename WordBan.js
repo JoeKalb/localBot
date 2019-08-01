@@ -32,8 +32,8 @@ class WordBan{
                 "on_game":this._gameOn,
                 "hard":this._hard
             },
-            "players":this._players,
-            "played":this._played
+            "played":this._played,
+            "players":this._players
         }
         fs.writeFileSync(`./gameFiles/${this._channel}/WordBan.json`, JSON.stringify(this._file))
     }
@@ -80,7 +80,7 @@ class WordBan{
         this.saveAll()
     }
 
-    getwordChatCount(){
+    getWordChatCount(){
         return this._wordChatCount
     }
 
@@ -168,6 +168,10 @@ class WordBan{
     setLevelEasy(){
         this._hard = false;
         this.saveAll()
+    }
+
+    getPlayed(){
+        return this._played
     }
 }
 

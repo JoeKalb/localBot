@@ -140,6 +140,7 @@ client.on('whisper', onWhisperHandler)
 client.on('subscription', onSubHandler)
 client.on('subgift', onSubGiftHandler)
 client.on('submysterygift', onSubMysteryGiftHandler)
+client.on('resub', onResubHandler)
 
 // Connect to Twitch:
 client.connect()
@@ -524,10 +525,17 @@ function onWhisperHandler(from, userstate, message, self){
 }
 
 function onSubHandler(channel, username, method, message, userstate){
-  console.log(`${channel} === ${thabuttress.channel} returns ${channel === thabuttress.channel}`)
   if(channel === '#thabuttress'){
     setTimeout(() => {
       handleResponses(channel, thabuttress.subHandler(username, method, message, userstate))
+    }, 5000)
+  }
+}
+
+function onResubHandler(channel, username, months, message, userstate, methods){
+  if(channel === '#thabuttress'){
+    setTimeout(() => {
+      handleResponses(channel, thabuttress.subHandler(username, methods, message, userstate))
     }, 5000)
   }
 }

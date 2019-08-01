@@ -393,3 +393,11 @@ streamDisplayClear.addEventListener('click', async () => {
   streamDisplayInput.value = ''
   streamDisplay.innerText = ''
 })
+
+// wordban increase and decrease
+const wordBanNumberInput = document.getElementById('wordBanNumberInput')
+const wordBanIncrease = document.getElementById('wordBanIncrease')
+const wordBanDecrease = document.getElementById('wordBanDecrease')
+
+clickBtnBindChannel(wordBanIncrease)
+clickBtnBindChannel(wordBanDecrease)

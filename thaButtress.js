@@ -145,7 +145,9 @@ module.exports = {
         if(wordBanGame.getGameOn() && wordBanGame.checkPlayer(context.username)){
             wordBanGame.chatterInGame(context.username)
             let check = wordBanGame.wordCheck(msg)
+            console.log(check)
             if(check){
+                console.log(context.username)
                 wordBanGame.chatterSaidWord(context.username)
                 result.hasMessage = true;
                 result.items = [
@@ -207,7 +209,7 @@ module.exports = {
             case 'wordban':
                 result.hasMessage = true;
                 result.items = [
-                    `Commands for the wordban game: !join !leave !score`
+                    `Redeem a ban word in the Streamlabs Extension for Butt and Chat. Saying the word in the chat will lose you buttcoins but if Butt ends up saying the banned word more all of chat will get a payout! Commands: !join the wordban game| !leave the wordban game | !score to see what the current points are`
                 ]
                 return result;
             case 'score':
@@ -324,13 +326,12 @@ module.exports = {
                     return result;
                 case 'wordset':
                     if(parse[1]){
-                        wordBanGame.clear()
                         wordBanGame.setWord(parse[1].toLowerCase())
                         result.hasMessage = true;
                         result.items = [
                             `Banned Word: ${wordBanGame.getWord()}`
                         ]
-                        updateStreamDisplay(`Banned word: ${wordBanGame.getWord()}`, 60, 'white')
+                        updateStreamDisplay(`Banned Word: ${wordBanGame.getWord()}`, 60, 'white')
                         wordBanGame.setGameOnTrue()
                         return result;
                     }
@@ -343,9 +344,9 @@ module.exports = {
                             wordBanGame.wordStreamerSaid(parseInt(parse[1])) :
                             wordBanGame.wordStreamerSaid()
                     }
-                    updateStreamDisplay(wordBanGame.getScoreDisplay(), 60, 'black')
+                    updateStreamDisplay(wordBanGame.getScoreDisplay(), 60, 'white')
                     setTimeout(() => {
-                        updateStreamDisplay(`Banned Word: ${wordBanGame.getWord()}`, 60, 'black')
+                        updateStreamDisplay(`Banned Word: ${wordBanGame.getWord()}`, 60, 'white')
                     }, 5000)
                     return result;
                 case 'unsaid':
@@ -354,7 +355,10 @@ module.exports = {
                             wordBanGame.wordStreamerSaidDecrease(parseInt(parse[1])) :
                             wordBanGame.wordStreamerSaidDecrease()
                     }
-                    console.log(wordBanGame.getScoreDisplay())
+                    updateStreamDisplay(wordBanGame.getScoreDisplay(), 60, 'white')
+                    setTimeout(() => {
+                        updateStreamDisplay(`Banned Word: ${wordBanGame.getWord()}`, 60, 'white')
+                    }, 5000)
                     return result;
                 case 'wordhard':
                     wordBanGame.setLevelHard()
@@ -362,12 +366,60 @@ module.exports = {
                 case 'wordeasy':
                     wordBanGame.setLevelEasy()
                     return result;
+                case 'wordcheck':
+                    result.hasMessage = true;
+                    if(wordBanGame.checkPlayer(parse[1].replace('@','').toLowerCase())){
+                        result.items = [`${parse[1]} is playing the wordban game.`]
+                    }
+                    else{
+                        result.items = [`${parse[1]} isn't playing the wordban game.`]
+                    }
+                    return result;
                 case 'wordend':
                     wordBanGame.setGameOnFalse()
+                    
+                    const buttScore = wordBanGame.getWordSaidCount()
+                    const chatScore = wordBanGame.getWordChatCount()
+                    const diffScore = Math.abs(buttScore - chatScore)
+
                     result.hasMessage = true;
                     result.items = [
                         `Final Score for WordBan: ${wordBanGame.getScoreDisplay()}`
                     ]
+
+                    if(buttScore > chatScore){
+                        result.hasMultiPayout = true;
+                        result.items[0] = 
+                            `${result.items[0]} CHAT WINS! buttHype`
+
+                        let played = wordBanGame.getPlayed()
+
+                        Object.keys(played).forEach(name => {
+                            result.items = [
+                                ...result.items,
+                                buttcoinPayout(name, diffScore * 5)
+                            ]
+                        })
+                    }
+                    else if(chatScore > buttScore){
+                        result.hasMultiPayout = true;
+                        result.items[0] = 
+                            `${result.items[0]} BUTT WINS! buttSmug`
+
+                        let played = wordBanGame.getPlayed()
+
+                        Object.keys(played).forEach(name => {
+                            result.items = [
+                                ...result.items,
+                                buttcoinRemove(name, played[name] * 5)
+                            ]
+                        })
+                    }
+                    else{ // diffScore = 0
+                        result.items[0] = 
+                            `${result.items[0]} No one wins buttThump`
+                    }
+
                     return result;
                 case'startpuptime':
                     puptimeGame.start('thabuttress')
@@ -583,12 +635,27 @@ module.exports = {
     getCurrentQuestion: () => {
         return triviaGame.getCurrentQuestion();
     },
+    wordBanInc:() => {
+        if(wordBanGame.getGameOn()){
+            wordBanGame.wordStreamerSaid()
+            return true;
+        }
+        return false
+    },
+    wordBanDec:() => {
+        if(wordBanGame.getGameOn()){
+            wordBanGame.wordStreamerSaidDecrease()
+            return true;
+        }
+        return false;
+    },
     clear:() => {
         hangman.clear();
         puptimeGame.clear();
         giveaway.clear();
         randNum.clear();
         blackJackGame.clear();
+        wordBanGame.clear();
     }
 }
 
