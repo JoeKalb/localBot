@@ -144,12 +144,13 @@ module.exports = {
         // wordban game logic
         if(wordBanGame.getGameOn() && wordBanGame.checkPlayer(context.username)){
             wordBanGame.chatterInGame(context.username)
-            let check = wordBanGame.wordCheck(msg)
-            if(check){
-                wordBanGame.chatterSaidWord(context.username)
+            let wordCount = wordBanGame.wordCheck(msg)
+            if(wordCount > 0){
+                wordBanGame.chatterSaidWord(context.username, wordCount)
                 result.hasMessage = true;
                 result.items = [
-                    `${buttcoinRemove(context.username, 5)} "${wordBanGame.getWord()}" is the current banned word!`
+                    `${buttcoinRemove(context.username, 5*wordCount)} You said the banned word "${wordBanGame.getWord()}" ${(wordCount > 1) ? 
+                        `${wordCount} times`:`in your last message`}!`
                 ]
                 return result;
             }

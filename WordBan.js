@@ -93,30 +93,37 @@ class WordBan{
     }
 
     wordCheck(msg){
+        let count = 0;
+
         if(this._hard){
             let reg = new RegExp(this._word, "i")
-            if(reg.test(msg)){
-                ++this._wordChatCount;
-                this.saveAll()
-                return true;
+            msg = msg.replace(/ /gi, '')
+
+            const msgLoop = msg.length - this._word.length + 1
+
+            let i = 0
+            while(i < msgLoop){
+                if(reg.test(msg.substring(i, i+this._word.length))){
+                    i += this._word.length
+                    ++count
+                    ++this._wordChatCount
+                }
+                else ++i
             }
-            return false;
         }
         else{
             const words = msg.split(' ')
-            let check = false
             for(let word of words){
                 let reg = /[\W_]/gi
-                word = word.replace(reg, '');
-                check = word.toLowerCase() === this._word
-                if(check){
-                    ++this._wordChatCount;
-                    this.saveAll()
-                    return check;
+                word = word.replace(reg, '')
+                if(word.toLowerCase() === this._word){
+                    ++count
+                    ++this._wordChatCount
                 }
             }
-            return check
         }
+        this.saveAll()
+        return count
     }
 
     wordStreamerSaid(num=1){
@@ -140,8 +147,8 @@ class WordBan{
         }
     }
 
-    chatterSaidWord(name){
-        ++this._played[name];
+    chatterSaidWord(name, num=1){
+        this._played[name] += num;
         this.saveAll();
     }
 
