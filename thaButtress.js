@@ -538,8 +538,9 @@ module.exports = {
         //console.log(msg)
     },
     subHandler: (username, method, message, userstate) => {
-        console.log(`${username} just subbed with plan ${method.plan}`)
         let result = Object.assign({}, response)
+        if(username === 'joefish5') return result;
+        
         result.hasMessage = true;
         result.items = ['buttHella buttHype buttHella buttHype buttHella buttHype buttHella buttHype buttHella buttHype buttHella buttHype']
         return result;

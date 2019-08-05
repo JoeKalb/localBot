@@ -528,7 +528,7 @@ function onSubHandler(channel, username, method, message, userstate){
   if(channel === '#thabuttress'){
     setTimeout(() => {
       handleResponses(channel, thabuttress.subHandler(username, method, message, userstate))
-    }, 5000)
+    }, 4000)
   }
 }
 
@@ -536,7 +536,7 @@ function onResubHandler(channel, username, months, message, userstate, methods){
   if(channel === '#thabuttress'){
     setTimeout(() => {
       handleResponses(channel, thabuttress.subHandler(username, methods, message, userstate))
-    }, 5000)
+    }, 4000)
   }
 }
 
