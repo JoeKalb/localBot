@@ -221,7 +221,7 @@ module.exports = {
 
         // trivia commands
         switch(commandName){
-            case 'current':
+            case 'currentQ':
                 if(trivia.play){
                     result.hasMessage = true;
                     result.items = [trivia.getCurrentQuestion()]

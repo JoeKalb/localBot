@@ -1,6 +1,6 @@
 // bug: while backupbot is live, games cannot be activated in chat
 
-let bottressDown = false;
+let bottressDown = true;
 const fs = require('fs');
 const fetch = require('node-fetch');
 const co = require('co');
@@ -44,7 +44,7 @@ module.exports = {
       console.log(commandName)
       switch(commandName){
         case 'discord':
-          return `Join our offline Discord chat! Subs: Link your discord to your twitch account for bonus channels! https://discordapp.com/invite/YbdqmZG`
+          return `Join our offline Discord chat! Subs: Link your discord to your twitch account for bonus channels! https://discord.gg/YbdqmZG`
         case 'house':
           return `buttHouse If you want to join in on the Harry Potter fun go the the pottermore website http://bit.ly/2ETyXDB and post a screenshot your house in the #sorting_hat channel of the discord! https://discord.gg/j3G5bx3 buttHouse`
         case 'lego':
@@ -62,11 +62,9 @@ module.exports = {
         case 'tats':
           return `Here are all of butt's tattoos! https://imgur.com/a/Vd1iAMF`
         case 'subnight':
-          return `IF YOU ARE A SUB...Subnights will be held every Friday!!! buttSmug https://clips.twitch.tv/AbstemiousDeterminedSageFunRun`
+          return `IF YOU ARE A SUB...Subnights will be held every Friday! Make sure to join the !discord and download Kast: https://kast.gg/download.html buttSmug https://clips.twitch.tv/AbstemiousDeterminedSageFunRun`
         case 'earn':
           return `Ways to earn points for your house: Donations - $1=5pts Bits - 100=5pts Gifted Subs - 1=25pts Community Games buttHouse`
-        case 'current':
-          return `Currently hanging around outside!`
         case 'twitter':
           return `Butt's twitter: https://twitter.com/thaButtress`
         case 'socials':
@@ -91,8 +89,16 @@ module.exports = {
           return `buttMonty Bet on the dog breeds! (Ex Monty: !monty pug 10) (Ex. Reggie: !reggie border_collie 10) **if the breed you want is more that one word use an "_" rather than a space! buttReggie`
         case 'job':
           return `Butt works at Twitch now! So she's livin' that SoCal lifestyle!`
+        case 'current':
+          return `Butt's currently building the HG IBO Grimgerde Sauron Custom buttDab https://www.gundamplanet.com/hg-ibo-grimgerde.html`
+        case 'work':
+          return `Butt doesn't discuss job specifics during stream.`
         case 'schedule':
           return `New Stream Schedule buttOMG Tuesday/Wednesday Evenings, weekends TBA! Subnight are now every Friday!!!`
+        case 'glue':
+          return `Butt uses Tamiya Extra Thin Cement Glue https://amzn.to/2YdgxYw`
+        case 'lurk':
+          return `buttLurk ${context['display-name']} has turned set their mobile suit to stand-by mode buttLurk`
         case 'followage':
           return co(function*(){
             try{
