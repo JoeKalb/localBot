@@ -119,6 +119,28 @@ module.exports = {
               return `${context['display-name']} is not following buttThump`
             }
           })
+        case 'uptime':
+          return co(function*() {
+            try{
+              let res = yield fecth(`https://api.twitch.tv/helix/streams?user_id=82523255`)
+              let json = yield res.json()
+              let now = (new Date(Date.now())).toISOString()
+              let items = [createDateTimeBreakdown(now), createDateTimeBreakdown(json.started_at)]
+              let numDays = items[0].day - items[1].day;
+              let hours = items[0].hour - items[1].hour
+              let minutes = items[0].minute - items[1].minute
+              if(numDays >= 1){
+                return `Stream has been live for ${numDays} day${(numDays === 1)? '':'s'} ${hours} hour${(hours === 1) ? '':'s'} and ${minutes} minute${(minutes === 1) ? '':'s'}.`
+              }
+              else if(numDays === 0){
+                return `Stream has been live for ${hours} hour${(hours === 1) ? '':'s'} and ${minutes} minute${(minutes === 1) ? '':'s'}.`
+              }
+            }
+            catch(err){
+              console.log(err)
+              return `Either this command is broken of the stream is not currently live.`
+            }
+          })
         default:
           if(!mod)
             return false;
@@ -173,5 +195,18 @@ module.exports = {
       console.log(`Should not be here: ${commandName}`)
       return false;
     }
+  }
+}
+
+function createDateTimeBreakdown(utc){
+  let dateTime = utc.split('T')
+  let day = parseInt(dateTime[0].split('-')[2])
+  let times = dateTime.split(':')
+  let hour = parseInt(times[0])
+  let minute = parseInt(times[1])
+  return {
+    day,
+    hour,
+    minute
   }
 }
