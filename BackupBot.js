@@ -53,6 +53,8 @@ module.exports = {
           return "You're all such nerds!!!"
         case 'gundam':
           return `If you're planning on buying a kit check out https://www.gundamplanet.com/ and use coupon code "THABUTTRESS" to get 10% off all regularly priced items!`
+        case 'gundams':
+          return `If you're planning on buying a kit check out https://www.gundamplanet.com/ and use coupon code "THABUTTRESS" to get 10% off all regularly priced items!`
         case 'imgur':
           return `Look at all these cool gundams that thaButtress has built and customized! https://thabuttress.imgur.com/ buttOMG`
         case 'built':
@@ -89,8 +91,6 @@ module.exports = {
           return `buttMonty Bet on the dog breeds! (Ex Monty: !monty pug 10) (Ex. Reggie: !reggie border_collie 10) **if the breed you want is more that one word use an "_" rather than a space! buttReggie`
         case 'job':
           return `Butt works at Twitch now! So she's livin' that SoCal lifestyle!`
-        case 'current':
-          return `Butt's currently building the HG IBO Grimgerde Sauron Custom buttDab https://www.gundamplanet.com/hg-ibo-grimgerde.html`
         case 'work':
           return `Butt doesn't discuss job specifics during stream.`
         case 'schedule':
@@ -99,6 +99,14 @@ module.exports = {
           return `Butt uses Tamiya Extra Thin Cement Glue https://amzn.to/2YdgxYw`
         case 'lurk':
           return `buttLurk ${context['display-name']} has turned set their mobile suit to stand-by mode buttLurk`
+        case 'current':
+          return `Butt's currently customzing an HG IBO Grimgerde into a Sauron Gundam buttOMG https://www.gundamplanet.com/hg-ibo-grimgerde.html`
+        case 'newtype':
+          return `Butt's gonna be a featured guest for Newtype Build Con Nov 16th & 17th buttOMG http://bit.ly/NTBCbuttress`
+        case 'vip':
+          return `How to get VIP for the month: Top Monthly Dono | Top Monthly Bits | $100 Dono | 10,000 Bits or Buttcoins | Forever VIP: 100 or more gifted subs!!!`
+        case '1k':
+          return `Butt just hit 1000 followers on youtube!!! Here's a video Pop made to celebrate it: https://youtu.be/nn51DLN9Esk`
         case 'followage':
           return co(function*(){
             try{

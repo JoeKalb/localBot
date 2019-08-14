@@ -170,8 +170,6 @@ module.exports = {
         // backup bot commands
         if(backupBot.isBottressDown()){
             let message = backupBot.BotHandler('#thabuttress', context.mod, commandName, parse, context)
-            if(message === false)
-                return result;
 
             if(typeof message == "string"){
                 result.hasMessage = true;
@@ -187,6 +185,8 @@ module.exports = {
                 result.items = [...result.items, message]
                 return result;
             }
+            else if(message === false)
+                console.log('Backup Command Not Found')
         }
 
         // wordban commands
@@ -336,6 +336,7 @@ module.exports = {
                     }
                 case 'wordclear':
                     wordBanGame.clear()
+                    console.log('wordgame cleared')
                     return result;
                 case 'said':
                     if(wordBanGame.getGameOn()){
