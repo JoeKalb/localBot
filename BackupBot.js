@@ -4,10 +4,13 @@ let bottressDown = true;
 const fs = require('fs');
 const fetch = require('node-fetch');
 const co = require('co');
+const moment = require('moment')
 
 let today = new Date();
 let streamDay = `${today.getUTCMonth()+1}-${today.getDate()}`
 let fileName = `logs/backupButtcoins.txt`
+
+const user_id = '82523255'
 
 recordButtcoins = (payout) => {
   fs.appendFile(fileName, `\n${streamDay} | ${payout}`, (err) => {
@@ -122,23 +125,54 @@ module.exports = {
         case 'uptime':
           return co(function*() {
             try{
-              let res = yield fecth(`https://api.twitch.tv/helix/streams?user_id=82523255`)
+              let res = yield fetch(`https://api.twitch.tv/helix/streams?user_id=${user_id}`, {
+                headers:{
+                  'Client-ID':'q9qpitg0qv8dujukht7g581ds0n5hx'
+                }
+              })
               let json = yield res.json()
-              let now = (new Date(Date.now())).toISOString()
-              let items = [createDateTimeBreakdown(now), createDateTimeBreakdown(json.started_at)]
-              let numDays = items[0].day - items[1].day;
-              let hours = items[0].hour - items[1].hour
-              let minutes = items[0].minute - items[1].minute
-              if(numDays >= 1){
-                return `Stream has been live for ${numDays} day${(numDays === 1)? '':'s'} ${hours} hour${(hours === 1) ? '':'s'} and ${minutes} minute${(minutes === 1) ? '':'s'}.`
+              let now = moment(Date.now())
+              let streamStart = moment(new Date(json.data[0].started_at))
+
+              let hours = now.diff(streamStart, 'hours')
+              let minutes = now.diff(streamStart, 'minutes') - (hours*60)
+
+              return `Stream has been live for ${(hours > 0)? `${hours} hour${(hours === 1) ? '':'s'} and `:''} ${minutes} minute${(minutes === 1) ? '':'s'}.`
+            }
+            catch(err){
+              console.log(err)
+              return `Either this command is broken or the stream is not currently live.`
+            }
+          })
+        case 'game':
+          return co(function*(){
+            try{
+              let res = yield fetch(`https://api.twitch.tv/helix/streams?user_id=${user_id}`, {
+                headers:{
+                  'Client-ID':'q9qpitg0qv8dujukht7g581ds0n5hx'
+                }
+              })
+              let json = yield res.json()
+              const gameID = json.data[0].game_id
+
+              try{
+                let res = yield fetch(`https://api.twitch.tv/helix/games?id=${gameID}`, {
+                  headers:{
+                    'Client-ID':'q9qpitg0qv8dujukht7g581ds0n5hx'
+                  }
+                })
+                let json = yield res.json()
+                let game = json.data[0].name 
+                return `Butt's currently streaming ${game}!`
               }
-              else if(numDays === 0){
-                return `Stream has been live for ${hours} hour${(hours === 1) ? '':'s'} and ${minutes} minute${(minutes === 1) ? '':'s'}.`
+              catch(err){
+                console.log(err)
+                return `Looks like thaButtress isn't playing a game right now!`
               }
             }
             catch(err){
               console.log(err)
-              return `Either this command is broken of the stream is not currently live.`
+              return `Looks like thaButtress isn't currently streaming!`
             }
           })
         default:
