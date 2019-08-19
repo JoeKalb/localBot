@@ -169,7 +169,8 @@ module.exports = {
 
         // backup bot commands
         if(backupBot.isBottressDown()){
-            let message = backupBot.BotHandler('#thabuttress', context.mod, commandName, parse, context)
+            let message = backupBot.BotHandler('#thabuttress', (context.username === 'thabuttress')?
+                true:context.mod, commandName, parse, context)
 
             if(typeof message == "string"){
                 result.hasMessage = true;

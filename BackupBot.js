@@ -12,7 +12,7 @@ let fileName = `logs/backupButtcoins.txt`
 
 const user_id = '82523255'
 
-recordButtcoins = (payout) => {
+let recordButtcoins = (payout) => {
   fs.appendFile(fileName, `\n${streamDay} | ${payout}`, (err) => {
     if(err) throw err;
     console.log(`Buttcoins saved: ${payout}`)
@@ -44,7 +44,7 @@ module.exports = {
   },
   BotHandler: (target, mod, commandName, parse, context) => {
     if(bottressDown && target == '#thabuttress'){
-      console.log(commandName)
+      //console.log(`Command Used: ${commandName}`)
       switch(commandName){
         case 'discord':
           return `Join our offline Discord chat! Subs: Link your discord to your twitch account for bonus channels! https://discord.gg/YbdqmZG`
@@ -84,14 +84,10 @@ module.exports = {
           return `Check out these Gundam Planet lotto winners! https://www.twitch.tv/videos/362520541`
         case 'dad':
           return `buttDad buttDad buttDad buttDad buttDad buttDad buttDad buttDad buttDad buttDad buttDad buttDad buttDad buttDad buttDad buttDad buttDad buttDad`
+        case 'love':
+          return `buttLove buttLove buttLove buttLove buttLove buttLove buttLove buttLove buttLove buttLove buttLove buttLove buttLove buttLove buttLove buttLove buttLove`
         case 'morebuttress':
           return `Instagram https://goo.gl/Jf4v7U | Twitter https://goo.gl/y3gpVu | FaceBook https://goo.gl/kqIjiz | Patreon https://goo.gl/iDRnBW | Snapchat: thaButtress`
-        case 'win':
-          return `A donation of $10 gets your name into the Goblet of Fire! Each entry will be a ticket into a giveaway for the custom ButtCoin plus a lil extra something for the !top single donation! buttHouse`
-        case 'top':
-          return `The largest single donation by the 27th will get the chance to pick Butt's next Gundam + 500 points towards their house!`
-        case 'breed':
-          return `buttMonty Bet on the dog breeds! (Ex Monty: !monty pug 10) (Ex. Reggie: !reggie border_collie 10) **if the breed you want is more that one word use an "_" rather than a space! buttReggie`
         case 'job':
           return `Butt works at Twitch now! So she's livin' that SoCal lifestyle!`
         case 'work':
@@ -101,7 +97,7 @@ module.exports = {
         case 'glue':
           return `Butt uses Tamiya Extra Thin Cement Glue https://amzn.to/2YdgxYw`
         case 'lurk':
-          return `buttLurk ${context['display-name']} has turned set their mobile suit to stand-by mode buttLurk`
+          return `buttLurk ${context['display-name']} has set their mobile suit to stand-by mode buttLurk`
         case 'current':
           return `Butt's currently customzing an HG IBO Grimgerde into a Sauron Gundam buttOMG https://www.gundamplanet.com/hg-ibo-grimgerde.html`
         case 'newtype':
@@ -115,7 +111,7 @@ module.exports = {
             try{
               let followage = yield fetch(`https://decapi.me/twitch/followage/thabuttress/${context.username}`)
               let response = yield followage.text()
-              return `${context['display-name']} has been following thaButtress for ${response}`
+              return `${context['display-name']} has been following for ${response}!`
             }
             catch(err){
               console.log(err)
@@ -137,7 +133,7 @@ module.exports = {
               let hours = now.diff(streamStart, 'hours')
               let minutes = now.diff(streamStart, 'minutes') - (hours*60)
 
-              return `Stream has been live for ${(hours > 0)? `${hours} hour${(hours === 1) ? '':'s'} and `:''} ${minutes} minute${(minutes === 1) ? '':'s'}.`
+              return `Buttress has been piloting the stream for ${(hours > 0)? `${hours} hour${(hours === 1) ? '':'s'} and `:''} ${minutes} minute${(minutes === 1) ? '':'s'}.`
             }
             catch(err){
               console.log(err)
@@ -173,6 +169,64 @@ module.exports = {
             catch(err){
               console.log(err)
               return `Looks like thaButtress isn't currently streaming!`
+            }
+          })
+        case 'time':{
+          const now = moment(Date.now())
+          let hours = now.hours()
+          const ampm = (hours >= 12)?'PM':'AM' 
+          hours = hours%12
+          hours = (hours === 0) ? 12:hours
+
+          return `It is currently ${hours}:${now.minutes()} ${ampm} Buttress Standard Time`
+        }
+        case 'retweet':
+          return co(function*(){
+            try{
+              let res = yield fetch(`https://decapi.me/twitter/latest_url/thabuttress?shorten=true&no_rts=true`)
+              let tweet = yield res.text()
+
+              return `4 out of 5 doctors agree that retweeting thaButtress is good for your health! ${tweet}`
+            }
+            catch(err){
+              console.log(err)
+              return `Could not get latest tweet buttThump`
+            }
+          })
+        case 'emotes':
+          return co(function*(){
+            try{
+              let res = yield fetch(`https://api.twitchemotes.com/api/v4/channels/${user_id}`)
+              let json = yield res.json()
+
+              let message = ''
+              json.emotes.forEach(emote => {
+                message += `${emote.code} `
+              })
+
+              return message
+            }
+            catch(err){
+              console.log(err)
+              return `Can't find the emotes buttThump`
+            }
+          })
+        case 'staff':
+          return co(function *(){
+            try{
+              let res = yield(`https://tmi.twitch.tv/group/user/thabuttress/chatters`)
+              let json = yield res.json()
+
+              const { staff } = json.chatters
+              if(staff.length > 0){
+                return `Current Staff Member${(staff.length > 1)?'s':''} in chat: ${staff.join(', ')}`
+              }
+              else
+                return `I don't see any staff in the chat... but I could be wrong!`
+            }
+            catch(err){
+              console.log(err)
+              return `Viewer List is currently unavailable...`
             }
           })
         default:
