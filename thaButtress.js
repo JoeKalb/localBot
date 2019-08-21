@@ -19,6 +19,8 @@ console.log(triviaGame.token)
 
 let wordBanGame = new WordBan('thabuttress')
 
+const fs = require('fs')
+
 const response = {
     hasMessage:false,
     hasDelay:false,
