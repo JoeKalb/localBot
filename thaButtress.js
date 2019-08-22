@@ -198,7 +198,7 @@ module.exports = {
                 wordBanGame.editPlayer(context.username, true)
                 result.hasMessage = true;
                 result.items = [
-                    `${context['display-name']} has opted into future word ban games. Do !leave if you don't want to play.`
+                    `${context['display-name']} has opted into${(wordBanGame.getGameOn())? ' this current and':''} future word ban games. Do !leave if you don't want to play.`
                 ]
                 return result;
             case 'leave':
@@ -412,10 +412,12 @@ module.exports = {
                         let played = wordBanGame.getPlayed()
 
                         Object.keys(played).forEach(name => {
-                            result.items = [
-                                ...result.items,
-                                buttcoinRemove(name, played[name] * 5)
-                            ]
+                            if(played[name] > 0){
+                                result.items = [
+                                    ...result.items,
+                                    buttcoinRemove(name, played[name] * 5)
+                                ]
+                            }
                         })
                     }
                     else{ // diffScore = 0
