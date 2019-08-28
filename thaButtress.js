@@ -211,7 +211,7 @@ module.exports = {
             case 'wordban':
                 result.hasMessage = true;
                 result.items = [
-                    `Redeem a ban word in the Streamlabs Extension for Butt and Chat. Saying the word in the chat will lose you buttcoins but if Butt ends up saying the banned word more all of chat will get a payout! Commands: !join the wordban game| !leave the wordban game | !score to see what the current points are`
+                    `Redeem a ban word in the Streamlabs Extension for Butt and Chat. Saying the word in the chat will lose you buttcoins but if Butt ends up saying the banned word more, then all of chat will get a payout! Commands: !join the wordban game| !leave the wordban game | !score to see what the current points are`
                 ]
                 return result;
             case 'score':
@@ -424,6 +424,8 @@ module.exports = {
                         result.items[0] = 
                             `${result.items[0]} No one wins buttThump`
                     }
+
+                    wordBanGame.clear()
 
                     return result;
                 case'startpuptime':
