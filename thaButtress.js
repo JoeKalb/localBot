@@ -320,7 +320,7 @@ module.exports = {
 
         //game start and ending mod commands
         if(context.mod || `#${context.username}` == this.channel || context.username === channelName
-            || context.username === 'oi_atomsk_io' || context.username === 'minovskyflight'){
+            || context.username === 'minovskyflight'){
             switch(commandName){
                 case 'clear':
                     result.hasMessage = true;
