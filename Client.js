@@ -437,7 +437,7 @@ function onMessageHandler (target, context, msg, self) {
           client.action(target, `RA RA ${houses.houseNames[houseNum].toUpperCase()}`)
       }
       else{
-        client.action(target, `Sorry ${context['display-name']}, you need a !house to cheer.`)
+        //client.action(target, `Sorry ${context['display-name']}, you need a !house to cheer.`)
       }
       break;
     /* case 'raid':
