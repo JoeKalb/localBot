@@ -319,7 +319,8 @@ module.exports = {
         }
 
         //game start and ending mod commands
-        if(context.mod || `#${context.username}` == this.channel || context.username === channelName){
+        if(context.mod || `#${context.username}` == this.channel || context.username === channelName
+            || context.username === 'oi_atomsk_io' || context.username === 'minovskyflight'){
             switch(commandName){
                 case 'clear':
                     result.hasMessage = true;
@@ -428,6 +429,9 @@ module.exports = {
                     wordBanGame.clear()
 
                     return result;
+                case 'refresh':{
+                    updateStreamDisplay(`Banned Word: ${wordBanGame.getWord()}`, 60, 'white')
+                }
                 case'startpuptime':
                     puptimeGame.start('thabuttress')
                     result.hasMessage = true;
