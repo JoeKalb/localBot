@@ -89,8 +89,7 @@ module.exports = {
                     
                     hangman.updateDisplay(letter)
 
-                    //result.items.push(`${letter} appears ${numCount} time${(numCount > 1)? 's': ''}!`)
-                    result.items = [...result.items, `${letter} appears ${numCount} time${(numCount > 1)? 's': ''}!`]
+                    //result.items = [...result.items, `${letter} appears ${numCount} time${(numCount > 1)? 's': ''}!`] //shows the number of letters found
                     hangman.updateDisplay(letter)
 
                     if(hangman.isDisplayAnswer()){
@@ -351,7 +350,7 @@ module.exports = {
                     updateStreamDisplay(wordBanGame.getScoreDisplay(), 60, 'white')
                     setTimeout(() => {
                         updateStreamDisplay(`Banned Word: ${wordBanGame.getWord()}`, 60, 'white')
-                    }, 5000)
+                    }, 10000)
                     return result;
                 case 'unsaid':
                     if(wordBanGame.getGameOn()){
