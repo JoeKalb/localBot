@@ -154,7 +154,7 @@ module.exports = {
                         `${wordCount} times`:`in your last message`}!`
                 ]
                 updateStreamDisplay(`Banned Word: ${wordBanGame.getWord()}`, 60, 'white')
-                return result;
+                //return result;
             }
         }
 
@@ -198,6 +198,7 @@ module.exports = {
                 wordBanGame.editPlayer(context.username, true)
                 result.hasMessage = true;
                 result.items = [
+                    ...result.items,
                     `${context['display-name']} has opted into${(wordBanGame.getGameOn())? ' this current and':''} future word ban games. Do !leave if you don't want to play.`
                 ]
                 return result;
@@ -205,20 +206,24 @@ module.exports = {
                 wordBanGame.editPlayer(context.username, false)
                 result.hasMessage = true;
                 result.items = [
+                    ...result.items,
                     `${context['display-name']} has opted out of the word ban.`
                 ]
                 return result;
             case 'wordban':
                 result.hasMessage = true;
                 result.items = [
+                    ...result.items,
                     `Redeem a ban word in the Streamlabs Extension for Butt and Chat. Saying the word in the chat will lose you buttcoins but if Butt ends up saying the banned word more, then all of chat will get a payout! Commands: !join the wordban game| !leave the wordban game | !score to see what the current points are`
                 ]
                 return result;
             case 'score':
                 result.hasMessage = true;
                 result.items = [
+                    ...result.items,
                     wordBanGame.getScoreDisplay()
                 ]
+                return result
             default:
         }
 
