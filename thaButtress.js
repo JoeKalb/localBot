@@ -153,6 +153,7 @@ module.exports = {
                     `${buttcoinRemove(context.username, 5*wordCount)} You said the banned word "${wordBanGame.getWord()}" ${(wordCount > 1) ? 
                         `${wordCount} times`:`in your last message`}!`
                 ]
+                updateStreamDisplay(`Banned Word: ${wordBanGame.getWord()}`, 60, 'white')
                 return result;
             }
         }

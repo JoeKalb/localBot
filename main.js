@@ -67,6 +67,11 @@ function changeDisplay(input){
   wordP.innerHTML = input
 }
 
+hangmanInput.addEventListener('keypress', e => { 
+  if(e.keyCode === 13 || e.which === 13)
+    startHangman() 
+})
+
 async function startHangman() {
   changeDisplay(hangmanInput.value)
   if(hangmanInput.value.length > 0){
