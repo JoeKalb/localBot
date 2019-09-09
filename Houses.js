@@ -186,7 +186,8 @@ module.exports = {
     crelca:0,
     samasulee:0,
     pgdmystic:2,
-    itscharmazing:2
+    itscharmazing:2,
+    beardsofprey:2
     //gryf = 0, huff = 1, sly = 2, raven = 3
   },
   getHouse: function(name){
