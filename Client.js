@@ -518,10 +518,10 @@ function onCheerHandler(channel, userstate, message){
 }
 
 function onWhisperHandler(from, userstate, message, self){
-  if(self) return
+  //if(self) return
 
-  //console.log(from, message)
-  //console.log(userstate)
+  console.log(from, message)
+  console.log(userstate)
 }
 
 function onSubHandler(channel, username, method, message, userstate){
