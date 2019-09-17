@@ -524,7 +524,14 @@ function onWhisperHandler(from, userstate, message, self){
   console.log(userstate)
 
   if(client.isMod('#thabuttress', from)){
-    thabuttress.whisperHandler(from)
+    let result = thabuttress.whisperHandler(message)
+    if(result){
+      let wordNum = thabuttress.getHangmanWordCount()
+      let lettersPerWord = thabuttress.eachWordLength(thabuttress.eachWordLength())
+      client.say('#thabuttress', `It's time for some hangman! ${wordNum} word${(wordNum > 1)? 's':''}, letters per word: ${lettersPerWord} (!hangman !guesses)`)
+      client.say('#thabuttress', `${thabuttress.getHangmanDisplay()}`)
+      client.whisper(from, result)
+    }
     // handle response for inchat game
   }
 }

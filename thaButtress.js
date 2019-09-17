@@ -550,9 +550,24 @@ module.exports = {
 
         // catch any final values and return them
     },
-    whisperHandler:(message) => {
-        const parse = message.split(' ')
-        console.log(parse)
+    whisperHandler:(msg) => {
+        if(msg.substr(0,1) !== commandPrefix)
+            return false; // not a command
+
+        const parse = msg.slice(1).split(' ')
+        const commandName = parse[0]
+
+        if(parse.length < 2) return false
+
+        switch(commandName){
+            case 'hangman':{
+                const info = parse.slice(1, parse.length-1).join(' ').toUpperCase()
+                this.startHangman(info)
+                return `Hangman Started: ${info}`
+            }
+            default:
+                return false;
+        }
     },
     cheerHandler:(userstate, msg) => {
         //console.log(userstate)
