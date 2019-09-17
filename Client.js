@@ -522,6 +522,11 @@ function onWhisperHandler(from, userstate, message, self){
 
   console.log(from, message)
   console.log(userstate)
+
+  if(client.isMod('#thabuttress', from)){
+    thabuttress.whisperHandler(from)
+    // handle response for inchat game
+  }
 }
 
 function onSubHandler(channel, username, method, message, userstate){

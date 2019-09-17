@@ -550,6 +550,10 @@ module.exports = {
 
         // catch any final values and return them
     },
+    whisperHandler:(message) => {
+        const parse = message.split(' ')
+        console.log(parse)
+    },
     cheerHandler:(userstate, msg) => {
         //console.log(userstate)
         //console.log(msg)
