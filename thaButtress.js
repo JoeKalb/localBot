@@ -561,7 +561,7 @@ module.exports = {
 
         switch(commandName){
             case 'hangman':{
-                const info = parse.slice(1, parse.length-1).join(' ').toUpperCase()
+                const info = parse.slice(1).join(' ').toUpperCase()
                 this.startHangman(info)
                 return `Hangman Started: ${info}`
             }
