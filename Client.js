@@ -113,8 +113,8 @@ let opts = {
     //'oooskittles',
     'thethingssheplays',
     'hairofthedogpodcast',
-    'lunalyrik',
-    'mopgarden'
+    'admiralbahroo',
+    'pokimane'
    ]
 }
 
@@ -542,6 +542,7 @@ function onSubHandler(channel, username, method, message, userstate){
       handleResponses(channel, thabuttress.subHandler(username, method, message, userstate))
     }, 4000)
   }
+  else console.log('Sub Handler:',userstate)
 }
 
 function onResubHandler(channel, username, months, message, userstate, methods){
@@ -550,10 +551,11 @@ function onResubHandler(channel, username, months, message, userstate, methods){
       handleResponses(channel, thabuttress.subHandler(username, methods, message, userstate))
     }, 4000)
   }
+  else console.log('Resub Handler:', userstate)
 }
 
 function onSubGiftHandler(channel, username, streakMonths, recipient, methods, userstate){
-  //console.log(methods)
+  console.log('Gift Sub Handler:', userstate)
 }
 
 function onSubMysteryGiftHandler(channel, username, numbOfSubs, methods, userstate) {
@@ -562,6 +564,7 @@ function onSubMysteryGiftHandler(channel, username, numbOfSubs, methods, usersta
       handleResponses(channel, thabuttress.subMysteryGiftHandler(username, numbOfSubs, methods, userstate))
     }, 5000)
   }
+  else console.log('Mystery Sub Handler',userstate)
 }
 
 function onConnectedHandler (addr, port) {
