@@ -552,7 +552,9 @@ function onResubHandler(channel, username, months, message, userstate, methods){
 
 function onSubGiftHandler(channel, username, streakMonths, recipient, methods, userstate){
   if(channel === thabuttress.channel){
-    console.log('Gift Sub Handler:', thabuttress.subGiftHandler(username, methods, userstate))
+    setTimeout(() => {
+      handleResponses(channel, thabuttress.subGiftHandler(username, methods, userstate))
+    }, 4000)
   }
 }
 
