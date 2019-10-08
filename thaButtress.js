@@ -591,7 +591,8 @@ module.exports = {
                 'buttHella buttHype buttHella buttHype buttHella buttHype buttHella buttHype buttHella buttHype buttHella buttHype',
                 singleGiftPayout(username, methods)
             ]
-        }else 
+        }
+        else 
             --mysterySubGifters[username];
 
 
@@ -611,7 +612,8 @@ module.exports = {
 
         let hype = 'buttHella buttHype '
         result.items = [
-            hype.repeat(Math.floor(numbOfSubs/2)),
+            (numbOfSubs > 13) ? hype.repeat(Math.floor(numbOfSubs/2)) : 
+            'buttHella buttHype buttHella buttHype buttHella buttHype buttHella buttHype buttHella buttHype buttHella buttHype',
             multiGiftPayout(username, numbOfSubs, methods)
         ]
         return result;
