@@ -1,6 +1,6 @@
 // bug: while backupbot is live, games cannot be activated in chat
 
-let bottressDown = false;
+let bottressDown = true;
 const fs = require('fs');
 const fetch = require('node-fetch');
 const co = require('co');
@@ -48,8 +48,6 @@ module.exports = {
       switch(commandName){
         case 'discord':
           return `Join our offline Discord chat! Subs: Link your discord to your twitch account for bonus channels! https://discord.gg/YbdqmZG`
-        case 'house':
-          return `buttHouse If you want to join in on the Harry Potter fun go the the pottermore website http://bit.ly/2ETyXDB and post a screenshot your house in the #sorting_hat channel of the discord! https://discord.gg/j3G5bx3 buttHouse`
         case 'lego':
           return `Butt's built this 6020 piece Hogwarts Lego Set! https://amzn.to/2LEy7uE buttHouse https://clips.twitch.tv/AltruisticBreakableToadDuDudu`
         case 'nerds':
@@ -62,14 +60,12 @@ module.exports = {
           return `Look at all these cool gundams that thaButtress has built and customized! https://thabuttress.imgur.com/ buttOMG`
         case 'built':
           return `Check out Butt's built list and backlog!!! https://goo.gl/7DxzVX buttDab`
-        case 'playlist':
-          return `Digging the current playlist? https://www.twitch.tv/relaxbeats`
         case 'tats':
           return `Here are all of butt's tattoos! https://imgur.com/a/Vd1iAMF`
         case 'subnight':
-          return `IF YOU ARE A SUB...Subnights will be held every Friday! Make sure to join the !discord and download Kast: https://kast.gg/download.html buttSmug https://clips.twitch.tv/AbstemiousDeterminedSageFunRun`
-        case 'earn':
-          return `Ways to earn points for your house: Donations - $1=5pts Bits - 100=5pts Gifted Subs - 1=25pts Community Games buttHouse`
+          return `IF YOU ARE A SUB...Subnights will be held ever other Friday! Make sure to join the !discord buttSmug https://clips.twitch.tv/AbstemiousDeterminedSageFunRun`
+        case 'anime':
+          return `Anime nights are back!!! Every other Friday T2 and above subs are welcome to jion`
         case 'twitter':
           return `Butt's twitter: https://twitter.com/thaButtress`
         case 'socials':
@@ -80,8 +76,6 @@ module.exports = {
           return `Buttress (noun) - a projecting support of stone or brick built against a wall`
         case 'snap':
           return `You can follow @thabuttress on snapchat but she only does add backs for T2 subs and above.`
-        case 'lotto':
-          return `Check out these Gundam Planet lotto winners! https://www.twitch.tv/videos/362520541`
         case 'dad':
           return `buttDad buttDad buttDad buttDad buttDad buttDad buttDad buttDad buttDad buttDad buttDad buttDad buttDad buttDad buttDad buttDad buttDad buttDad`
         case 'love':
@@ -99,13 +93,21 @@ module.exports = {
         case 'lurk':
           return `buttLurk ${context['display-name']} has set their mobile suit to stand-by mode buttLurk`
         case 'current':
-          return `Butt's currently customzing an HG IBO Grimgerde into a Sauron Gundam buttOMG https://www.gundamplanet.com/hg-ibo-grimgerde.html`
+          return `Butt's currently customzing an HG IBO Grimgerde into a Sauron Gundam buttOMG https://www.gundamplanet.com/hg-ibo-grimgerde.html?c=CAvHeI&referring_service=link`
         case 'newtype':
           return `Butt's gonna be a featured guest for Newtype Build Con Nov 16th & 17th buttOMG http://bit.ly/NTBCbuttress`
         case 'vip':
           return `How to get VIP for the month: Top Monthly Dono | Top Monthly Bits | $100 Dono | 10,000 Bits or Buttcoins | Forever VIP: 100 or more gifted subs!!!`
         case '1k':
           return `Butt just hit 1000 followers on youtube!!! Here's a video Pop made to celebrate it: https://youtu.be/nn51DLN9Esk`
+        case 'subtember':
+          return `Eat this subway !sandwich and get 1000 (foot-long) or 500 (6-inch) buttcoins for posting a pic of it in the !discord https://www.twitch.tv/videos/490840815`
+        case 'sandwich':
+          return `Subway Sandwich Order: Italian Herb and Cheese, Meatball, Pepperjack, Jalapenos, Avocado, Chipotle Southwest, and Ranch buttStink`
+        case 'bday':
+          return `Butt's Birthday is on the 10th!!! Want to get her a gift? Check out her wishlist: a.co/7qE8gqN`
+        case 'schedule':
+          return `Thuesday and Wednesday evening with possible streams on the weekend and Sub/Anime night on Friday in the !discord buttHype `
         case 'followage':
           return co(function*(){
             try{
