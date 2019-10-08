@@ -581,11 +581,39 @@ module.exports = {
         result.items = ['buttHella buttHype buttHella buttHype buttHella buttHype buttHella buttHype buttHella buttHype buttHella buttHype']
         return result;
     },
+    subGiftHandler: (username, methods, userstate) => {
+        let result = Object.assign({}, response)
+        if(mysterySubGifters.hasProperty(username) && mysterySubGifters[username] > 0){
+            result.hasMessage = true;
+            result.hasPayout = true;
+
+            result.items = [
+                'buttHella buttHype buttHella buttHype buttHella buttHype buttHella buttHype buttHella buttHype buttHella buttHype',
+                singleGiftPayout(username, methods)
+            ]
+        }else 
+            --mysterySubGifters[username];
+
+
+        return result
+    },
     subMysteryGiftHandler: (username, numbOfSubs, methods, userstate) => {
+        if(mysterySubGifters.hasProperty(username)){
+            mysterySubGifters[username] += numbOfSubs
+        }
+        else{
+            mysterySubGifters[username] = numbOfSubs
+        }
+
         let result = Object.assign({}, response)
         result.hasMessage = true;
         result.hasPayout = true;
-        result.items = [multiGiftPayout(username, numbOfSubs, methods)]
+
+        let hype = 'buttHella buttHype '
+        result.items = [
+            hype.repeat(numbOfSubs/2),
+            multiGiftPayout(username, numbOfSubs, methods)
+        ]
         return result;
     },
     // commands to handle games
@@ -695,6 +723,8 @@ module.exports = {
     }
 }
 
+let mysterySubGifters = {}
+
 // helper functions
 function buttcoinPayout(user, amount){
     return `!buttcoins add ${user} ${amount}`;
@@ -702,6 +732,16 @@ function buttcoinPayout(user, amount){
 
 function buttcoinRemove(user, amount){
     return `!buttcoins remove ${user} ${amount}`
+}
+
+function singleGiftPayout(user, methods){
+    const plan = parseInt(methods.plan) / 1000;
+    let value = 25
+    if(plan === 2)
+        value = 50
+    else if(plan === 3)
+        value = 125
+    return buttcoinPayout(user, value)
 }
 
 function multiGiftPayout(user, numOfSubs, methods){

@@ -112,6 +112,7 @@ let opts = {
     'joefish5',
     //'oooskittles',
     'thethingssheplays',
+<<<<<<< HEAD
     'hairofthedogpodcast',
     'admiralbahroo',
     'pokimane',
@@ -127,6 +128,9 @@ let opts = {
     'catlikemeow',
     'storymodebae',
     'vio'
+=======
+    'hairofthedogpodcast'
+>>>>>>> 8ac58aa0bc21206a9af984b92aa6360e51974e92
    ]
 }
 
@@ -565,7 +569,9 @@ function onResubHandler(channel, username, months, message, userstate, methods){
 }
 
 function onSubGiftHandler(channel, username, streakMonths, recipient, methods, userstate){
-  console.log('Gift Sub Handler:', userstate)
+  if(channel === thabuttress.channel){
+    console.log('Gift Sub Handler:', thabuttress.subGiftHandler(username, methods, userstate))
+  }
 }
 
 function onSubMysteryGiftHandler(channel, username, numbOfSubs, methods, userstate) {
