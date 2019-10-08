@@ -611,7 +611,7 @@ module.exports = {
 
         let hype = 'buttHella buttHype '
         result.items = [
-            hype.repeat(numbOfSubs/2),
+            hype.repeat(Math.floor(numbOfSubs/2)),
             multiGiftPayout(username, numbOfSubs, methods)
         ]
         return result;
