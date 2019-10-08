@@ -117,7 +117,16 @@ let opts = {
     'pokimane',
     'summit1g',
     'shroud',
-    'jenna'
+    'jenna',
+    'miamalkova',
+    'gubbatv',
+    'lurn',
+    'nikkibreanne',
+    'palmbee',
+    'dumplings',
+    'catlikemeow',
+    'storymodebae',
+    'vio'
    ]
 }
 
