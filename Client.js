@@ -112,25 +112,7 @@ let opts = {
     'joefish5',
     //'oooskittles',
     'thethingssheplays',
-<<<<<<< HEAD
-    'hairofthedogpodcast',
-    'admiralbahroo',
-    'pokimane',
-    'summit1g',
-    'shroud',
-    'jenna',
-    'miamalkova',
-    'gubbatv',
-    'lurn',
-    'nikkibreanne',
-    'palmbee',
-    'dumplings',
-    'catlikemeow',
-    'storymodebae',
-    'vio'
-=======
     'hairofthedogpodcast'
->>>>>>> 8ac58aa0bc21206a9af984b92aa6360e51974e92
    ]
 }
 
