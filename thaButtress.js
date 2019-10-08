@@ -608,7 +608,12 @@ module.exports = {
         let result = Object.assign({}, response)
         result.hasMessage = true;
         result.hasPayout = true;
-        result.items = [multiGiftPayout(username, numbOfSubs, methods)]
+
+        let hype = 'buttHella buttHype '
+        result.items = [
+            hype.repeat(numbOfSubs/2),
+            multiGiftPayout(username, numbOfSubs, methods)
+        ]
         return result;
     },
     // commands to handle games
