@@ -594,16 +594,13 @@ module.exports = {
                 singleGiftPayout(username, methods)
             ]
         } 
-        
+
         return result
     },
     subMysteryGiftHandler: (username, numbOfSubs, methods, userstate) => {
-        if(mysterySubGifters.hasProperty(username)){
-            mysterySubGifters[username] += numbOfSubs
-        }
-        else{
+        (mysterySubGifters.hasProperty(username))?
+            mysterySubGifters[username] += numbOfSubs :
             mysterySubGifters[username] = numbOfSubs
-        }
 
         let result = Object.assign({}, response)
         result.hasMessage = true;
