@@ -583,7 +583,9 @@ module.exports = {
     },
     subGiftHandler: (username, methods, userstate) => {
         let result = Object.assign({}, response)
-        if(mysterySubGifters.hasProperty(username) && mysterySubGifters[username] > 0){
+        if(mysterySubGifters.hasProperty(username) && mysterySubGifters[username] > 0)
+            --mysterySubGifters[username];
+        else{
             result.hasMessage = true;
             result.hasPayout = true;
 
@@ -591,11 +593,8 @@ module.exports = {
                 'buttHella buttHype buttHella buttHype buttHella buttHype buttHella buttHype buttHella buttHype buttHella buttHype',
                 singleGiftPayout(username, methods)
             ]
-        }
-        else 
-            --mysterySubGifters[username];
-
-
+        } 
+        
         return result
     },
     subMysteryGiftHandler: (username, numbOfSubs, methods, userstate) => {
