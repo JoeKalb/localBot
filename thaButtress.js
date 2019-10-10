@@ -583,10 +583,10 @@ module.exports = {
     },
     subGiftHandler: (username, methods, userstate) => {
         let result = Object.assign({}, response)
-        if(mysterySubGifters.hasProperty(username) && mysterySubGifters[username] > 0)
-            --mysterySubGifters[username];
-        else if(mysterySubGifters[username] === 0){
-            delete mysterySubGifters[username]
+        if(mysterySubGifters.hasProperty(username)){
+            (mysterySubGifters[username] === 0) ?
+                delete mysterySubGifters[username] :
+                --mysterySubGifters[username];
         }
         else{
             result.hasMessage = true;
