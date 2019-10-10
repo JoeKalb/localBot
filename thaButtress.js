@@ -585,6 +585,9 @@ module.exports = {
         let result = Object.assign({}, response)
         if(mysterySubGifters.hasProperty(username) && mysterySubGifters[username] > 0)
             --mysterySubGifters[username];
+        else if(mysterySubGifters[username] === 0){
+            delete mysterySubGifters[username]
+        }
         else{
             result.hasMessage = true;
             result.hasPayout = true;
