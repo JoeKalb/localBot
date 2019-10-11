@@ -583,7 +583,7 @@ module.exports = {
     },
     subGiftHandler: (username, methods, userstate) => {
         let result = Object.assign({}, response)
-        if(mysterySubGifters.hasProperty(username)){
+        if(mysterySubGifters.hasOwnProperty(username)){
             (mysterySubGifters[username] === 0) ?
                 delete mysterySubGifters[username] :
                 --mysterySubGifters[username];
@@ -601,7 +601,7 @@ module.exports = {
         return result
     },
     subMysteryGiftHandler: (username, numbOfSubs, methods, userstate) => {
-        (mysterySubGifters.hasProperty(username))?
+        (mysterySubGifters.hasOwnProperty(username))?
             mysterySubGifters[username] += numbOfSubs :
             mysterySubGifters[username] = numbOfSubs
 
