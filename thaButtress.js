@@ -741,22 +741,22 @@ function buttcoinRemove(user, amount){
 
 function singleGiftPayout(user, methods){
     const plan = parseInt(methods.plan) / 1000;
-    let value = 25
-    if(plan === 2)
-        value = 50
-    else if(plan === 3)
-        value = 125
-    return buttcoinPayout(user, value*2) // only for today
+    return buttcoinPayout(user, getButtcoinAmountByPlan(plan))
 }
 
 function multiGiftPayout(user, numOfSubs, methods){
     const plan = parseInt(methods.plan) / 1000;
-    let value = 25
-    if(plan === 2)
-        value = 50
-    else if(plan === 3)
-        value = 125
-    return buttcoinPayout(user, numOfSubs * value * 2) // only for today
+    return buttcoinPayout(user, numOfSubs * getButtcoinAmountByPlan(plan))
+}
+
+function getButtcoinAmountByPlan(plan){
+    if(plan === 1){
+        return 25
+    }else if(plan === 2){
+        return 50
+    }else if(plan === 3){
+        return 125
+    }
 }
 
 let updateStreamDisplay = async (value, font, color) => {
