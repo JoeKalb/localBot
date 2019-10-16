@@ -746,7 +746,7 @@ function singleGiftPayout(user, methods){
         value = 50
     else if(plan === 3)
         value = 125
-    return buttcoinPayout(user, value)
+    return buttcoinPayout(user, value*2) // only for today
 }
 
 function multiGiftPayout(user, numOfSubs, methods){
@@ -756,7 +756,7 @@ function multiGiftPayout(user, numOfSubs, methods){
         value = 50
     else if(plan === 3)
         value = 125
-    return buttcoinPayout(user, numOfSubs * value)
+    return buttcoinPayout(user, numOfSubs * value * 2) // only for today
 }
 
 let updateStreamDisplay = async (value, font, color) => {
