@@ -534,6 +534,10 @@ module.exports = {
                     result.isAction = true;
                     result.items = [...result.items, blackJackGame.dealerHand()]
                     return result;
+                case 'countdown':{
+                    console.log(parse.slice(1))
+                    updateStreamDisplayCountdown(parse[1], 60, 'white')
+                }
                 default:
             }
         }
@@ -762,6 +766,24 @@ let updateStreamDisplay = async (value, font, color) => {
         color
     })
     let res = await fetch(`https://buttress-live-display.herokuapp.com?password=${channelName}`, {
+        method:"POST",
+        headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+        },
+        body
+    })
+    let json = await res.json()
+    console.log(json)
+}
+
+let updateStreamDisplayCountdown = async (value, font, color) => {
+    const body = JSON.stringify({
+        value,
+        font,
+        color
+    })
+    let res = await fetch(`https://buttress-live-display.herokuapp.com/countdown?password=${channelName}`, {
         method:"POST",
         headers: {
         'Accept': 'application/json',
