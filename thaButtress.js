@@ -536,7 +536,8 @@ module.exports = {
                     return result;
                 case 'countdown':{
                     console.log(parse.slice(1))
-                    updateStreamDisplayCountdown(parse[1], 60, 'white')
+                    if(parse[1] === 'pause' || parse[1] === 'play') pauseStreamDisplayCountdown()
+                    else updateStreamDisplayCountdown(parse[1], 60, 'black')
                 }
                 default:
             }
@@ -790,6 +791,18 @@ let updateStreamDisplayCountdown = async (value, font, color) => {
         'Content-Type': 'application/json'
         },
         body
+    })
+    let json = await res.json()
+    console.log(json)
+}
+
+let pauseStreamDisplayCountdown = async () => {
+    let res = await fetch(`https://buttress-live-display.herokuapp.com/countdown/pause?password=${channelName}`, {
+        method:"GET",
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        }
     })
     let json = await res.json()
     console.log(json)
