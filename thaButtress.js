@@ -535,9 +535,8 @@ module.exports = {
                     result.items = [...result.items, blackJackGame.dealerHand()]
                     return result;
                 case 'countdown':{
-                    console.log(parse.slice(1))
                     if(parse[1] === 'pause' || parse[1] === 'play') pauseStreamDisplayCountdown()
-                    else updateStreamDisplayCountdown(parse[1], 60, 'black')
+                    else updateStreamDisplayCountdown(parse[1], 60, 'white')
                 }
                 default:
             }
