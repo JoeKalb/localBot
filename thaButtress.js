@@ -8,6 +8,7 @@ let search = new require('./Search')
 let blackJack = new require('./BlackJack')
 let WordBan = new require('./WordBan')
 let fetch = require('node-fetch')
+const co = require('co')
 
 let dogbets = require('./dogbets')
 let backupBot = require('./BackupBot')
@@ -327,6 +328,12 @@ module.exports = {
         if(context.mod || `#${context.username}` == this.channel || context.username === channelName
             || context.username === 'minovskyflight'){
             switch(commandName){
+                case 'lookout':{
+                    result.hasMessage = true
+                    result.hasPromise = true
+                    result.items = [staffInChat()]
+                    return result
+                }
                 case 'clear':
                     result.hasMessage = true;
                     result.items = [...result.items, 'Clearing Stream Display']
@@ -588,7 +595,7 @@ module.exports = {
     subGiftHandler: (username, methods, userstate) => {
         let result = Object.assign({}, response)
         if(mysterySubGifters.hasOwnProperty(username)){
-            console.log(mysterySubGifters[username])
+            console.log(mysterySubGifters[username]);
             (mysterySubGifters[username] <= 1) ?
                 delete mysterySubGifters[username] :
                 --mysterySubGifters[username];
@@ -895,6 +902,26 @@ let getTwitchStaffTeamIDArr = async () => {
         console.log(err)
         return false;
     }
+}
+
+let staffInChat = () => {
+    return co(function *(){
+        try{
+          let res = yield fetch(`https://tmi.twitch.tv/group/user/thabuttress/chatters`)
+          let json = yield res.json()
+          //console.log(json)
+          const { staff } = json.chatters
+          if(staff.length > 0){
+            return `Check out these cool twitch staff in the chat! ${staff.join(', ')}`
+          }
+          else
+            return `I don't see any staff in the chat... but I could be wrong!`
+        }
+        catch(err){
+          console.log(err)
+          return `Viewer List is currently unavailable...`
+        }
+      })
 }
 
 /* (async() => {

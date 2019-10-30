@@ -213,15 +213,15 @@ module.exports = {
               return `Can't find the emotes buttThump`
             }
           })
-        case 'staff':
+        case 'lookout':
           return co(function *(){
             try{
-              let res = yield(`https://tmi.twitch.tv/group/user/thabuttress/chatters`)
+              let res = yield fetch(`https://tmi.twitch.tv/group/user/thabuttress/chatters`)
               let json = yield res.json()
-
+              //console.log(json)
               const { staff } = json.chatters
               if(staff.length > 0){
-                return `Current Staff Member${(staff.length > 1)?'s':''} in chat: ${staff.join(', ')}`
+                return `Check out these cool twitch staff in the chat! ${staff.join(', ')}`
               }
               else
                 return `I don't see any staff in the chat... but I could be wrong!`
