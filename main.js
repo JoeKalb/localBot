@@ -370,13 +370,20 @@ postStreamDisplay = async (val, font, color) => {
   return json
 }
 
+let displayInterval
 let displayCall = async () => {
   let result = await postStreamDisplay(
     streamDisplayInput.value, 
     parseInt(streamDisplayInputFontSize.value), 
     streamDisplayColor.value)
-  if(result.value)
+  if(result.value){
     streamDisplay.innerText = `${result.value} | Font: ${result.font} | Color: ${result.color}`
+    clearInterval(displayInterval)
+    displayInterval = setInterval(() => {
+      console.log(`Called displayCall()`)
+      displayCall()
+    }, 900000)
+  }
 }
 
 const streamDisplayInputs = document.getElementsByClassName('input is-small streamDisplay')
@@ -397,6 +404,7 @@ streamDisplayClear.addEventListener('click', async () => {
   let result = await postStreamDisplay('', 0, 'white')
   streamDisplayInput.value = ''
   streamDisplay.innerText = ''
+  clearInterval(displayInterval)
 })
 
 // wordban increase and decrease
