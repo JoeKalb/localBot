@@ -596,9 +596,11 @@ module.exports = {
         let result = Object.assign({}, response)
         if(mysterySubGifters.hasOwnProperty(username)){
             console.log(mysterySubGifters[username]);
-            (mysterySubGifters[username] <= 1) ?
+            (mysterySubGifters[username] < 1) ?
                 delete mysterySubGifters[username] :
                 --mysterySubGifters[username];
+
+            if(mysterySubGifters[username] === 0) delete mysterySubGifters[username]
         }
         else{
             result.hasMessage = true;
