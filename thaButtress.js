@@ -581,8 +581,8 @@ module.exports = {
         }
     },
     cheerHandler:(userstate, msg) => {
-        //console.log(userstate)
-        //console.log(msg)
+        console.log(userstate)
+        console.log(msg)
     },
     subHandler: (username, method, message, userstate) => {
         let result = Object.assign({}, response)
