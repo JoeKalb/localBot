@@ -595,7 +595,7 @@ module.exports = {
     subGiftHandler: (username, methods, userstate) => {
         let result = Object.assign({}, response)
         if(mysterySubGifters.hasOwnProperty(username)){
-            console.log(mysterySubGifters[username]);
+            //console.log(mysterySubGifters[username]);
             (mysterySubGifters[username] < 1) ?
                 delete mysterySubGifters[username] :
                 --mysterySubGifters[username];
