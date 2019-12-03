@@ -551,9 +551,16 @@ module.exports = {
 
         // general commands
         switch(commandName){
-            case 'test':
+            case 'test':{
                 backupBot.checkingBottressStatus();
                 return result;
+            }
+            case 'clip':{
+                result.hasPromise = true
+                result.hasMessage = true
+                result.items = [getReggieClipCount()]
+                return result
+            }
             default:
                 //console.log(`Command Not Found: ${commandName}`)
                 return result;
@@ -767,6 +774,19 @@ function getButtcoinAmountByPlan(plan){
     }else if(plan === 3){
         return 125
     }
+}
+
+let getReggieClipCount = async() => {
+    let res = await fetch(`https://api.twitch.tv/helix/clips?id=SparklingBumblingBananaPoooound`, {
+        method:"GET",
+        headers:{
+            'Client-ID':`${CLIENT_ID}`
+        }
+    })
+    let json = await res.json()
+    const { view_count } = json.data[0]
+
+    return `${view_count} want to give Reggie attention! buttReggie`
 }
 
 let updateStreamDisplay = async (value, font, color) => {
