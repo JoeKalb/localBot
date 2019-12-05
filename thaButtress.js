@@ -786,7 +786,7 @@ let getReggieClipCount = async() => {
     let json = await res.json()
     const { view_count } = json.data[0]
 
-    return `${view_count} want to give Reggie attention! buttReggie`
+    return `${view_count} people want to give Reggie attention! buttReggie`
 }
 
 let updateStreamDisplay = async (value, font, color) => {
