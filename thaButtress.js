@@ -601,6 +601,8 @@ module.exports = {
     },
     subGiftHandler: (username, methods, userstate) => {
         let result = Object.assign({}, response)
+        console.log(userstate)
+        console.log(methods)
         if(mysterySubGifters.hasOwnProperty(username)){
             //console.log(mysterySubGifters[username]);
             (mysterySubGifters[username] < 1) ?
