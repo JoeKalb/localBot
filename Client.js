@@ -521,9 +521,14 @@ function onWhisperHandler(from, userstate, message, self){
   console.log(from, message)
   console.log(userstate)
 
-  if(client.isMod('#thabuttress', from)){
+  if(client.isMod('#thabuttress', from) || userstate.username === 'thabuttress'){
     let result = thabuttress.whisperHandler(message)
     if(result){
+      const info = {
+        hangman: parse.slice(1).join(' ').toUpperCase(),
+        channel:'thabuttress'
+      }
+      thabuttress.startHangman(info)
       let wordNum = thabuttress.getHangmanWordCount()
       let lettersPerWord = thabuttress.eachWordLength(thabuttress.eachWordLength())
       client.say('#thabuttress', `It's time for some hangman! ${wordNum} word${(wordNum > 1)? 's':''}, letters per word: ${lettersPerWord} (!hangman !guesses)`)

@@ -22,6 +22,8 @@ let wordBanGame = new WordBan('thabuttress')
 
 const fs = require('fs')
 
+//let client = require('./Client')
+
 const response = {
     hasMessage:false,
     hasDelay:false,
@@ -579,9 +581,9 @@ module.exports = {
 
         switch(commandName){
             case 'hangman':{
-                const info = parse.slice(1).join(' ').toUpperCase()
-                this.startHangman(info)
-                return `Hangman Started: ${info}`
+                let response = parse.slice(1).join(' ').toUpperCase()
+                
+                return `Hangman Started: ${response}`
             }
             default:
                 return false;
