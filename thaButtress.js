@@ -762,12 +762,12 @@ function buttcoinRemove(user, amount){
 
 function singleGiftPayout(user, methods){
     const plan = parseInt(methods.plan) / 1000;
-    return buttcoinPayout(user, getButtcoinAmountByPlan(plan))
+    return buttcoinPayout(user, 2 * getButtcoinAmountByPlan(plan)) // double until xmas
 }
 
 function multiGiftPayout(user, numOfSubs, methods){
     const plan = parseInt(methods.plan) / 1000;
-    return buttcoinPayout(user, numOfSubs * getButtcoinAmountByPlan(plan))
+    return buttcoinPayout(user, 2 * numOfSubs * getButtcoinAmountByPlan(plan)) // double until xmas
 }
 
 function getButtcoinAmountByPlan(plan){
