@@ -145,7 +145,7 @@ client.connect()
 
 // Called every time a message comes in:
 function onMessageHandler (target, context, msg, self) {
-  if (self) { return } // Ignore messages from the bot
+  if (self) { return } // Ignore messages from the bot *uncomment after stream
   // This isn't a command since it has no prefix:
 
   //console.log(context.id) for grabbing id, might want to to do try out deleting messages at some point

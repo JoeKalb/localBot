@@ -46,6 +46,12 @@ module.exports = {
     if(bottressDown && target == '#thabuttress'){
       //console.log(`Command Used: ${commandName}`)
       switch(commandName){
+        case 'raffle':
+          return `You ready to for the holiday raffle?! Get your tickets to win a RE100 Jagd Doga or a Gundam canvas thaButtress will be painting this Saturday! Tickets cost 500 ButtCoins through the Streamlabs Extension & winners will be drawn on the 21st!`
+        case 'double':
+          return `buttSweat Double the buttcoins for donos, bits, subs & gift subs! Merry Buttmas!!!! buttMas`
+        case 'plans':
+          return `Next two Saturdays gonna be buttLit woo! Sat 14th - Canvas painting (2pm PT) Sat 21st - Holiday event w/ Lego (5pm PT) buttHype`
         case 'discord':
           return `Join our offline Discord chat! Subs: Link your discord to your twitch account for bonus channels! https://discord.gg/YbdqmZG`
         case 'lego':
@@ -53,11 +59,11 @@ module.exports = {
         case 'nerds':
           return "You're all such nerds!!!"
         case 'gundam':
-          return `If you're planning on buying a kit check out https://www.gundamplanet.com/ and use coupon code "THABUTTRESS" to get 10% off all regularly priced items!`
+          return `Want to build your own gundam?? thaButtress gets all her model kits and buttHella tools here at Gundam Planet buttDab Use this link to receive 10% off all regular priced items! http://bit.ly/GP_thaButtress`
         case 'gundams':
-          return `If you're planning on buying a kit check out https://www.gundamplanet.com/ and use coupon code "THABUTTRESS" to get 10% off all regularly priced items!`
+          return `Want to build your own gundam?? thaButtress gets all her model kits and buttHella tools here at Gundam Planet buttDab Use this link to receive 10% off all regular priced items! http://bit.ly/GP_thaButtress`
         case 'imgur':
-          return `Look at all these cool gundams that thaButtress has built and customized! https://thabuttress.imgur.com/ buttOMG`
+          return `Look at all these cool gundams that thaButtress has built and customized! https://imgur.com/user/thabuttress buttOMG`
         case 'built':
           return `Check out Butt's built list and backlog!!! https://goo.gl/7DxzVX buttDab`
         case 'tats':
@@ -93,7 +99,7 @@ module.exports = {
         case 'lurk':
           return `buttLurk ${context['display-name']} has set their mobile suit to stand-by mode buttLurk`
         case 'current':
-          return `Butt's currently customzing an HG IBO Grimgerde into a Sauron Gundam buttOMG https://www.gundamplanet.com/hg-ibo-grimgerde.html?c=CAvHeI&referring_service=link`
+          return `Butt's currently building the MG Astray Red Frame buttOMG https://www.gundamplanet.com/mg-mbf-p02kai-gundam-astray-red-frame-kai.html?c=CAvHeI&referring_service=link`
         case 'newtype':
           return `Butt's gonna be a featured guest for Newtype Build Con Nov 16th & 17th buttOMG http://bit.ly/NTBCbuttress`
         case 'vip':
