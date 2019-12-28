@@ -101,7 +101,7 @@ module.exports = {
         case 'current':
           return `Butt's currently building the MG Astray Red Frame buttOMG https://www.gundamplanet.com/mg-mbf-p02kai-gundam-astray-red-frame-kai.html?c=CAvHeI&referring_service=link`
         case 'newtype':
-          return `Butt's gonna be a featured guest for Newtype Build Con Nov 16th & 17th buttOMG http://bit.ly/NTBCbuttress`
+          return `Butt was a featured guest for Newtype Build Con! buttOMG http://bit.ly/NTBCbuttress`
         case 'vip':
           return `How to get VIP for the month: Top Monthly Dono | Top Monthly Bits | $100 Dono | 10,000 Bits or Buttcoins | Forever VIP: 100 or more gifted subs!!!`
         case '1k':
