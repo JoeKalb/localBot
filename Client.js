@@ -104,15 +104,15 @@ let commandPrefix = '!'
 // Define configuration options:
 let opts = {
    identity: {
-    username: 'JoeFish5',
+    username: 'botfish5',
     password: CONFIG.OAUTH
    },
    channels: [
     'thabuttress',
     'joefish5',
     //'oooskittles',
-    'thethingssheplays',
-    'hairofthedogpodcast'
+    //'thethingssheplays',
+    //'hairofthedogpodcast'
    ]
 }
 
