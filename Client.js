@@ -438,7 +438,7 @@ function onMessageHandler (target, context, msg, self) {
         //client.action(target, `Sorry ${context['display-name']}, you need a !house to cheer.`)
       }
       break;
-    /* case 'raid':
+    case 'raid':
       if(houses.isEnrolled(context.username)){
         let houseNum = houses.students[context.username]
         client.action(target, `buttButt buttCrew ${houses.houseNames[houseNum].toUpperCase()} RAID buttBest buttCrew`)
@@ -461,8 +461,8 @@ function onMessageHandler (target, context, msg, self) {
       break;
     case 'rav':
       client.say(target, houses.specificHouseStudents(3))
-      break; */
-    /* case 'commands':
+      break;
+    case 'commands':
       let commands = "Current list of all Harry Potter commands:";
       commands += " House info [!house !houses !whathouse !myhouse !earn !cheer !raid !gry !huff !sly !rav] |";
       commands += " Quidditch [!play !results !mypoints !snitch] |";
@@ -470,7 +470,7 @@ function onMessageHandler (target, context, msg, self) {
       commands += " Hangman [!hangman !guessed] |";
       commands += " Item Hunt [!left !right !option !mypoints !results !hunt]"
       client.say(target, commands)
-      break; */
+      break;
     default:
         //console.log(`Unknown Command: ${commandName}`)
     }

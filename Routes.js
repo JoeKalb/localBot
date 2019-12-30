@@ -21,7 +21,7 @@ let fileName = `logs/${today.getUTCMonth()+1}-${today.getUTCDate()}.txt`;
 
 function recordPayouts(message){
   fs.appendFile(fileName, `\n${message}`, (err) => {
-    if(err) throw err;
+    if(err) throw err; 
     console.log(`Saved message: ${message}`)
   })
 }

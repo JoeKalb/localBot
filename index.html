@@ -46,6 +46,25 @@
         </div>
       </div>
     </div>
+    <div id="Stream Input Div">
+      <h5>Stream Input: Buttress</h5><p id="streamDisplay"></p>
+      <div class="columns is-mobile">
+        <div class="column is-4">
+          <input type="text" id="streamDisplayInput" class="input is-small streamDisplay" placeholder="Enter Display">
+        </div>
+        <div class="column is-1">
+          <input type="number" id="streamDisplayInputFontSize" class="input is-small streamDisplay" placeholder="In PX">
+        </div>
+        <div class="column is-2">
+          <input type="text" id="streamDisplayColor" class="input is-small streamDisplay" placeholder="Pick a color" list="streamDisplayColorList">
+          <datalist id="streamDisplayColorList"></datalist>
+        </div>
+        <div class="column is-4">
+          <button class="button is-primary is-small is-primary" id="streamDisplaySubmit">SUBMIT</button>
+          <button class="button is-primary is-small is-danger" id="streamDisplayClear">CLEAR</button>
+        </div>
+      </div>
+    </div>
     <div id="hangmanDiv">
       <h5>Hangman</h5><p id="wordDisplay"></p>
       <div class="columns is-mobile">
@@ -110,25 +129,7 @@
           </div>
         </div>
       </div>
-      <div id="Stream Input Div">
-        <h5>Stream Input: Buttress</h5><p id="streamDisplay"></p>
-        <div class="columns is-mobile">
-          <div class="column is-4">
-            <input type="text" id="streamDisplayInput" class="input is-small streamDisplay" placeholder="Enter Display">
-          </div>
-          <div class="column is-1">
-            <input type="number" id="streamDisplayInputFontSize" class="input is-small streamDisplay" placeholder="In PX">
-          </div>
-          <div class="column is-2">
-            <input type="text" id="streamDisplayColor" class="input is-small streamDisplay" placeholder="Pick a color" list="streamDisplayColorList">
-            <datalist id="streamDisplayColorList"></datalist>
-          </div>
-          <div class="column is-4">
-            <button class="button is-primary is-small is-primary" id="streamDisplaySubmit">SUBMIT</button>
-            <button class="button is-primary is-small is-danger" id="streamDisplayClear">CLEAR</button>
-          </div>
-        </div>
-      </div>
+      
 
       <div id="Word Ban Div">
         <h5>Word Ban Game Increase/Decrease</h5>
@@ -144,7 +145,7 @@
       </div>
 
       <!-- Harry Potter Games Start -->
-      <div style="visibility: collapse">
+      <div style=> <!-- "visibility: collapse" -->
       <div id="quidditchDiv">
         <h5>Quidditch Game</h5>
         <div class="columns is-mobile">
