@@ -125,6 +125,8 @@ client.getChannels = () => {
   return opts.channels
 }
 
+
+
 client.delayedWinnings = (target, messages) => {
   delayedWinnings(target, messages)
 }
@@ -467,7 +469,7 @@ function onMessageHandler (target, context, msg, self) {
       commands += " House info [!house !houses !whathouse !myhouse !earn !cheer !raid !gry !huff !sly !rav] |";
       commands += " Quidditch [!play !results !mypoints !snitch] |";
       commands += " Wizard duel [!wizard !duel !duelists !bet (1 or 2)] |";
-      commands += " Hangman [!hangman !guessed] |";
+      commands += " Hangman [!hangman !guesses] |";
       commands += " Item Hunt [!left !right !option !mypoints !results !hunt]"
       client.say(target, commands)
       break;

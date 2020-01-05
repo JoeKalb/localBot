@@ -16,7 +16,6 @@ module.exports = {
     minovskyflight:1,
     theshyguy69:1,
     maverick825:3,
-    grantypants:2,
     majintb:3,
     tonyvirgo:3,
     tripleb85:1,
@@ -189,7 +188,24 @@ module.exports = {
     itscharmazing:2,
     beardsofprey:2,
     ulluki:1,
-    therisenone247:3
+    therisenone247:3,
+    yaritstony:3,
+    drago_x172:3,
+    daaybot:2,
+    milkham:1,
+    harbortownhobbies:1,
+    lord_mangoat:2,
+    nilstryfe:1,
+    zackrobotheart:2,
+    mensanurse:2,
+    lemongrenade:2,
+    fleetwood619:3,
+    darkhatchet600:2,
+    helladerpy:1,
+    zabanya91:0,
+    ansinex726:0,
+    tribalgrayfox:3,
+    lfg_joey:1
     //gryf = 0, huff = 1, sly = 2, raven = 3
   },
   getHouse: function(name){
