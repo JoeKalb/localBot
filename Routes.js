@@ -56,7 +56,7 @@ router.get('/testBtn/:channel', (req, res) => {
 function delayedWinnings(target, messages){
   for(let i in messages){
     setTimeout(() => {
-      client.action(target, messages[i])   
+      client.say(target, messages[i])   
     }, i*3000)
   }
 }
@@ -262,7 +262,7 @@ router.get('/duel/:channel', (req, res) => {
 
 router.get('/duel/game/pick', (req, res) =>{
   if(wizardDuel.studentCount > 2){
-    client.action("#" + wizardDuel.channel, wizardDuel.pickDuelists());
+    client.say("#" + wizardDuel.channel, wizardDuel.pickDuelists());
     res.status(200).json(`${wizardDuel.duelists[1]} VS ${wizardDuel.duelists[2]}`)
   }else
     res.status(200).json("Not enough students")
@@ -270,7 +270,7 @@ router.get('/duel/game/pick', (req, res) =>{
 
 router.get('/duel/game/start', (req, res) => {
   if(wizardDuel.allowBets){
-    client.action("#"+wizardDuel.channel, wizardDuel.readyToDuel());
+    client.say("#"+wizardDuel.channel, wizardDuel.readyToDuel());
     wizardDuel.timeToDuel();
     wizardDuel.finalHousePayouts();
 
@@ -314,13 +314,13 @@ router.post('/duel/game/specialDuel', (req, res) => {
   if(typeof duel == 'object'){
     duel.then((duelRes) => {
       console.log('Special Duel Called: Promise Displays Names')
-      client.action(`#${wizardDuel.channel}`, duelRes)
+      client.say(`#${wizardDuel.channel}`, duelRes)
       res.status(200).json(`Wizard duel promise: ${req.body.student1} VS ${req.body.student2}`)
     })
   }
   else{
     console.log('Special Duel Called: stored Display Names')
-    client.action("#" + wizardDuel.channel, duel)
+    client.say("#" + wizardDuel.channel, duel)
     res.status(200).json(`Special Duel: ${req.body.student1} VS ${req.body.student2}`)
   }
 })
@@ -359,7 +359,7 @@ router.post('/search', (req, res) => {
       searchGameStarted.then((twitchRes) => {
         console.log(`object: ${searchGameStarted}`)
         search.setItem();
-        client.action(`#${search.channel}`, search.startGameDisplay())
+        client.say(`#${search.channel}`, search.startGameDisplay())
 
         if(twitchRes)
           res.status(200).json(`${search.getSneakyName()} is now searching!`)
@@ -370,7 +370,7 @@ router.post('/search', (req, res) => {
     else{
       console.log(`non object: ${searchGameStarted}`)
       search.setItem();
-      client.action(`#${search.channel}`, search.startGameDisplay())
+      client.say(`#${search.channel}`, search.startGameDisplay())
 
       res.status(200).json(`${search.getSneakyName()} is now searching!`)
     }
@@ -458,7 +458,7 @@ router.get('/puptime/game/stop/:channel', (req, res) => {
       }
   
       let topDisplay = `Top Score: ${topScore} ${topNames}`
-      client.action(thabuttress.channel, topDisplay)
+      client.say(thabuttress.channel, topDisplay)
       client.delayedWinnings(thabuttress.channel, payoutStrings)
       res.status(200).json(`Puptime points: ${topDisplay}`)
     }
