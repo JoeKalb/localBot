@@ -205,7 +205,17 @@ module.exports = {
     zabanya91:0,
     ansinex726:0,
     tribalgrayfox:3,
-    lfg_joey:1
+    lfg_joey:1,
+    xshrimpx:3,
+    tiagorb26:1,
+    josh_ortega:2,
+    ralkor_targaryen:3,
+    been_jammin245:0,
+    scarid:1,
+    agentjohnny47:3,
+    biscuitboyusa:3,
+    srn0va:1,
+    garzey:1
     //gryf = 0, huff = 1, sly = 2, raven = 3
   },
   getHouse: function(name){
