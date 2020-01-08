@@ -437,13 +437,13 @@ function onMessageHandler (target, context, msg, self) {
           client.action(target, `RA RA ${houses.houseNames[houseNum].toUpperCase()}`)
       }
       else{
-        //client.action(target, `Sorry ${context['display-name']}, you need a !house to cheer.`)
+        client.action(target, `Sorry ${context['display-name']}, you need a !house to cheer.`)
       }
       break;
     case 'raid':
       if(houses.isEnrolled(context.username)){
         let houseNum = houses.students[context.username]
-        client.action(target, `buttButt buttCrew ${houses.houseNames[houseNum].toUpperCase()} RAID buttBest buttCrew`)
+        client.action(target, `buttHouse ${houses.houseNames[houseNum].toUpperCase()} RAID buttHouse`)
       }
       else if (target == "#thabuttress"){
         client.action(target, `MUGGLE RAID!!!`)
@@ -468,7 +468,7 @@ function onMessageHandler (target, context, msg, self) {
       let commands = "Current list of all Harry Potter commands:";
       commands += " House info [!house !houses !whathouse !myhouse !earn !cheer !raid !gry !huff !sly !rav] |";
       commands += " Quidditch [!play !results !mypoints !snitch] |";
-      commands += " Wizard duel [!wizard !duel !duelists !bet (1 or 2)] |";
+      commands += " Wizard duel [!duel !duelists !bet (1 or 2)] |";
       commands += " Hangman [!hangman !guesses] |";
       commands += " Item Hunt [!left !right !option !mypoints !results !hunt]"
       client.say(target, commands)

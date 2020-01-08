@@ -37,6 +37,12 @@ async function stardardAPICallChannel(){
   let response = await fetch(window.location + this.value + dropDown.value);
   let json = await response.json();
   console.log(json);
+  if(json === 'Quidditch Game Started'){
+    gameStarted('Quidditch: !play')
+  }
+  else{
+    displayCall()
+  }
 }
 
 // channel options
@@ -93,6 +99,7 @@ async function startHangman() {
     })
     let json = await response.json()
     console.log(`Start Hangman: ${json}`);
+    gameStarted('Hangman: !hangman !guesses')
   }
 }
 
@@ -201,6 +208,12 @@ async function postSpecialDuel()  {
 
   let json = await response.json()
   console.log(json)
+  try{
+    gameStarted(`!bet 1 (${inputWizDuelSearch1.value}) | !bet 2 (${inputWizDuelSearch2.value})`)
+  }
+  catch(err){
+    console.log(err)
+  }
 }
 
 // standard duel random selector
@@ -383,6 +396,19 @@ let displayCall = async () => {
       console.log(`Called displayCall()`)
       displayCall()
     }, 900000)
+  }
+}
+
+let gameStarted = async (gameCommands) => {
+  clearInterval(displayInterval)
+  let result = await postStreamDisplay(
+    gameCommands,
+    parseInt(streamDisplayInputFontSize.value),
+    streamDisplayColor.value)
+  if(result.value){
+    streamDisplay.innerText = `${result.value} | Font: ${result.font} | Color: ${result.color}`
+  }else{
+    console.log(`gameStarted() did not update postStreamDisplay Properly`)
   }
 }
 
