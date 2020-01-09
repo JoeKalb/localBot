@@ -216,7 +216,8 @@ module.exports = {
     biscuitboyusa:3,
     srn0va:1,
     garzey:1,
-    fittzle16:3
+    fittzle16:3,
+    flyingpainguin:0
     //gryf = 0, huff = 1, sly = 2, raven = 3
   },
   getHouse: function(name){
