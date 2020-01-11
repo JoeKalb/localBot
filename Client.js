@@ -60,9 +60,11 @@ function handleResponses(target, response){
   if(response.hasMessage){
     let len = response.items.length
     if(response.timedMessage && response.timedMessage > 0){
-      setTimeout(() => {
-        client.say(target, response.items[0])
-      }, 1000*response.timedMessage)
+      for(let i = 0; i < len; ++i){
+        setTimeout(() => {
+          client.say(target, response.items[i])
+        }, 1000*response.timedMessage*i)
+      }
     }
     else if(len == 1){
       if(typeof response.items[0] == 'object'){

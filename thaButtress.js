@@ -13,6 +13,7 @@ const co = require('co')
 let dogbets = require('./dogbets')
 let backupBot = require('./BackupBot')
 const trivia = require('./Trivia')
+let ButtVGuilty = require('./ButtVGuilty')
 
 let blackJackGame = new blackJack('thabuttress')
 let triviaGame = new trivia('thabuttress')
@@ -326,6 +327,21 @@ module.exports = {
             triviaGame.answerSubmitted(context.username, parseInt(commandName))
         }
 
+        //ButtVGuilty commands
+        if(ButtVGuilty.allowBets){
+            switch(commandName){
+                case 'butt':{
+                    ButtVGuilty.bet(context.username, 0)
+                    return result
+                }
+                case 'guilty':{
+                    ButtVGuilty.bet(context.username, 1)
+                    return result
+                }
+                default:
+            }
+        }
+
         //game start and ending mod commands
         if(context.mod || `#${context.username}` == this.channel || context.username === channelName
             || context.username === 'minovskyflight'){
@@ -547,6 +563,35 @@ module.exports = {
                     if(parse[1] === 'pause' || parse[1] === 'play') pauseStreamDisplayCountdown()
                     else updateStreamDisplayCountdown(parse[1], 60, 'white')
                 }
+                case '1v1':{
+                    ButtVGuilty.start('thabuttress')
+                    result.hasMessage = true
+                    result.items = [
+                        "It's time to throw down! Bet on who you think will win: !butt or !guilty"
+                    ]
+                    return result
+                }
+                case 'winner':{
+                    result.hasMessage = true
+                    if(parse[1].toLowerCase() === 'butt'){
+                        result.items = [ButtVGuilty.selectWinnerAndPayout(0)]
+                    }
+                    else if(parse[1].toLowerCase() === 'guilty'){
+                        result.items = [ButtVGuilty.selectWinnerAndPayout(1)]
+                    }else{
+                        result.items = [
+                            'It was a tie! No one wins or loses!'
+                        ]
+                        return result
+                    }
+                    result.timedMessage = 1
+                    result.items = [
+                        ...result.items,
+                        ButtVGuilty.houseResults()
+                    ]
+                    return result
+                }
+
                 default:
             }
         }
@@ -562,6 +607,13 @@ module.exports = {
                 result.hasMessage = true
                 result.items = [getReggieClipCount()]
                 return result
+            }
+            case 'bets':{
+                if(ButtVGuilty.allowBets){
+                    result.hasMessage = true
+                    result.items = [ButtVGuilty.getBets()]
+                    return result
+                }
             }
             default:
                 //console.log(`Command Not Found: ${commandName}`)
