@@ -7,6 +7,7 @@ let wizardDuel = new require('./WizardDuel')
 let search = new require('./Search')
 let blackJack = new require('./BlackJack')
 let WordBan = new require('./WordBan')
+let hpPhrase = new require('./hpPhrase')
 let fetch = require('node-fetch')
 const co = require('co')
 
@@ -20,6 +21,7 @@ let triviaGame = new trivia('thabuttress')
 console.log(triviaGame.token)
 
 let wordBanGame = new WordBan('thabuttress')
+let hpPhraseGame = new hpPhrase('thabuttress')
 
 const fs = require('fs')
 
@@ -69,6 +71,21 @@ module.exports = {
             
             return result; */
             console.log(`Chainmail was said by ${context['display-name']}`)
+        }
+
+        //phPhraseGame logic
+        if(hpPhraseGame.getGameOn()){
+            if(hpPhraseGame.guess(context.username, msg)){
+                result.hasMessage = true
+                result.hasPayout = true
+
+                result.items = [
+                    `${context['display-name']} guessed correctly! ${hpPhraseGame.getPhrase()}`,
+                    buttcoinPayout(context['display-name'], hpPhraseGame.getPayout())
+                ]
+
+                return result
+            }
         }
 
         // hangman logic
@@ -791,6 +808,18 @@ module.exports = {
         }
         return false;
     },
+    hpPhraseStart:(phrase) => {
+        hpPhraseGame.startGame(phrase)
+    },
+    hpPhraseStop:() => {
+        hpPhraseGame.stopGame()
+    },
+    hpPhraseGetPhrase:() => {
+        return hpPhraseGame.getPhrase()
+    },
+    hpPhraseClear:() => {
+        hpPhraseGame.clear()
+    },
     clear:() => {
         hangman.clear();
         puptimeGame.clear();
@@ -798,6 +827,7 @@ module.exports = {
         randNum.clear();
         blackJackGame.clear();
         wordBanGame.clear();
+        hpPhraseGame.clear();
     }
 }
 

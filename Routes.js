@@ -518,6 +518,28 @@ router.get('/wordban/dec/:channel', (req, res) => {
   else res.status(200),json({'channel':req.params.channel})
 })
 
+router.post('/hpPhrase', (req, res) => {
+  try{
+    thabuttress.hpPhraseStart(req.body.phrase)
+    client.say('thabuttress', `Guess the phrase on screen before Butt and win Buttcoins! buttHouse`)
+    res.status(200).json({'hpPhrase':thabuttress.hpPhraseGetPhrase()})
+  }catch(err){
+    console.log(err)
+    res.status(404).json({err})
+  }
+})
+
+router.get('/hpPhrase/stop', (req, res) => {
+  thabuttress.hpPhraseStop()
+  client.say('thabuttress', `Butt got the phrase first! ${thabuttress.hpPhraseGetPhrase()}`)
+  res.status(200).json({'winner':'thaButtress'})
+})
+
+router.get('/hpPhrase/clear', (req, res) => {
+  thabuttress.hpPhraseClear()
+  res.status(200).json({'phrase':'cleared'})
+})
+
 // clear all info
 router.get('/clear/all', (req, res) => {
   giveaway.clear();

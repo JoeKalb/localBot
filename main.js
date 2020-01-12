@@ -1,3 +1,5 @@
+//import fetch from "node-fetch";
+
 const dropDown = document.getElementById("channelsDropDown");
 
 (async () => {
@@ -440,3 +442,38 @@ const wordBanDecrease = document.getElementById('wordBanDecrease')
 
 clickBtnBindChannel(wordBanIncrease)
 clickBtnBindChannel(wordBanDecrease)
+
+//hpPhrase
+const phraseInput = document.getElementById('phraseInput')
+
+const phraseBtn = document.getElementById('phraseBtn')
+phraseBtn.addEventListener('click',async () => {
+  startPhrase()
+})
+async function startPhrase(){
+  if(phraseInput.value.length > 0){
+    console.log(phraseInput.value)
+    let newPhrase = phraseInput.value.trim().toUpperCase()
+
+    let data = JSON.stringify({
+      "phrase":newPhrase
+    })
+
+    let res = await fetch(window.location + phraseBtn.value, {
+      method: "POST",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: data
+    })
+    let json = await res.json()
+    console.log(json)
+  }
+}
+
+const stopPhraseBtn = document.getElementById('stopPhraseBtn')
+clickBtnBind(stopPhraseBtn)
+
+const clearPhraseBtn = document.getElementById('clearPhraseBtn')
+clickBtnBind(clearPhraseBtn)
