@@ -274,6 +274,8 @@ async function startSearchGame() {
 
   let json = await response.json();
   console.log(json)
+
+  gameStarted('Hunt: !left !right')
 }
 
 const continueSearchBtn = document.getElementById("continueSearchBtn")
@@ -445,6 +447,10 @@ clickBtnBindChannel(wordBanDecrease)
 
 //hpPhrase
 const phraseInput = document.getElementById('phraseInput')
+phraseInput.addEventListener('keypress', e => { 
+  if(e.keyCode === 13 || e.which === 13)
+  startPhrase() 
+})
 
 const phraseBtn = document.getElementById('phraseBtn')
 phraseBtn.addEventListener('click',async () => {

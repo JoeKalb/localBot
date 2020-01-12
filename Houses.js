@@ -217,7 +217,14 @@ module.exports = {
     srn0va:1,
     garzey:1,
     fittzle16:3,
-    flyingpainguin:0
+    flyingpainguin:0,
+    guiltycosplay:3,
+    zraveno:1,
+    kahhlie:2,
+    slickbuilder:3,
+    thefryingpan:1,
+    pr3stss:1,
+    aleistercrowwley:3
     //gryf = 0, huff = 1, sly = 2, raven = 3
   },
   getHouse: function(name){

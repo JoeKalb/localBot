@@ -261,7 +261,7 @@ function onMessageHandler (target, context, msg, self) {
           }
         break;
       case 'duelists':
-        client.action(target, wizardDuel.options())
+        client.say(target, wizardDuel.options())
         break;
       case 'duelHouses':
         if(target == "#" + wizardDuel.channel)
