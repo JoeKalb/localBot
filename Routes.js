@@ -540,6 +540,22 @@ router.get('/hpPhrase/clear', (req, res) => {
   res.status(200).json({'phrase':'cleared'})
 })
 
+router.post('/addstudent', async(req, res) => {
+  try{
+    const { name, houseNum } = req.body
+    let studentAdded = await houses.addNewStudent(name, houseNum)
+    if(studentAdded){
+      res.status(200).json({name, houseNum})
+    }else{
+      res.status(404).json({name, houseNum})
+    }
+    
+  }catch(err){
+    console.log(err)
+    res.status(404).json({err})
+  }
+})
+
 // clear all info
 router.get('/clear/all', (req, res) => {
   giveaway.clear();

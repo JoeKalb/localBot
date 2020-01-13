@@ -1,5 +1,3 @@
-//import fetch from "node-fetch";
-
 const dropDown = document.getElementById("channelsDropDown");
 
 (async () => {
@@ -227,6 +225,9 @@ clickBtnBind(pickDuelBtn)
 
 const duelBtn = document.getElementById("duelBtn")
 clickBtnBind(duelBtn)
+duelBtn.addEventListener('click', () => {
+  displayCall()
+})
 
 const resetDuelBtn = document.getElementById("resetDuelBtn")
 clickBtnBind(resetDuelBtn)
@@ -483,3 +484,29 @@ clickBtnBind(stopPhraseBtn)
 
 const clearPhraseBtn = document.getElementById('clearPhraseBtn')
 clickBtnBind(clearPhraseBtn)
+
+const addStudentBtn = document.getElementById('addStudentBtn')
+addStudentBtn.addEventListener('click', () => {
+  addStudentCall()
+})
+
+const studentNameInput = document.getElementById('studentNameInput')
+const houseDropDown = document.getElementById('houseDropDown')
+
+const addStudentCall = async() => {
+  const body = JSON.stringify({
+    name:studentNameInput.value.trim().toLowerCase(),
+    houseNum:houseDropDown.value
+  })
+
+  let res = await fetch(window.location + addStudentBtn.value,{
+    method: "POST",
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body
+  })
+  let json = await res.json()
+  console.log(json)
+}

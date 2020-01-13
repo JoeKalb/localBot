@@ -7,16 +7,11 @@ let wizardDuel = require('./WizardDuel')
 let search = require('./Search')
 const fs = require('fs');
 const houses = require('./Houses')
-let CONFIG;
+const dotenv = require('dotenv').config();
 
 let thabuttress = require('./thaButtress')
 let ttsp = require('./ttsp')
 let hotd = require('./hotd')
-
-if(process.env.OAUTH === undefined) {
-  let localConfig = require('./config.js')
-  CONFIG = localConfig.CONFIG;
-}
 
 // create file for logging
 let today = new Date();
@@ -107,7 +102,7 @@ let commandPrefix = '!'
 let opts = {
    identity: {
     username: 'botfish5',
-    password: CONFIG.OAUTH
+    password: process.env.TWITCH
    },
    channels: [
     'thabuttress',

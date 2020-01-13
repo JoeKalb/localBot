@@ -32,17 +32,36 @@
     </section>
   <div>
     <div id="channelsDiv">
-      <h5 class="">Channel</h5>
+      <div class="columns">
+        <h5 class="column is-6" style="padding-bottom: 0px;">Channel</h5>
+        <h5 class="column is-6" style="padding-bottom: 0px;">Add/Edit Student</h5>
+      </div>
       <div class="columns is-mobile">
-        <div class="column is-3">
+        <div class="column is-2">
           <div class="select is-small">
             <select name="channels" id="channelsDropDown" class="level-item"></select>
           </div>
         </div>
-        <div class="column is-10">
-          <button id="testBtn" value="testBtn/" class="level-item button is-primary is-small">TEST</button> 
-          <button id="houseUpdateBtn" value="house/update" class="level-item button is-primary is-small">UPDATE</button>
-          <button id="clearAllBtn" value="clear/all/" class="level-item button is-primary is-small">CLEAR ALL</button>
+        <div class="column is-3">
+          <button id="testBtn" value="testBtn/" class="button is-primary is-small">TEST</button> 
+          <button id="houseUpdateBtn" value="house/update" class="button is-primary is-small">UPDATE</button>
+          <button id="clearAllBtn" value="clear/all/" class="button is-primary is-small">CLEAR ALL</button>
+        </div>
+
+        <div class="column is-2">
+          <input type="text " placeholder="Student Name" id="studentNameInput">
+        </div>
+        <div class="column is-3">
+          <div class="select is-small">
+            <select name="houses" id="houseDropDown">
+              <option value="" disabled="disabled">House</option> 
+              <option value=0>Gryffindor</option>
+              <option value=1>Hufflepuff</option>
+              <option value=2>Slytherin</option>
+              <option value=3>Ravenclaw</option>
+            </select>
+          </div>
+          <button class="button is-primary is-small" id="addStudentBtn" value="addstudent/">SUBMIT</button>
         </div>
       </div>
     </div>
@@ -78,71 +97,6 @@
         </div>
       </div>
     </div>
-      <div id="randomNumDiv">
-        <h5>Random Number</h5>
-        <div class="columns is-mobile">
-          <div class="column is-4">
-            <input type="number" id="randomNumInput" class="input is-small" placeholder="Enter this upper limit">
-          </div>
-          <div class="column is-3">
-            <button id="randomStartBtn" value="randNum/" class="button is-primary is-small">START</button>
-            <button id="randomStopBtn" value="randNum/game/clear/" class="button is-danger is-small">STOP</button>
-          </div>
-        </div>
-      </div>
-      <div id="triviaDiv">
-        <h5>Trivia in the Chat!!!</h5>
-        <div class="field has-addons">
-          <div class="control">
-            <div class="select is-small">
-              <select name="triviaCatagory" id="triviaDropDown">
-                <option value=""></option>
-              </select>
-            </div>
-          </div>
-          <div class="control">
-            <button id="triviaStartBtn" value="trivia/" class="button is-primary is-small">START</button>
-            <button id="triviaNextBtn" value="trivia/next/" class="button is-warning is-small">NEXT</button>
-            <button id="triviaStopBtn" class="button is-danger is-small">STOP</button>
-            <button id="triviaResetBtn" class="button is-danger is-small">RESET</button>
-          </div>
-        </div>
-      </div>
-      <div id="giveawayDiv">
-        <h5>Giveaway!</h5>
-        <div class="columns is-moblie">
-          <div class="column is-6">
-            <button id="giveawayStartBtn" value="giveaway/" class="button is-primary is-small">START</button>
-            <button id="giveawayStopBtn" value="giveaway/game/stop/" class="button is-warning is-small">STOP</button>
-            <button id="giveawayDrawBtn" value="giveaway/game/draw/" class="button is-primary is-small">DRAW</button>
-            <button id="giveawayClearBtn" value="giveaway/game/clear/" class="button is-danger is-small">CLEAR</button>
-          </div>
-        </div>
-      </div>
-      <div id="puptimeDiv">
-        <h5>Puptime!!!</h5>
-        <div class="columns is-mobile">
-          <div class="column is-6">
-            <button id="puptimeStartBtn" value="puptime/" class="button is-primary is-small">START</button>
-            <button id="puptimeStopBtn" value="puptime/game/stop/" class="button is-warning is-small">STOP</button>
-            <button id="puptimeClearBtn" value="puptime/game/clear/" class="button is-danger is-small">CLEAR</button>
-          </div>
-        </div>
-      </div>
-      
-
-      <div id="Word Ban Div">
-        <h5>Word Ban Game Increase/Decrease</h5>
-        <div class="columns is-mobile">
-          <div class="column is-1">
-            <input type="number" id="wordBanNumberInput" class="input is-small">
-          </div>
-          <div class="column is-4">
-            <button class="button is-primary is-small is-primary" id="wordBanIncrease" value='wordban/inc/'>INCREASE</button>
-            <button class="button is-primary is-small is-danger" id="wordBanDecrease" value='wordban/dec/'>DECREASE</button>
-          </div>
-        </div>
-      </div>
 
       <!-- Harry Potter Games Start -->
       <div style=> <!-- "visibility: collapse" -->
@@ -216,6 +170,75 @@
       </div>
       </div>
       <!-- Harry Potter Games End -->
+
+      <div id="randomNumDiv" style="visibility: collapse">
+        <h5>Random Number</h5>
+        <div class="columns is-mobile">
+          <div class="column is-4">
+            <input type="number" id="randomNumInput" class="input is-small" placeholder="Enter this upper limit">
+          </div>
+          <div class="column is-3">
+            <button id="randomStartBtn" value="randNum/" class="button is-primary is-small">START</button>
+            <button id="randomStopBtn" value="randNum/game/clear/" class="button is-danger is-small">STOP</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="triviaDiv" style="visibility: collapse">
+        <h5>Trivia in the Chat!!!</h5>
+        <div class="field has-addons">
+          <div class="control">
+            <div class="select is-small">
+              <select name="triviaCatagory" id="triviaDropDown">
+                <option value=""></option>
+              </select>
+            </div>
+          </div>
+          <div class="control">
+            <button id="triviaStartBtn" value="trivia/" class="button is-primary is-small">START</button>
+            <button id="triviaNextBtn" value="trivia/next/" class="button is-warning is-small">NEXT</button>
+            <button id="triviaStopBtn" class="button is-danger is-small">STOP</button>
+            <button id="triviaResetBtn" class="button is-danger is-small">RESET</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="giveawayDiv" style="visibility: collapse">
+        <h5>Giveaway!</h5>
+        <div class="columns is-moblie">
+          <div class="column is-6">
+            <button id="giveawayStartBtn" value="giveaway/" class="button is-primary is-small">START</button>
+            <button id="giveawayStopBtn" value="giveaway/game/stop/" class="button is-warning is-small">STOP</button>
+            <button id="giveawayDrawBtn" value="giveaway/game/draw/" class="button is-primary is-small">DRAW</button>
+            <button id="giveawayClearBtn" value="giveaway/game/clear/" class="button is-danger is-small">CLEAR</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="puptimeDiv" style="visibility: collapse">
+        <h5>Puptime!!!</h5>
+        <div class="columns is-mobile">
+          <div class="column is-6">
+            <button id="puptimeStartBtn" value="puptime/" class="button is-primary is-small">START</button>
+            <button id="puptimeStopBtn" value="puptime/game/stop/" class="button is-warning is-small">STOP</button>
+            <button id="puptimeClearBtn" value="puptime/game/clear/" class="button is-danger is-small">CLEAR</button>
+          </div>
+        </div>
+      </div>
+      
+
+      <div id="Word Ban Div" style="visibility: collapse">
+        <h5>Word Ban Game Increase/Decrease</h5>
+        <div class="columns is-mobile">
+          <div class="column is-1">
+            <input type="number" id="wordBanNumberInput" class="input is-small">
+          </div>
+          <div class="column is-4">
+            <button class="button is-primary is-small is-primary" id="wordBanIncrease" value='wordban/inc/'>INCREASE</button>
+            <button class="button is-primary is-small is-danger" id="wordBanDecrease" value='wordban/dec/'>DECREASE</button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
   <script src="main.js"></script>
