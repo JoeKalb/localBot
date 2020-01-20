@@ -659,8 +659,8 @@ module.exports = {
         }
     },
     cheerHandler:(userstate, msg) => {
-        console.log(userstate)
-        console.log(msg)
+        //console.log(userstate)
+        //console.log(msg)
     },
     subHandler: (username, method, message, userstate) => {
         let result = Object.assign({}, response)
@@ -672,8 +672,8 @@ module.exports = {
     },
     subGiftHandler: (username, methods, userstate) => {
         let result = Object.assign({}, response)
-        console.log(userstate)
-        console.log(methods)
+        //console.log(userstate)
+        //console.log(methods)
         if(mysterySubGifters.hasOwnProperty(username)){
             //console.log(mysterySubGifters[username]);
             (mysterySubGifters[username] < 1) ?
