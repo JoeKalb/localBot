@@ -608,10 +608,17 @@ module.exports = {
                     ]
                     return result
                 }
-
+                case 'urban':{
+                    let text = urban(parse[1], parseInt(parse[2]))
+                    if(text){
+                        result.items = [text]
+                        result.hasMessage = true
+                        result.hasPromise = true
+                    }
+                }
                 default:
             }
-        }
+        } 
 
         // general commands
         switch(commandName){
@@ -1030,6 +1037,26 @@ let staffInChat = () => {
           return `Viewer List is currently unavailable...`
         }
       })
+}
+
+let urban = async(term, position=0) => {
+    try{
+        let res = await fetch(`http://api.urbandictionary.com/v0/define?term=${term}`)
+        let json = await res.json()
+    
+        if(position === 0)
+            return `${term.toUpperCase()} - ${json.list[0].definition} [${json.list[0].thumbs_up} likes]`
+        else if(json.list.length < position - 1){
+            `${term.toUpperCase()} - ${json.list[position - 1].definition} [${json.list[position - 1].thumbs_up} likes]`
+        }else{
+            return `${term.toUpperCase()} - ${json.list[json.list.length - 1].definition} [${json.list[json.list.length - 1].thumbs_up} likes]`
+        }
+    }
+    catch(err){
+        console.log(err)
+        return false
+    }
+    
 }
 
 /* (async() => {
