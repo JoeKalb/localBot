@@ -608,14 +608,14 @@ module.exports = {
                     ]
                     return result
                 }
-                case 'urban':{
+                /* case 'urban':{
                     let text = urban(parse[1], parseInt(parse[2]))
                     if(text){
                         result.items = [text]
                         result.hasMessage = true
                         result.hasPromise = true
                     }
-                }
+                } */
                 default:
             }
         } 
@@ -1041,6 +1041,12 @@ let staffInChat = () => {
 
 let urban = async(term, position=0) => {
     try{
+        console.log(position)
+        if(position == NaN){
+            console.log(here)
+            position = 0
+        }
+        console.log(position)
         let res = await fetch(`http://api.urbandictionary.com/v0/define?term=${term}`)
         let json = await res.json()
     
