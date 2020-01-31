@@ -138,6 +138,7 @@ clickBtnBindChannel(quidditchStartBtn)
 
 const quidditchStopBtn = document.getElementById("quidditchStopBtn")
 clickBtnBind(quidditchStopBtn)
+quidditchStopBtn.addEventListener('click', () => {displayCall()})
 
 const quidditchPayoutsBtn = document.getElementById("quidditchPayoutsBtn")
 clickBtnBind(quidditchPayoutsBtn)
@@ -209,7 +210,11 @@ async function postSpecialDuel()  {
   let json = await response.json()
   console.log(json)
   try{
-    gameStarted(`!bet 1 (${inputWizDuelSearch1.value}) | !bet 2 (${inputWizDuelSearch2.value})`)
+    const houses = ["Gry", "Huff", "Sly", "Rav"]
+    let response = await fetch(window.location + 'students')
+    allStudents = await response.json()
+
+    gameStarted(`!bet 1 (${houses[allStudents[inputWizDuelSearch1.value]]}) | !bet 2 (${houses[allStudents[inputWizDuelSearch2.value]]})`)
   }
   catch(err){
     console.log(err)
