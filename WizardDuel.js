@@ -114,7 +114,7 @@ module.exports = {
         define:"Forces opponent to dance",
         0:"<other> starts taping their foot.",
         1:"<other> can't help but dance, good thing they were taking notes during Professor Mcgonagall dancing instructions.",
-        2:"<other> starts moshing on the stage... Every is staring buttWut",
+        2:"<other> starts flossing on the stage... Every is staring buttWut",
         win: "<other> can dance if they want to, and they did."
       }
     },
