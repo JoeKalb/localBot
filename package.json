@@ -28,7 +28,8 @@
     "ignore": [
       "displayNames.json",
       "dogbets.json",
-      "WordBan.json"
+      "WordBan.json",
+      "points.js"
     ]
   },
   "repository": {
