@@ -581,12 +581,12 @@ module.exports = {
                     else updateStreamDisplayCountdown(parse[1], 60, 'white')
                 }
                 case '1v1':{
-                    ButtVGuilty.start('thabuttress')
+                    /* ButtVGuilty.start('thabuttress')
                     result.hasMessage = true
                     result.items = [
                         "It's time to throw down! Bet on who you think will win: !butt or !guilty"
                     ]
-                    return result
+                    return result */
                 }
                 case 'winner':{
                     result.hasMessage = true

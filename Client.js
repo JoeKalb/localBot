@@ -207,7 +207,8 @@ function onMessageHandler (target, context, msg, self) {
   else{
     //console.log(`!duel ${context['display-name']}`)
   }
-  if(wizardDuel.beginDuel || wizardDuel.allowBets 
+
+  /* if(wizardDuel.beginDuel || wizardDuel.allowBets 
     || wizardDuel.allowEntries || wizardDuel.studentCount){
     switch(commandName){ // 
       case 'duel':
@@ -292,9 +293,9 @@ function onMessageHandler (target, context, msg, self) {
         // commands during wizard duel that do not apply
         //console.log(`Wizard Duel Switch Case Default: ${commandName}`)
     }
-  }
+  } */
   // search game commands
-  if(commandName == 'starthunt'){
+  /* if(commandName == 'starthunt'){
     if(parse.length > 1 && (context.mod || context.username == 'joefish5' || context.username == 'thabuttress')){
       search.start(target.replace('#', ''))
       let readyToSearch = search.manualChooseStudent(parse[1].replace('@', '').toLowerCase())
@@ -350,11 +351,11 @@ function onMessageHandler (target, context, msg, self) {
         break;
       default:
     }
-  }
+  } */
 
   // If the command is known, let's execute it:
   // commands only for butt's channel
-  if(target == '#thabuttress' || target == '#joefish5'){
+  /* if(target == '#thabuttress' || target == '#joefish5'){
     switch(commandName){
       case 'quidditch':
         if(target == "#thabuttress" && (context.mod || context.username == 'thabuttress')){
@@ -473,7 +474,7 @@ function onMessageHandler (target, context, msg, self) {
     default:
         //console.log(`Unknown Command: ${commandName}`)
     }
-  }
+  } */
 
   switch(commandName){
     case 'start':

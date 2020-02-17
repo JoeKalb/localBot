@@ -98,80 +98,8 @@
       </div>
     </div>
 
-      <!-- Harry Potter Games Start -->
-      <div style=> <!-- "visibility: collapse" -->
-      <div id="quidditchDiv">
-        <h5>Quidditch Game</h5>
-        <div class="columns is-mobile">
-          <div class="column is-4">
-            <button id="quidditchStartBtn" value="quidditch/" class="button is-primary is-small">START</button>
-            <button id="quidditchStopBtn" value="quidditch/game/over" class="button is-warning is-small">END</button>
-            <button id="quidditchClearBtn" value="quidditch/game/clear" class="button is-danger is-small">CLEAR</button>
-          </div>
-          <div class="column is-4">
-              <button id="quidditchResultsBtn" value="quidditch/game/results" class="button is-primary is-small">RESULTS</button>
-              <button id="quidditchPayoutsBtn" value="quidditch/game/payout" class="button is-primary is-small">PAYOUTS</button>
-          </div>
-        </div>
-      </div>
-      <div id="duelDiv">
-        <h5>Wizard Duel</h5>
-        <div class="columns is-mobile">
-          <div class="column is-3">
-            <input type="text" id="inputWizDuelSearch1" list='studentsWizDuel1' class="input is-small">
-            <datalist id='studentsWizDuel1'></datalist>
-          </div>
-          <div class="column is-1">
-            <span>VS</span>
-          </div>
-          <div class="column is-3">
-            <input type="text" id="inputWizDuelSearch2" list='studentsWizDuel2' class="input is-small">
-            <datalist id='studentsWizDuel2'></datalist> 
-          </div>
-          <div class="column">
-            <button id="specialDuelBtn" class="button is-primary is-small">Special Duel</button>
-          </div>
-        </div>
-        <div class="columns">
-          <div class="column is-7">
-            <button id="startDuelBtn" value="duel/" class="button is-primary is-small">START</button>
-            <button id="pickDuelBtn" value="duel/game/pick" class="button is-primary is-small">PICK DUELISTS</button>
-            <button id="duelBtn" value="duel/game/start" class="button is-primary is-small">DUEL</button>
-            <button id="resetDuelBtn" value="duel/game/clear" class="button is-danger is-small">RESET DUEL</button>
-          </div>
-        </div>
-      </div>
-      <div id="searchDiv">
-        <h5>Item Hunt!</h5>
-        <div class="columns is-mobile">
-          <div class="column is-4">
-            <input type="text" id='itemHuntInput' list='searchSelect' class="input is-small">
-            <datalist name="" id="searchSelect"></datalist>
-          </div>
-          <div class="column is-4">
-            <button id="startSearchBtn" value="search/" class="button is-primary is-small">START</button>
-            <button id="continueSearchBtn" value="search/game/continue" class="button is-primary is-small">CONTINUE</button>
-            <button id="clearSearchBtn" value="search/game/clear" class="button is-danger is-small">CLEAR</button>
-          </div>
-        </div>
-      </div>
-      <div id="phraseDiv">
-        <h5>Phrase Game</h5>
-        <div class="columns is-mobile">
-          <div class="column is-4">
-            <input type="text" id="phraseInput" class="input is-small">
-          </div>
-          <div class="column is-4">
-            <button class="button is-small is-primary" id="phraseBtn" value='hpPhrase/'>Start</button>
-            <button class="button is-small is-primary" id="stopPhraseBtn" value="hpPhrase/stop">Stop</button>
-            <button class="button is-small is-danger" id="clearPhraseBtn" value="hpPhrase/clear">Clear</button>
-          </div>
-        </div>
-      </div>
-      </div>
-      <!-- Harry Potter Games End -->
-
-      <div id="randomNumDiv" style="visibility: collapse">
+      
+      <div id="randomNumDiv" style=>
         <h5>Random Number</h5>
         <div class="columns is-mobile">
           <div class="column is-4">
@@ -184,7 +112,7 @@
         </div>
       </div>
 
-      <div id="triviaDiv" style="visibility: collapse">
+      <div id="triviaDiv" style=>
         <h5>Trivia in the Chat!!!</h5>
         <div class="field has-addons">
           <div class="control">
@@ -203,7 +131,7 @@
         </div>
       </div>
 
-      <div id="giveawayDiv" style="visibility: collapse">
+      <div id="giveawayDiv" style=>
         <h5>Giveaway!</h5>
         <div class="columns is-moblie">
           <div class="column is-6">
@@ -215,7 +143,7 @@
         </div>
       </div>
 
-      <div id="puptimeDiv" style="visibility: collapse">
+      <div id="puptimeDiv" style=>
         <h5>Puptime!!!</h5>
         <div class="columns is-mobile">
           <div class="column is-6">
@@ -239,6 +167,80 @@
           </div>
         </div>
       </div>
+
+      <!-- Harry Potter Games Start -->
+      <div style="visibility: collapse"> <!-- "visibility: collapse" -->
+        <div id="quidditchDiv">
+          <h5>Quidditch Game</h5>
+          <div class="columns is-mobile">
+            <div class="column is-4">
+              <button id="quidditchStartBtn" value="quidditch/" class="button is-primary is-small">START</button>
+              <button id="quidditchStopBtn" value="quidditch/game/over" class="button is-warning is-small">END</button>
+              <button id="quidditchClearBtn" value="quidditch/game/clear" class="button is-danger is-small">CLEAR</button>
+            </div>
+            <div class="column is-4">
+                <button id="quidditchResultsBtn" value="quidditch/game/results" class="button is-primary is-small">RESULTS</button>
+                <button id="quidditchPayoutsBtn" value="quidditch/game/payout" class="button is-primary is-small">PAYOUTS</button>
+            </div>
+          </div>
+        </div>
+        <div id="duelDiv">
+          <h5>Wizard Duel</h5>
+          <div class="columns is-mobile">
+            <div class="column is-3">
+              <input type="text" id="inputWizDuelSearch1" list='studentsWizDuel1' class="input is-small">
+              <datalist id='studentsWizDuel1'></datalist>
+            </div>
+            <div class="column is-1">
+              <span>VS</span>
+            </div>
+            <div class="column is-3">
+              <input type="text" id="inputWizDuelSearch2" list='studentsWizDuel2' class="input is-small">
+              <datalist id='studentsWizDuel2'></datalist> 
+            </div>
+            <div class="column">
+              <button id="specialDuelBtn" class="button is-primary is-small">Special Duel</button>
+            </div>
+          </div>
+          <div class="columns">
+            <div class="column is-7">
+              <button id="startDuelBtn" value="duel/" class="button is-primary is-small">START</button>
+              <button id="pickDuelBtn" value="duel/game/pick" class="button is-primary is-small">PICK DUELISTS</button>
+              <button id="duelBtn" value="duel/game/start" class="button is-primary is-small">DUEL</button>
+              <button id="resetDuelBtn" value="duel/game/clear" class="button is-danger is-small">RESET DUEL</button>
+            </div>
+          </div>
+        </div>
+        <div id="searchDiv">
+          <h5>Item Hunt!</h5>
+          <div class="columns is-mobile">
+            <div class="column is-4">
+              <input type="text" id='itemHuntInput' list='searchSelect' class="input is-small">
+              <datalist name="" id="searchSelect"></datalist>
+            </div>
+            <div class="column is-4">
+              <button id="startSearchBtn" value="search/" class="button is-primary is-small">START</button>
+              <button id="continueSearchBtn" value="search/game/continue" class="button is-primary is-small">CONTINUE</button>
+              <button id="clearSearchBtn" value="search/game/clear" class="button is-danger is-small">CLEAR</button>
+            </div>
+          </div>
+        </div>
+        <div id="phraseDiv">
+          <h5>Phrase Game</h5>
+          <div class="columns is-mobile">
+            <div class="column is-4">
+              <input type="text" id="phraseInput" class="input is-small">
+            </div>
+            <div class="column is-4">
+              <button class="button is-small is-primary" id="phraseBtn" value='hpPhrase/'>Start</button>
+              <button class="button is-small is-primary" id="stopPhraseBtn" value="hpPhrase/stop">Stop</button>
+              <button class="button is-small is-danger" id="clearPhraseBtn" value="hpPhrase/clear">Clear</button>
+            </div>
+          </div>
+        </div>
+        </div>
+        <!-- Harry Potter Games End -->
+  
     </div>
   </div>
   <script src="main.js"></script>
