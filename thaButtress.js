@@ -579,6 +579,7 @@ module.exports = {
                 case 'countdown':{
                     if(parse[1] === 'pause' || parse[1] === 'play') pauseStreamDisplayCountdown()
                     else updateStreamDisplayCountdown(parse[1], 60, 'white')
+                    return result;
                 }
                 case '1v1':{
                     /* ButtVGuilty.start('thabuttress')
@@ -589,7 +590,7 @@ module.exports = {
                     return result */
                 }
                 case 'winner':{
-                    result.hasMessage = true
+                    /* result.hasMessage = true
                     if(parse[1].toLowerCase() === 'butt'){
                         result.items = [ButtVGuilty.selectWinnerAndPayout(0)]
                     }
@@ -606,7 +607,7 @@ module.exports = {
                         ...result.items,
                         ButtVGuilty.houseResults()
                     ]
-                    return result
+                    return result */
                 }
                 /* case 'urban':{
                     let text = urban(parse[1], parseInt(parse[2]))
