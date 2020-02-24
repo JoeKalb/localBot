@@ -1,6 +1,6 @@
 // bug: while backupbot is live, games cannot be activated in chat
 
-let bottressDown = false;
+let bottressDown = true;
 const fs = require('fs');
 const fetch = require('node-fetch');
 const co = require('co');
@@ -65,7 +65,7 @@ module.exports = {
         case 'imgur':
           return `Look at all these cool gundams that thaButtress has built and customized! https://imgur.com/user/thabuttress buttOMG`
         case 'built':
-          return `Check out Butt's built list and backlog!!! https://goo.gl/7DxzVX buttDab`
+          return `Check out Butt's built list and backlog!!! https://goo.gl/7DxzVX buttHype`
         case 'tats':
           return `Here are all of butt's tattoos! https://imgur.com/a/Vd1iAMF`
         case 'subnight':
@@ -99,19 +99,19 @@ module.exports = {
         case 'lurk':
           return `buttLurk ${context['display-name']} has set their mobile suit to stand-by mode buttLurk`
         case 'current':
-          return `Butt's currently building the MG Astray Red Frame buttOMG https://www.gundamplanet.com/mg-mbf-p02kai-gundam-astray-red-frame-kai.html?c=CAvHeI&referring_service=link`
+          return `Butt's currently building the SD Shining Gundam buttOMG https://www.gundamplanet.com/bb-senshi-bb239-shining-gundam.html?c=CAvHeI&referring_service=link`
         case 'newtype':
           return `Butt was a featured guest for Newtype Build Con! buttOMG http://bit.ly/NTBCbuttress`
         case 'vip':
           return `How to get VIP for the month: Top Monthly Dono | Top Monthly Bits | $100 Dono | 10,000 Bits or Buttcoins | Forever VIP: 100 or more gifted subs!!!`
         case '1k':
-          return `Butt just hit 1000 followers on youtube!!! Here's a video Pop made to celebrate it: https://youtu.be/nn51DLN9Esk`
+          return `Butt just hit 1000 followers on youtube!!! Here's a video Pop made to celebrate it: https://youtu.be/nn51DLN9Esk` 
         case 'subtember':
           return `Eat this subway !sandwich and get 1000 (foot-long) or 500 (6-inch) buttcoins for posting a pic of it in the !discord https://www.twitch.tv/videos/490840815`
         case 'sandwich':
           return `Subway Sandwich Order: Italian Herb and Cheese, Meatball, Pepperjack, Jalapenos, Avocado, Chipotle Southwest, and Ranch buttStink`
         case 'bday':
-          return `Butt's Birthday is on the 10th!!! Want to get her a gift? Check out her wishlist: a.co/7qE8gqN`
+          return `Butt's Birthday is on October 10th!!! Want to get her a gift? Check out her wishlist: a.co/7qE8gqN`
         case 'schedule':
           return `Thuesday and Wednesday evening with possible streams on the weekend and Sub/Anime night on Friday in the !discord buttHype `
         case 'followage':

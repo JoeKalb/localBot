@@ -100,6 +100,9 @@ async function startHangman() {
     let json = await response.json()
     console.log(`Start Hangman: ${json}`);
     gameStarted('Hangman: !hangman !guesses')
+    setTimeout(() => {
+      displayCall()
+    }, 180000)
   }
 }
 
