@@ -231,13 +231,13 @@ module.exports = {
                     `${context['display-name']} has opted out of the word ban.`
                 ]
                 return result;
-            case 'wordban':
+            /* case 'wordban':
                 result.hasMessage = true;
                 result.items = [
                     ...result.items,
                     `Redeem a ban word in the Streamlabs Extension for Butt and Chat. Saying the word in the chat will lose you buttcoins but if Butt ends up saying the banned word more, then all of chat will get a payout! Commands: !join the wordban game| !leave the wordban game | !score to see what the current points are`
                 ]
-                return result;
+                return result; */
             case 'score':
                 result.hasMessage = true;
                 result.items = [
