@@ -672,6 +672,8 @@ module.exports = {
     },
     subHandler: (username, method, message, userstate) => {
         let result = Object.assign({}, response)
+
+        return result // remove later
         if(username === 'joefish5') return result;
         
         result.hasMessage = true;
@@ -695,7 +697,7 @@ module.exports = {
             result.hasPayout = true;
 
             result.items = [
-                'buttHella buttHype buttHella buttHype buttHella buttHype buttHella buttHype buttHella buttHype buttHella buttHype',
+                /*'buttHella buttHype buttHella buttHype buttHella buttHype buttHella buttHype buttHella buttHype buttHella buttHype',*/
                 singleGiftPayout(username, methods)
             ]
         } 
@@ -713,8 +715,8 @@ module.exports = {
 
         let hype = 'buttHella buttHype '
         result.items = [
-            (numbOfSubs > 13) ? hype.repeat(Math.floor(numbOfSubs/2)) : 
-            'buttHella buttHype buttHella buttHype buttHella buttHype buttHella buttHype buttHella buttHype buttHella buttHype',
+            /*(numbOfSubs > 13) ? hype.repeat(Math.floor(numbOfSubs/2)) : 
+            'buttHella buttHype buttHella buttHype buttHella buttHype buttHella buttHype buttHella buttHype buttHella buttHype',*/
             multiGiftPayout(username, numbOfSubs, methods)
         ]
         return result;
