@@ -640,6 +640,10 @@ module.exports = {
                     return result
                 }
             }
+            case 'spam':{
+                result.hasMessage = true
+                result.items = ['buttMonty buttLove buttReggie']
+            }
             default:
                 //console.log(`Command Not Found: ${commandName}`)
                 return result;
