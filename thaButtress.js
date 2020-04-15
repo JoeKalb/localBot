@@ -640,7 +640,7 @@ module.exports = {
                     return result
                 }
             }
-            case 'spam':{
+            case 'testEmotes':{
                 result.hasMessage = true
                 result.items = ['buttMonty buttLove buttReggie']
             }
