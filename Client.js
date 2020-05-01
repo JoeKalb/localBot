@@ -511,8 +511,9 @@ function onMessageHandler (target, context, msg, self) {
 function onCheerHandler(channel, userstate, message){
   if(channel == ttsp.channel)
     ttsp.cheerHandler(userstate, message)
-  else if(channel == thabuttress.channel)
-    thabuttress.cheerHandler(userstate, message)
+  else if(channel == thabuttress.channel){
+    handleResponses(channel, thabuttress.cheerHandler(userstate, message))
+  }
 }
 
 function onWhisperHandler(from, userstate, message, self){

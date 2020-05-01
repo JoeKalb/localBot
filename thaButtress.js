@@ -671,8 +671,18 @@ module.exports = {
         }
     },
     cheerHandler:(userstate, msg) => {
-        //console.log(userstate)
+        console.log(userstate)
         //console.log(msg)
+        let result = Object.assign({}, response)
+
+        if(userstate.bits === "1") return result
+        
+        result.hasMessage = true
+        result.items = [
+            `buttOMG Thanks for the ${userstate.bits} bits ${userstate['display-name']}!!!`
+        ]
+
+        return result
     },
     subHandler: (username, method, message, userstate) => {
         let result = Object.assign({}, response)
@@ -680,7 +690,10 @@ module.exports = {
         if(username === 'joefish5') return result;
         
         result.hasMessage = true;
-        result.items = ['buttHella buttHype buttHella buttHype buttHella buttHype buttHella buttHype buttHella buttHype buttHella buttHype']
+        result.hasPayout = true;
+        result.items = [
+            'buttHella buttHype buttHella buttHype buttHella buttHype buttHella buttHype buttHella buttHype buttHella buttHype'
+        ]
         return result;
     },
     subGiftHandler: (username, methods, userstate) => {
@@ -717,6 +730,7 @@ module.exports = {
         result.hasPayout = true;
 
         let hype = 'buttHella buttHype '
+        const plan = parseInt(methods.plan) / 1000
         result.items = [
             (numbOfSubs > 13) ? hype.repeat(Math.floor(numbOfSubs/2)) : 
             'buttHella buttHype buttHella buttHype buttHella buttHype buttHella buttHype buttHella buttHype buttHella buttHype',
