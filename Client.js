@@ -107,6 +107,7 @@ let opts = {
    channels: [
     'thabuttress',
     'joefish5',
+    'taylien'
     //'oooskittles',
     //'thethingssheplays',
     //'hairofthedogpodcast'
@@ -546,6 +547,23 @@ function onSubHandler(channel, username, method, message, userstate){
       handleResponses(channel, thabuttress.subHandler(username, method, message, userstate))
     }, 4000)
   }
+  else if (channel === '#taylien'){
+    console.log(userstate)
+    setTimeout(() => {
+      handleResponses(channel, 
+        {
+          hasMessage:true,
+          hasDelay:false,
+          hasPayout:false,
+          hasMultiPayout:false,
+          isAction:false,
+          hasPromise:false,
+          timedMessage:0,
+          items:[`Hey Taylien! ${username} just did a T${parseInt(method.plan) / 1000} sub! sbtHype sbtHype sbtHype`]
+        }
+      )
+    }, 4000)
+  }
 }
 
 function onResubHandler(channel, username, months, message, userstate, methods){
@@ -554,13 +572,50 @@ function onResubHandler(channel, username, months, message, userstate, methods){
       handleResponses(channel, thabuttress.subHandler(username, methods, message, userstate))
     }, 4000)
   }
+  else if (channel === '#taylien'){
+    console.log(userstate)
+    setTimeout(() => {
+      handleResponses(channel, 
+        {
+          hasMessage:true,
+          hasDelay:false,
+          hasPayout:false,
+          hasMultiPayout:false,
+          isAction:false,
+          hasPromise:false,
+          timedMessage:0,
+          items:[`Hey Taylien! ${username} just T${parseInt(methods.plan) / 1000} resubbed for ${userstate['msg-param-cumulative-months']} months! sbtHype sbtHype sbtHype `]
+        }
+      )
+    }, 4000)
+  }
 }
 
+let tayMysterHandler = false
 function onSubGiftHandler(channel, username, streakMonths, recipient, methods, userstate){
   if(channel === thabuttress.channel){
     setTimeout(() => {
       handleResponses(channel, thabuttress.subGiftHandler(username, methods, userstate))
     }, 4000)
+  }
+  else if(channel == '#taylien'){
+    if(!tayMysterHandler){
+      console.log(userstate)
+      setTimeout(() => {
+        handleResponses(channel, 
+          {
+            hasMessage:true,
+            hasDelay:false,
+            hasPayout:false,
+            hasMultiPayout:false,
+            isAction:false,
+            hasPromise:false,
+            timedMessage:0,
+            items:[`Hey Taylien! ${username} just gifted ${recipient} a T${parseInt(methods.plan) / 1000} sub! sbtHype sbtHype sbtHype`]
+          }
+        )
+      }, 4000)
+    }
   }
 }
 
@@ -569,6 +624,25 @@ function onSubMysteryGiftHandler(channel, username, numbOfSubs, methods, usersta
     setTimeout(() => {
       handleResponses(channel, thabuttress.subMysteryGiftHandler(username, numbOfSubs, methods, userstate))
     }, 5000)
+  }
+  else if(channel == '#taylien'){
+    console.log(userstate)
+    tayMysterHandler = true
+    setTimeout(() => { tayMysterHandler = false}, 10000)
+    setTimeout(() => {
+      handleResponses(channel, 
+        {
+          hasMessage:true,
+          hasDelay:false,
+          hasPayout:false,
+          hasMultiPayout:false,
+          isAction:false,
+          hasPromise:false,
+          timedMessage:0,
+          items:[`Hey Taylien! ${username} just gifted ${numbOfSubs} T${parseInt(methods.plan) / 1000} subs! sbtHype sbtHype sbtHype`]
+        }
+      )
+    }, 4000)
   }
   else console.log('Mystery Sub Handler',userstate)
 }
