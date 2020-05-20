@@ -559,7 +559,9 @@ function onSubHandler(channel, username, method, message, userstate){
           isAction:false,
           hasPromise:false,
           timedMessage:0,
-          items:[`Hey Taylien! ${username} just did a T${parseInt(method.plan) / 1000} sub! sbtHype sbtHype sbtHype`]
+          items:[(userstate['msg-param-sub-plan'] === 'Prime')
+            ? `Hey Taylien! ${username} just Prime subbed! sbtHype sbtHype sbtHype`
+            :`Hey Taylien! ${username} just T${parseInt(method.plan) / 1000} subbed! sbtHype sbtHype sbtHype`]
         }
       )
     }, 4000)
@@ -584,7 +586,9 @@ function onResubHandler(channel, username, months, message, userstate, methods){
           isAction:false,
           hasPromise:false,
           timedMessage:0,
-          items:[`Hey Taylien! ${username} just T${parseInt(methods.plan) / 1000} resubbed for ${userstate['msg-param-cumulative-months']} months! sbtHype sbtHype sbtHype `]
+          items:[(userstate['msg-param-sub-plan'] === 'Prime')
+            ? `Hey Taylien! ${username} just Prime subbed for ${userstate['msg-param-cumulative-months']} months! sbtHype sbtHype sbtHype`
+            :`Hey Taylien! ${username} just T${parseInt(methods.plan) / 1000} subbed for ${userstate['msg-param-cumulative-months']} months! sbtHype sbtHype sbtHype `]
         }
       )
     }, 4000)
