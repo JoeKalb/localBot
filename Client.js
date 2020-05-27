@@ -12,6 +12,7 @@ const dotenv = require('dotenv').config();
 let thabuttress = require('./thaButtress')
 let ttsp = require('./ttsp')
 let hotd = require('./hotd')
+let taylien = require('./taylien')
 
 // create file for logging
 let today = new Date();
@@ -550,19 +551,9 @@ function onSubHandler(channel, username, method, message, userstate){
   else if (channel === '#taylien'){
     console.log(userstate)
     setTimeout(() => {
-      handleResponses(channel, 
-        {
-          hasMessage:true,
-          hasDelay:false,
-          hasPayout:false,
-          hasMultiPayout:false,
-          isAction:false,
-          hasPromise:false,
-          timedMessage:0,
-          items:[(userstate['msg-param-sub-plan'] === 'Prime')
-            ? `Hey Taylien! ${username} just Prime subbed! sbtHype sbtHype sbtHype`
-            :`Hey Taylien! ${username} just T${parseInt(method.plan) / 1000} subbed! sbtHype sbtHype sbtHype`]
-        }
+      handleResponses(
+        channel,
+        taylien.subHandler(username, method, message, userstate)
       )
     }, 4000)
   }
@@ -577,25 +568,14 @@ function onResubHandler(channel, username, months, message, userstate, methods){
   else if (channel === '#taylien'){
     console.log(userstate)
     setTimeout(() => {
-      handleResponses(channel, 
-        {
-          hasMessage:true,
-          hasDelay:false,
-          hasPayout:false,
-          hasMultiPayout:false,
-          isAction:false,
-          hasPromise:false,
-          timedMessage:0,
-          items:[(userstate['msg-param-sub-plan'] === 'Prime')
-            ? `Hey Taylien! ${username} just Prime subbed for ${userstate['msg-param-cumulative-months']} months! sbtHype sbtHype sbtHype`
-            :`Hey Taylien! ${username} just T${parseInt(methods.plan) / 1000} subbed for ${userstate['msg-param-cumulative-months']} months! sbtHype sbtHype sbtHype `]
-        }
+      handleResponses(
+        channel,
+        taylien.resubHandler(username, methods, message, userstate)
       )
     }, 4000)
   }
 }
 
-let tayMysterHandler = false
 function onSubGiftHandler(channel, username, streakMonths, recipient, methods, userstate){
   if(channel === thabuttress.channel){
     setTimeout(() => {
@@ -603,23 +583,13 @@ function onSubGiftHandler(channel, username, streakMonths, recipient, methods, u
     }, 4000)
   }
   else if(channel == '#taylien'){
-    if(!tayMysterHandler){
-      console.log(userstate)
-      setTimeout(() => {
-        handleResponses(channel, 
-          {
-            hasMessage:true,
-            hasDelay:false,
-            hasPayout:false,
-            hasMultiPayout:false,
-            isAction:false,
-            hasPromise:false,
-            timedMessage:0,
-            items:[`Hey Taylien! ${username} just gifted ${recipient} a T${parseInt(methods.plan) / 1000} sub! sbtHype sbtHype sbtHype`]
-          }
-        )
-      }, 4000)
-    }
+    console.log(userstate)
+    setTimeout(() => {
+      handleResponses(
+        channel, 
+        taylien.subGiftHandler(username, recipient, methods)
+      )
+    }, 4000)
   }
 }
 
@@ -630,21 +600,10 @@ function onSubMysteryGiftHandler(channel, username, numbOfSubs, methods, usersta
     }, 5000)
   }
   else if(channel == '#taylien'){
-    console.log(userstate)
-    tayMysterHandler = true
-    setTimeout(() => { tayMysterHandler = false}, 10000)
     setTimeout(() => {
-      handleResponses(channel, 
-        {
-          hasMessage:true,
-          hasDelay:false,
-          hasPayout:false,
-          hasMultiPayout:false,
-          isAction:false,
-          hasPromise:false,
-          timedMessage:0,
-          items:[`Hey Taylien! ${username} just gifted ${numbOfSubs} T${parseInt(methods.plan) / 1000} subs! sbtHype sbtHype sbtHype`]
-        }
+      handleResponses(
+        channel, 
+        taylien.subMysteryGiftHandler(username, numbOfSubs, methods, userstate)
       )
     }, 4000)
   }
