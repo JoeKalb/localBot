@@ -9,9 +9,61 @@ const response = {
     items:[]
 }
 
-let mysterySubGifter = {}
+const commandPrefix = '!';
+
 module.exports = {
     channel:'#taylien',
+    handleMessage: (context, msg) => {
+        if(context.username === 'joefish5'){
+            if(msg.substr(0,1) !== commandPrefix)
+                return {hasMessage:false}; // not a command
+
+            const parse = msg.slice(1).split(' ')
+            const commandName = parse[0]
+
+            switch(commandName){
+                case 'timer':{
+
+                }
+                default:
+                    return {
+                        hasMessage:false
+                    }
+            }
+        }
+    },
+    hostingHandler: (channel, target, viewers) => {
+        let result = Object.assign({}, response)
+
+        result.hasMessage = true
+        result.items = [
+            `sbtHype Hey Taylien, ${channel} just hosted you with ${viewers} viewers!`
+        ]
+
+        console.log(`channel ${channel}`)
+        console.log(`target: ${target}`)
+        return result
+    },
+    raidedHandler: (channel, username, viewers) => {
+        let result = Object.assign({}, response)
+
+        result.hasMessage = true
+        result.items = [
+            `sbtHype Hey Taylien, ${username} just raided you with ${viewers} viewers!`
+        ]
+
+        return result
+    },
+    cheerHandler: (userstate, message) => {
+        let result = Object.assign({}, response)
+
+        result.hasMessage = true
+        result.items = [
+            `sbtO Hey Taylien! ${userstate['display-name']} just cheered with ${userstate.bits} bits! sbtHype`
+        ]
+
+        return result
+    },
     subHandler: (username, method, messsage, userstate) => {
         let result = Object.assign({}, response)
 
@@ -33,6 +85,8 @@ module.exports = {
             ? `Hey Taylien! ${username} just Prime subbed for ${userstate['msg-param-cumulative-months']} months! sbtHype sbtHype sbtHype`
             :`Hey Taylien! ${username} just T${parseInt(methods.plan) / 1000} subbed for ${userstate['msg-param-cumulative-months']} months! sbtHype sbtHype sbtHype `
         ]
+
+        return result
     },
     subGiftHandler: (username, recipient, methods) => {
         let result = Object.assign({}, response)
@@ -53,9 +107,9 @@ module.exports = {
     },
     subMysteryGiftHandler: (username, numbOfSubs, methods, userstate) => {
         let result = Object.assign({}, response)
-        (mysterySubGifter.hasOwnProperty(username))?
-            mysterySubGifter[username] += numbOfSubs:
-            mysterySubGifter[username] = numbOfSubs
+        if(mysterySubGifter.hasOwnProperty(username))
+            mysterySubGifter[username] += numbOfSubs
+        else mysterySubGifter[username] = numbOfSubs
 
         result.hasMessage = true
         result.items = [
@@ -65,3 +119,6 @@ module.exports = {
         return result
     }
 }
+
+
+let mysterySubGifter = {}

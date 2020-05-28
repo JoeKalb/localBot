@@ -140,6 +140,8 @@ client.on('subscription', onSubHandler)
 client.on('subgift', onSubGiftHandler)
 client.on('submysterygift', onSubMysteryGiftHandler)
 client.on('resub', onResubHandler)
+client.on('hosting', onHostingHandler)
+client.on('raiding', onRaidingHandler)
 
 // Connect to Twitch:
 client.connect()
@@ -516,6 +518,9 @@ function onCheerHandler(channel, userstate, message){
   else if(channel == thabuttress.channel){
     handleResponses(channel, thabuttress.cheerHandler(userstate, message))
   }
+  else if(channel === taylien.channel){
+    handleResponses(channel, taylien.cheerHandler(userstate, message))
+  }
 }
 
 function onWhisperHandler(from, userstate, message, self){
@@ -549,13 +554,10 @@ function onSubHandler(channel, username, method, message, userstate){
     }, 4000)
   }
   else if (channel === '#taylien'){
-    console.log(userstate)
+    //console.log(userstate)
     setTimeout(() => {
-      handleResponses(
-        channel,
-        taylien.subHandler(username, method, message, userstate)
-      )
-    }, 4000)
+      handleResponses(channel, taylien.subHandler(username, method, message, userstate))
+    }, 3000)
   }
 }
 
@@ -566,13 +568,10 @@ function onResubHandler(channel, username, months, message, userstate, methods){
     }, 4000)
   }
   else if (channel === '#taylien'){
-    console.log(userstate)
+    //console.log(userstate)
     setTimeout(() => {
-      handleResponses(
-        channel,
-        taylien.resubHandler(username, methods, message, userstate)
-      )
-    }, 4000)
+      handleResponses(channel,taylien.resubHandler(username, methods, message, userstate))
+    }, 3000)
   }
 }
 
@@ -583,13 +582,10 @@ function onSubGiftHandler(channel, username, streakMonths, recipient, methods, u
     }, 4000)
   }
   else if(channel == '#taylien'){
-    console.log(userstate)
+    //console.log(userstate)
     setTimeout(() => {
-      handleResponses(
-        channel, 
-        taylien.subGiftHandler(username, recipient, methods)
-      )
-    }, 4000)
+      handleResponses(channel, taylien.subGiftHandler(username, recipient, methods))
+    }, 3000)
   }
 }
 
@@ -601,13 +597,26 @@ function onSubMysteryGiftHandler(channel, username, numbOfSubs, methods, usersta
   }
   else if(channel == '#taylien'){
     setTimeout(() => {
-      handleResponses(
-        channel, 
-        taylien.subMysteryGiftHandler(username, numbOfSubs, methods, userstate)
-      )
-    }, 4000)
+      handleResponses(channel, taylien.subMysteryGiftHandler(username, numbOfSubs, methods, userstate))
+    }, 3000)
   }
   else console.log('Mystery Sub Handler',userstate)
+}
+
+function onHostingHandler(channel, target, viewers){
+  if(channel === taylien.channel){
+    setTimeout(() => {
+      handleResponses(channel, taylien.hostingHandler(channel, target, viewers))
+    })
+  }
+}
+
+function onRaidingHandler(channel, username, viewers){
+  if(channel === taylien.channel){
+    setTimeout(() => {
+      handleResponses(channel, taylien.raidedHandler(channel, username, viewers))
+    })
+  }
 }
 
 function onConnectedHandler (addr, port) {
