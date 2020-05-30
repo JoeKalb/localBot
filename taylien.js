@@ -35,19 +35,19 @@ module.exports = {
     hostingHandler: (channel, target, viewers) => {
         let result = Object.assign({}, response)
 
-        result.hasMessage = true
+        result.hasMessage = false
         result.items = [
             `sbtHype Hey Taylien, ${channel} just hosted you with ${viewers} viewers!`
         ]
 
-        console.log(`channel ${channel}`)
-        console.log(`target: ${target}`)
+        //console.log(`channel ${channel}`)
+        //console.log(`target: ${target}`)
         return result
     },
     raidedHandler: (channel, username, viewers) => {
         let result = Object.assign({}, response)
 
-        result.hasMessage = true
+        result.hasMessage = false
         result.items = [
             `sbtHype Hey Taylien, ${username} just raided you with ${viewers} viewers!`
         ]
