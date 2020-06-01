@@ -25,18 +25,7 @@ let hpPhraseGame = new hpPhrase('thabuttress')
 
 const fs = require('fs')
 
-//let client = require('./Client')
-
-const response = {
-    hasMessage:false,
-    hasDelay:false,
-    hasPayout:false,
-    hasMultiPayout:false,
-    isAction:false,
-    hasPromise:false,
-    timedMessage:0,
-    items:[]
-}
+const response = require('./models/response')
 
 const commandPrefix = '!';
 const gamePrefix = '#';
