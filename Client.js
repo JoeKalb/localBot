@@ -13,6 +13,7 @@ let thabuttress = require('./thaButtress')
 let ttsp = require('./ttsp')
 let hotd = require('./hotd')
 let taylien = require('./taylien')
+let luna = require('./luna')
 
 // create file for logging
 let today = new Date();
@@ -108,8 +109,8 @@ let opts = {
    channels: [
     'thabuttress',
     'joefish5',
-    'taylien'
-    //'oooskittles',
+    'taylien',
+    'lunalyrik',
     //'thethingssheplays',
     //'hairofthedogpodcast'
    ]
@@ -162,6 +163,9 @@ function onMessageHandler (target, context, msg, self) {
   }
   else if(target == '#hairofthedogpodcast'){
     handleResponses(target, hotd.handleMessage(context, msg))
+  }
+  else if(target == luna.channel){
+    handleResponses(target, luna.handleMessage(context, msg))
   }
   
   // wizard duel logic
