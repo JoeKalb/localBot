@@ -27,7 +27,7 @@ module.exports = {
 
         result.hasMessage = false
         result.items = [
-            `sbtHype Hey Taylien, ${channel} just hosted you with ${viewers} viewers!`
+            `Hey Taylien, ${channel} just hosted you with ${viewers} viewers!`
         ]
 
         //console.log(`channel ${channel}`)
@@ -39,7 +39,7 @@ module.exports = {
 
         result.hasMessage = false
         result.items = [
-            `sbtHype Hey Taylien, ${username} just raided you with ${viewers} viewers!`
+            `Hey Taylien, ${username} just raided you with ${viewers} viewers!`
         ]
 
         return result
@@ -49,7 +49,7 @@ module.exports = {
 
         result.hasMessage = true
         result.items = [
-            `sbtO Hey Taylien! ${userstate['display-name']} just cheered with ${userstate.bits} bits! sbtHype`
+            `Hey Taylien! ${userstate['display-name']} just cheered with ${userstate.bits} bits!`
         ]
 
         return result
@@ -60,8 +60,8 @@ module.exports = {
         result.hasMessage = true
         result.items = [
             (userstate['msg-param-sub-plan'] === 'Prime')
-            ? `Hey Taylien! ${username} just Prime subbed! sbtHype sbtHype sbtHype`
-            :`Hey Taylien! ${username} just T${parseInt(method.plan) / 1000} subbed! sbtHype sbtHype sbtHype`
+            ? `Hey Taylien! ${username} just Prime subbed!`
+            :`Hey Taylien! ${username} just T${parseInt(method.plan) / 1000} subbed!`
         ]
 
         return result
@@ -72,8 +72,8 @@ module.exports = {
         result.hasMessage = true
         result.items = [
             (userstate['msg-param-sub-plan'] === 'Prime')
-            ? `Hey Taylien! ${username} just Prime subbed for ${userstate['msg-param-cumulative-months']} months! sbtHype sbtHype sbtHype`
-            :`Hey Taylien! ${username} just T${parseInt(methods.plan) / 1000} subbed for ${userstate['msg-param-cumulative-months']} months! sbtHype sbtHype sbtHype `
+            ? `Hey Taylien! ${username} just Prime subbed for ${userstate['msg-param-cumulative-months']} months!`
+            :`Hey Taylien! ${username} just T${parseInt(methods.plan) / 1000} subbed for ${userstate['msg-param-cumulative-months']} months!`
         ]
 
         return result
@@ -89,7 +89,7 @@ module.exports = {
         else{
             result.hasMessage = true
             result.items = [
-                `Hey Taylien! ${username} just gifted ${recipient} a T${parseInt(methods.plan) / 1000} sub! sbtHype sbtHype sbtHype`
+                `Hey Taylien! ${username} just gifted ${recipient} a T${parseInt(methods.plan) / 1000} sub!`
             ]
         }
 
@@ -103,7 +103,7 @@ module.exports = {
 
         result.hasMessage = true
         result.items = [
-            `Hey Taylien! ${username} just gifted ${numbOfSubs} T${parseInt(methods.plan) / 1000} subs! sbtHype sbtHype sbtHype`
+            `Hey Taylien! ${username} just gifted ${numbOfSubs} T${parseInt(methods.plan) / 1000} subs!`
         ]
 
         return result
