@@ -1,4 +1,6 @@
 module.exports = {
+    ban:false,
+    banName:"",
     hasMessage:false,
     hasDelay:false,
     hasPayout:false,

@@ -1,10 +1,13 @@
 const commandPrefix = '!';
 const response = require('./models/response')
+const fetch = require('node-fetch')
+const dotenv = require('dotenv').config();
+const moment = require('moment')
 let backup = false;
 
 module.exports = {
     channel:"#thethingssheplays",
-    handelMessage:(context, msg) => {
+    handelMessage:async (context, msg) => {
         let result = Object.assign({}, response)
         result.items = []
         
@@ -16,6 +19,12 @@ module.exports = {
                 `Backup commands are now ${(backup) ? 'on':'off'}.`
             ]
             return result;
+        }
+
+        if(await isBanable(context.username, msg)){
+            result.ban = true
+            result.banName = context.username
+            result.items = [`I don't want to become famous!`]
         }
 
         if(msg.substr(0,1) !== commandPrefix || !backup)
@@ -62,4 +71,31 @@ module.exports = {
         //console.log(userstate)
         //console.log(msg)
     }
+}
+
+let checked = []
+
+const isBanable = async (username, msg) => {
+    //Wanna become famous? Buy followers, primes and views on
+    //console.log(username, msg)
+   
+    if(!checked.includes(username) && msg.match(/Wanna become famous\? Buy followers, primes and views on/i)){
+        console.log(true)
+        const res = await fetch(`https://api.twitch.tv/kraken/users?login=${username}`,{
+            headers:{
+                'Client-ID':process.env.TWITCH_CLIENT,
+                'Accept':'application/vnd.twitchtv.v5+json'
+            }
+        }).catch(console.error)
+        const json = await res.json()
+
+        checked = [...checked, username]
+
+        const accountAge = moment(json.users[0].created_at).toNow(true)
+        if(accountAge.match(/seconds|minute|hour|day/g)){
+            return true
+        }
+    }
+
+    return false
 }
