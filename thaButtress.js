@@ -884,7 +884,7 @@ let getReggieClipCount = async() => {
         headers:{
             'Client-ID':`${CLIENT_ID}`
         }
-    })
+    }).catch(console.error)
     let json = await res.json()
     const { view_count } = json.data[0]
 
@@ -904,7 +904,7 @@ let updateStreamDisplay = async (value, font, color) => {
         'Content-Type': 'application/json'
         },
         body
-    })
+    }).catch(console.error)
     let json = await res.json()
     console.log(json)
 }
