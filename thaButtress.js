@@ -617,8 +617,8 @@ module.exports = {
                 return result;
             }
             case 'clip':{
-                result.hasPromise = true
-                result.hasMessage = true
+                //result.hasPromise = true
+                //result.hasMessage = true
                 result.items = [getReggieClipCount()]
                 return result
             }
@@ -879,16 +879,17 @@ function getButtcoinAmountByPlan(plan){
 }
 
 let getReggieClipCount = async() => {
-    let res = await fetch(`https://api.twitch.tv/helix/clips?id=SparklingBumblingBananaPoooound`, {
+    let res = await fetch(`https://api.twitch.tv/helix/clips?id=BumblingResourcefulFalconSoonerLater`, {
         method:"GET",
         headers:{
             'Client-ID':`${CLIENT_ID}`
         }
     }).catch(console.error)
     let json = await res.json()
-    const { view_count } = json.data[0]
+    console.log(json)
+    //const { view_count } = json.data[0]
 
-    return `${view_count} people want to give Reggie attention! buttReggie`
+    //return `${view_count} people want to give Reggie attention! buttReggie`
 }
 
 let updateStreamDisplay = async (value, font, color) => {
