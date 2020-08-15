@@ -514,9 +514,53 @@ function onMessageHandler (target, context, msg, self) {
         }, 30000)
       }
       break;
+    case 'dab':{
+      if(target === '#thabuttress'){
+        if(parse.length === 2)
+          tryButtcoinsDono(context.username, parseInt(parse[1]))
+        else
+          client.say('#thabuttress', `Want to see if Butt can handle The Last Dab?!? buttDab Donate your buttcoins towards the group goal of 200,000 and she'll have some live on stream. To contribute your buttcoins type "!dab <amount>". Amount left: ${200000 - totalDonated}`)
+      }
+      break;
+    }
+    case 'addDonos':{
+      if(target === '#thabuttress' && context.username === 'joefish5' && parse.length === 2){
+        totalDonated += parseInt(parse[1])
+        console.log("Total Donated:",totalDonated)
+      }
+      break;
+    }
+    case 'amountLeft':{
+      if(target === '#thabuttress' && context.mod)
+        client.say('#thabuttress', `Current amount left: ${200000 - totalDonated}`)
+      break;
+    }
     default:
       // this shows unknows commands
       //console.log(`* Unknown command ${commandName}`)
+  }
+}
+
+
+let totalAmount = 200000
+let totalDonated = 0
+let tempCheckAmounts = {}
+
+let whisperQueue = []
+
+setInterval(() => {
+  if(whisperQueue.length > 0)
+    client.whisper('thabottress', whisperQueue.shift()).then(data => console.log(data))
+},4000)
+
+function tryButtcoinsDono(username, amount){
+  if(amount == NaN){
+    client.say('#thabuttress', `Sorry ${context['display-name']} it looks like you didn't enter a number correctly.`)
+  }
+  else if(amount > 0){
+    tempCheckAmounts[username] = amount
+    //console.log(tempCheckAmounts)
+    whisperQueue = [...whisperQueue, `!check ${username}`]
   }
 }
 
@@ -532,10 +576,29 @@ function onCheerHandler(channel, userstate, message){
 }
 
 function onWhisperHandler(from, userstate, message, self){
-  //if(self) return
+  if(self) return
 
   console.log(from, message)
-  console.log(userstate)
+  if(from === '#thabottress'){
+    const info = message.split(' ')
+    if(info.length > 2) return
+    const username = info[0]
+    const buttcoins = info[1]
+
+    if(tempCheckAmounts.hasOwnProperty(username)){
+        if(tempCheckAmounts[username] <= buttcoins){
+          whisperQueue = [...whisperQueue, `!buttcoins remove ${username} ${tempCheckAmounts[username]}`]
+          totalDonated += tempCheckAmounts[username]
+          client.say('#thabuttress', `Thanks for the ${tempCheckAmounts[username]} buttcoins ${username}! Only ${totalAmount - totalDonated} buttcoins to go!!!`)
+          console.log("Total Donated:",totalDonated)
+          delete tempCheckAmounts[username]
+        }else{
+          client.say('#thabuttress', `Sorry ${username}, you only have ${buttcoins} buttcoins that you can donate.`)
+          delete tempCheckAmounts[username]
+        }
+        
+    }
+  }
 
   if(client.isMod('#thabuttress', from) || userstate.username === 'thabuttress'){
     let result = thabuttress.whisperHandler(message)

@@ -26,6 +26,7 @@ let hpPhraseGame = new hpPhrase('thabuttress')
 const fs = require('fs')
 
 const response = require('./models/response')
+const { client } = require('tmi.js')
 
 const commandPrefix = '!';
 const gamePrefix = '#';
@@ -632,6 +633,7 @@ module.exports = {
             case 'testEmotes':{
                 result.hasMessage = true
                 result.items = ['buttMonty buttLove buttReggie']
+                return result
             }
             default:
                 //console.log(`Command Not Found: ${commandName}`)
