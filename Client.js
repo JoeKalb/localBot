@@ -517,9 +517,10 @@ function onMessageHandler (target, context, msg, self) {
     case 'dab':{
       if(target === '#thabuttress'){
         if(parse.length === 2)
-          tryButtcoinsDono(context.username, parseInt(parse[1]))
+          //tryButtcoinsDono(context.username, parseInt(parse[1]))
+          console.log('donos are done')
         else
-          client.say('#thabuttress', `Want to see if Butt can handle The Last Dab?!? buttDab Donate your buttcoins towards the group goal of 200,000 and she'll have some live on stream. To contribute your buttcoins type "!dab <amount>". Amount left: ${200000 - totalDonated}`)
+          client.say('#thabuttress', `We make the 100k buttcoins dono goal so Butt tried The Last Dab! https://clips.twitch.tv/GoodRenownedOysterThunBeast`)
       }
       break;
     }
@@ -532,7 +533,7 @@ function onMessageHandler (target, context, msg, self) {
     }
     case 'amountLeft':{
       if(target === '#thabuttress' && context.mod)
-        client.say('#thabuttress', `Current amount left: ${200000 - totalDonated}`)
+        client.say('#thabuttress', `Current amount left: ${100000 - totalDonated}`)
       break;
     }
     default:
@@ -542,8 +543,8 @@ function onMessageHandler (target, context, msg, self) {
 }
 
 
-let totalAmount = 200000
-let totalDonated = 0
+let totalAmount = 100000
+let totalDonated = 2000
 let tempCheckAmounts = {}
 
 let whisperQueue = []
@@ -589,7 +590,10 @@ function onWhisperHandler(from, userstate, message, self){
         if(tempCheckAmounts[username] <= buttcoins){
           whisperQueue = [...whisperQueue, `!buttcoins remove ${username} ${tempCheckAmounts[username]}`]
           totalDonated += tempCheckAmounts[username]
-          client.say('#thabuttress', `Thanks for the ${tempCheckAmounts[username]} buttcoins ${username}! Only ${totalAmount - totalDonated} buttcoins to go!!!`)
+          if(totalAmount > totalDonated)
+            client.say('#thabuttress', `Thanks for the ${tempCheckAmounts[username]} buttcoins ${username}! Only ${totalAmount - totalDonated} buttcoins to go!!!`)
+          else
+            client.say('#thabuttress', `@thabuttress IT'S TIME TO DAB!!!! buttDab`)
           console.log("Total Donated:",totalDonated)
           delete tempCheckAmounts[username]
         }else{
