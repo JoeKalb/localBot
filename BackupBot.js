@@ -1,6 +1,6 @@
 // bug: while backupbot is live, games cannot be activated in chat
 
-let bottressDown = false;
+let bottressDown = true;
 const fs = require('fs');
 const fetch = require('node-fetch');
 const co = require('co');
@@ -22,6 +22,9 @@ let recordButtcoins = (payout) => {
 let pendingStatus;
 
 module.exports = {
+  recordButtcoins: (payout) => {
+    recordButtcoins(payout)
+  },
   isBottressDown: () => {
     return bottressDown
   },
@@ -47,13 +50,7 @@ module.exports = {
       //console.log(`Command Used: ${commandName}`)
       switch(commandName){
         case 'raffle':
-          return `You ready to for the holiday raffle?! Get your tickets to win a RE100 Jagd Doga or a Gundam canvas thaButtress will be painting this Saturday! Tickets cost 500 ButtCoins through the Streamlabs Extension & winners will be drawn on the 21st!`
-        case 'double':
-          return `buttSweat Double the buttcoins for donos, bits, subs & gift subs! Merry Buttmas!!!! buttMas`
-        case 'plans':
-          return `Next two Saturdays gonna be buttLit woo! Sat 14th - Canvas painting (2pm PT) Sat 21st - Holiday event w/ Lego (5pm PT) buttHype`
-        case 'discord':
-          return `Join our offline Discord chat! Subs: Link your discord to your twitch account for bonus channels! https://discord.gg/YbdqmZG`
+          return `Use your buttcoins in the streamlabs extension to possibly win a poster! Make sure to submit a memory of the stream or of Butt.`
         case 'lego':
           return `Butt's built this 6020 piece Hogwarts Lego Set! https://amzn.to/2LEy7uE buttHouse https://clips.twitch.tv/AltruisticBreakableToadDuDudu`
         case 'nerds':
@@ -93,27 +90,25 @@ module.exports = {
         case 'work':
           return `Butt doesn't discuss job specifics during stream.`
         case 'schedule':
-          return `New Stream Schedule buttOMG Tuesday/Wednesday Evenings, weekends TBA! Subnight are now every Friday!!!`
+          return `Tuesday evenings with possible streams on the weekend and Sub/Anime night on Friday in the !discord buttHype (schedule subject to change)`
         case 'glue':
           return `Butt uses Tamiya Extra Thin Cement Glue https://amzn.to/2YdgxYw`
         case 'lurk':
           return `buttLurk ${context['display-name']} has set their mobile suit to stand-by mode buttLurk`
         case 'current':
-          return `Butt's currently building the SD Shining Gundam buttOMG https://www.gundamplanet.com/bb-senshi-bb239-shining-gundam.html?c=CAvHeI&referring_service=link`
+          return `Butt's currently building the PG 00 Gundam Seven Sword buttDab https://www.gundamplanet.com/pg-gn-0000-7s-00-gundam-seven-sword-g.html?c=CAvHeI&referring_service=link`
         case 'newtype':
           return `Butt was a featured guest for Newtype Build Con! buttOMG http://bit.ly/NTBCbuttress`
         case 'vip':
           return `How to get VIP for the month: Top Monthly Dono | Top Monthly Bits | $100 Dono | 10,000 Bits or Buttcoins | Forever VIP: 100 or more gifted subs!!!`
         case '1k':
           return `Butt just hit 1000 followers on youtube!!! Here's a video Pop made to celebrate it: https://youtu.be/nn51DLN9Esk` 
-        case 'subtember':
-          return `Eat this subway !sandwich and get 1000 (foot-long) or 500 (6-inch) buttcoins for posting a pic of it in the !discord https://www.twitch.tv/videos/490840815`
-        case 'sandwich':
-          return `Subway Sandwich Order: Italian Herb and Cheese, Meatball, Pepperjack, Jalapenos, Avocado, Chipotle Southwest, and Ranch buttStink`
         case 'bday':
           return `Butt's Birthday is on October 10th!!! Want to get her a gift? Check out her wishlist: a.co/7qE8gqN`
-        case 'schedule':
-          return `Thuesday and Wednesday evening with possible streams on the weekend and Sub/Anime night on Friday in the !discord buttHype `
+        case 'link':
+          return `No links in chat, but you're welcome to post them in the discord! https://discord.gg/YbdqmZG`
+        case 'discord':
+          return `Join our offline Discord chat! Subs: Link your discord to your twitch account for bonus channels! https://discord.gg/YbdqmZG`
         case 'followage':
           return co(function*(){
             try{
@@ -306,3 +301,8 @@ function createDateTimeBreakdown(utc){
     minute
   }
 }
+
+// !buttcoins add Aborawatabinov 100
+// !buttcoins add ansinex726 100
+// !buttcoins add ansinex726 100
+// !buttcoins add tonekathsu 100

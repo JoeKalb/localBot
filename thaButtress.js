@@ -853,6 +853,7 @@ let mysterySubGifters = {}
 
 // helper functions
 function buttcoinPayout(user, amount){
+    if(backupBot.isBottressDown()) backupBot.recordButtcoins(`!buttcoins add ${user} ${amount}`)
     return `!buttcoins add ${user} ${amount}`;
 }
 
@@ -862,12 +863,12 @@ function buttcoinRemove(user, amount){
 
 function singleGiftPayout(user, methods){
     const plan = parseInt(methods.plan) / 1000;
-    return buttcoinPayout(user, 2 * getButtcoinAmountByPlan(plan))
+    return buttcoinPayout(user, getButtcoinAmountByPlan(plan))
 }
 
 function multiGiftPayout(user, numOfSubs, methods){
     const plan = parseInt(methods.plan) / 1000;
-    return buttcoinPayout(user, 2 * numOfSubs * getButtcoinAmountByPlan(plan))
+    return buttcoinPayout(user, numOfSubs * getButtcoinAmountByPlan(plan))
 }
 
 function getButtcoinAmountByPlan(plan){
