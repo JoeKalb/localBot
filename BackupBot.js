@@ -1,6 +1,6 @@
 // bug: while backupbot is live, games cannot be activated in chat
 
-let bottressDown = true;
+let bottressDown = false;
 const fs = require('fs');
 const fetch = require('node-fetch');
 const co = require('co');
