@@ -29,7 +29,8 @@
       "displayNames.json",
       "dogbets.json",
       "WordBan.json",
-      "points.js"
+      "points.js",
+      "Tickets.json"
     ]
   },
   "repository": {

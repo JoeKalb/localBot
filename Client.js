@@ -524,16 +524,29 @@ function onMessageHandler (target, context, msg, self) {
       }
       break;
     }
-    case 'addDonos':{
-      if(target === '#thabuttress' && context.username === 'joefish5' && parse.length === 2){
-        totalDonated += parseInt(parse[1])
-        console.log("Total Donated:",totalDonated)
+    case 'ticket':{
+      if(target === '#thabuttress'){
+        if(parse.length === 1){
+          //console.log(tickets[context.username])
+          if(tickets[context.username] !== undefined)
+            client.say(target, `${context['display-name']} currently has ${tickets[context.username]} ticket${(tickets[context.username] > 1)? "s":""}.`)
+          else
+            client.say(target, `Sorry ${context['display-name']}, you don't have any tickets yet. Do "!ticket <amount>"  to buy some. ${ticketPrice} per ticket.`)
+        }
+        else if(parse.length === 2){
+          let ticketCount = parseInt(parse[1]);
+          if(ticketCount > 0){
+            if(currentButtcoins[context.username] !== undefined && ticketCount*ticketPrice < currentButtcoins[context.username]){
+              whisperQueue = [...whisperQueue, `!buttcoins remove ${context.username} ${ticketPrice * ticketCount}`]
+              currentButtcoins[context.username] -= ticketPrice * ticketCount
+              addTickets(context.username, ticketPrice * ticketCount)
+              client.say('#thabuttress', `${context.username} currently has ${tickets[context.username]} ticket${(tickets[context.username] > 1)? "s":""}.`)
+            }
+            else
+              tryButtcoinsDono(context.username, ticketCount * ticketPrice)
+          }
+        }
       }
-      break;
-    }
-    case 'amountLeft':{
-      if(target === '#thabuttress' && context.mod)
-        client.say('#thabuttress', `Current amount left: ${100000 - totalDonated}`)
       break;
     }
     default:
@@ -542,17 +555,16 @@ function onMessageHandler (target, context, msg, self) {
   }
 }
 
-
-let totalAmount = 100000
-let totalDonated = 2000
+let ticketPrice = 100;
+let tickets = require('./gameFiles/thabuttress/Tickets.json')
 let tempCheckAmounts = {}
-
+let currentButtcoins = {}
 let whisperQueue = []
 
 setInterval(() => {
   if(whisperQueue.length > 0)
     client.whisper('thabottress', whisperQueue.shift()).then(data => console.log(data))
-},4000)
+},5000)
 
 function tryButtcoinsDono(username, amount){
   if(amount == NaN){
@@ -576,6 +588,15 @@ function onCheerHandler(channel, userstate, message){
   }
 }
 
+function addTickets(username, buttcoins){
+  if(tickets.hasOwnProperty(username))
+    tickets[username] += buttcoins/ticketPrice
+  else
+    tickets[username] = buttcoins/ticketPrice
+
+  fs.writeFileSync("gameFiles/thabuttress/Tickets.json", JSON.stringify(tickets));
+}
+
 function onWhisperHandler(from, userstate, message, self){
   if(self) return
 
@@ -587,20 +608,16 @@ function onWhisperHandler(from, userstate, message, self){
     const buttcoins = info[1]
 
     if(tempCheckAmounts.hasOwnProperty(username)){
-        if(tempCheckAmounts[username] <= buttcoins){
-          whisperQueue = [...whisperQueue, `!buttcoins remove ${username} ${tempCheckAmounts[username]}`]
-          totalDonated += tempCheckAmounts[username]
-          if(totalAmount > totalDonated)
-            client.say('#thabuttress', `Thanks for the ${tempCheckAmounts[username]} buttcoins ${username}! Only ${totalAmount - totalDonated} buttcoins to go!!!`)
-          else
-            client.say('#thabuttress', `@thabuttress IT'S TIME TO DAB!!!! buttDab`)
-          console.log("Total Donated:",totalDonated)
-          delete tempCheckAmounts[username]
-        }else{
-          client.say('#thabuttress', `Sorry ${username}, you only have ${buttcoins} buttcoins that you can donate.`)
-          delete tempCheckAmounts[username]
-        }
-        
+      if(tempCheckAmounts[username] <= buttcoins){
+        whisperQueue = [...whisperQueue, `!buttcoins remove ${username} ${tempCheckAmounts[username]}`]
+        addTickets(username, tempCheckAmounts[username])
+        currentButtcoins[username] = buttcoins - tempCheckAmounts[username]
+        client.say('#thabuttress', `${username} currently has ${tickets[username]} ticket${(tickets[username] > 1)? "s":""}.`)
+      }else{
+        client.say(`Sorry ${username}, you only have enough buttcoins for ${Math.floor(buttcoins/ticketPrice)} tickets.`)
+      }
+
+      delete tempCheckAmounts[username]
     }
   }
 
