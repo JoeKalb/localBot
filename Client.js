@@ -549,6 +549,38 @@ function onMessageHandler (target, context, msg, self) {
       }
       break;
     }
+    case 'pick':{
+      if(target === "#thabuttress" && (context.mod || context.username === 'thabuttress')){
+        let tempWinnerList = []
+        
+        for(const[key, value] of Object.entries(tickets)){
+          if(!winners.hasOwnProperty(key)){
+            for(let i = 0; i < value; ++i)
+              tempWinnerList = [...tempWinnerList, key]
+          }
+        }
+        if(tempWinnerList.length === 0) return
+        const randomNumber = Math.floor(Math.random() * tempWinnerList.length)
+        const winner = tempWinnerList[randomNumber]
+        winners[winner] = true
+        fs.writeFileSync("gameFiles/thabuttress/Winners.json", JSON.stringify(winners));
+
+        for(let i = 0; i< 3; ++i)
+          client.say(target, `${winner.toUpperCase()} HAS WON!!!!`)
+      }
+      break;
+    }
+    case 'total':{
+      let tempTickets = 0;
+
+      for(const[key, value] of Object.entries(tickets)){
+        if(!winners.hasOwnProperty(key))
+          tempTickets += value
+      }
+
+      client.say(target,`There are currently ${tempTickets} in the drawing.`)
+      break;
+    }
     default:
       // this shows unknows commands
       //console.log(`* Unknown command ${commandName}`)
@@ -557,6 +589,7 @@ function onMessageHandler (target, context, msg, self) {
 
 let ticketPrice = 100;
 let tickets = require('./gameFiles/thabuttress/Tickets.json')
+let winners = require('./gameFiles/thabuttress/Winners.json')
 let tempCheckAmounts = {}
 let currentButtcoins = {}
 let whisperQueue = []

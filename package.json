@@ -30,7 +30,8 @@
       "dogbets.json",
       "WordBan.json",
       "points.js",
-      "Tickets.json"
+      "Tickets.json",
+      "Winners.json"
     ]
   },
   "repository": {
