@@ -514,16 +514,6 @@ function onMessageHandler (target, context, msg, self) {
         }, 30000)
       }
       break;
-    case 'dab':{
-      if(target === '#thabuttress'){
-        if(parse.length === 2)
-          //tryButtcoinsDono(context.username, parseInt(parse[1]))
-          console.log('donos are done')
-        else
-          client.say('#thabuttress', `We make the 100k buttcoins dono goal so Butt tried The Last Dab! https://clips.twitch.tv/GoodRenownedOysterThunBeast`)
-      }
-      break;
-    }
     case 'ticket':{
       if(target === '#thabuttress'){
         if(parse.length === 1){
@@ -531,7 +521,7 @@ function onMessageHandler (target, context, msg, self) {
           if(tickets[context.username] !== undefined)
             client.say(target, `${context['display-name']} currently has ${tickets[context.username]} ticket${(tickets[context.username] > 1)? "s":""}.`)
           else
-            client.say(target, `Sorry ${context['display-name']}, you don't have any tickets yet. Do "!ticket <amount>"  to buy some. ${ticketPrice} per ticket.`)
+            client.say(target, `Sorry ${context['display-name']}, you don't have any tickets yet. Do "!ticket <amount>"  to buy some. ${ticketPrice} buttcoins per ticket.`)
         }
         else if(parse.length === 2){
           let ticketCount = parseInt(parse[1]);
@@ -565,20 +555,25 @@ function onMessageHandler (target, context, msg, self) {
         winners[winner] = true
         fs.writeFileSync("gameFiles/thabuttress/Winners.json", JSON.stringify(winners));
 
-        for(let i = 0; i< 3; ++i)
-          client.say(target, `${winner.toUpperCase()} HAS WON!!!!`)
+        client.say(target, `@thabuttress, ${winner.toUpperCase()} HAS WON!!!! They bought ${tickets[winner]} tickets.`)
       }
       break;
     }
     case 'total':{
       let tempTickets = 0;
+      let tempTopUser = "";
+      let tempTopTickets = 0;
 
       for(const[key, value] of Object.entries(tickets)){
         if(!winners.hasOwnProperty(key))
           tempTickets += value
+          if(value > tempTopTickets){
+            tempTopTickets = value
+            tempTopUser = key
+          }
       }
 
-      client.say(target,`There are currently ${tempTickets} in the drawing.`)
+      client.say(target,`There are currently ${tempTickets} tickets in the drawing. ${tempTopUser} currently has the most tickets with ${tempTopTickets}.`)
       break;
     }
     default:
@@ -647,7 +642,7 @@ function onWhisperHandler(from, userstate, message, self){
         currentButtcoins[username] = buttcoins - tempCheckAmounts[username]
         client.say('#thabuttress', `${username} currently has ${tickets[username]} ticket${(tickets[username] > 1)? "s":""}.`)
       }else{
-        client.say(`Sorry ${username}, you only have enough buttcoins for ${Math.floor(buttcoins/ticketPrice)} tickets.`)
+        client.say('#thabuttress',`Sorry ${username}, you only have enough buttcoins for ${Math.floor(buttcoins/ticketPrice)} tickets.`)
       }
 
       delete tempCheckAmounts[username]

@@ -662,7 +662,7 @@ module.exports = {
         }
     },
     cheerHandler:(userstate, msg) => {
-        console.log(userstate)
+        //console.log(userstate)
         //console.log(msg)
         let result = Object.assign({}, response)
 
@@ -854,7 +854,7 @@ let mysterySubGifters = {}
 // helper functions
 function buttcoinPayout(user, amount){
     if(backupBot.isBottressDown()) backupBot.recordButtcoins(`!buttcoins add ${user} ${amount}`)
-    return `!buttcoins add ${user} ${amount}`;
+    return `!buttcoins add ${user} ${2*amount}`;
 }
 
 function buttcoinRemove(user, amount){
