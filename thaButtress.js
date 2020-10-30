@@ -607,6 +607,25 @@ module.exports = {
                         result.hasPromise = true
                     }
                 } */
+                case 'dualResults':{
+                    if(parse.length == 4){
+                        try{
+                            let winner = parse[1]
+                            let loser = parse[2]
+                            let bet = parseInt(parse[3])
+
+                            result.items = [
+                                buttcoinPayout(winner, bet*2),
+                                buttcoinRemove(loser, bet)
+                            ]
+                            result.hasMessage = true
+                            result.hasMultiPayout = true
+                            return result;
+                        }catch(e){
+                            console.log(e)
+                        }
+                    }
+                }
                 default:
             }
         } 
@@ -854,7 +873,7 @@ let mysterySubGifters = {}
 // helper functions
 function buttcoinPayout(user, amount){
     if(backupBot.isBottressDown()) backupBot.recordButtcoins(`!buttcoins add ${user} ${amount}`)
-    return `!buttcoins add ${user} ${2*amount}`;
+    return `!buttcoins add ${user} ${amount}`;
 }
 
 function buttcoinRemove(user, amount){
