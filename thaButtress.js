@@ -38,6 +38,7 @@ module.exports = {
     channel:"#thabuttress",
     bot:"thabottress",
     handleMessage: (context, msg) => {
+        console.log(context);
         // all messages will choose to return through this object
         let result = Object.assign({}, response)
         result.items = []
@@ -865,6 +866,9 @@ module.exports = {
         blackJackGame.clear();
         wordBanGame.clear();
         hpPhraseGame.clear();
+    },
+    staffInChat:() => {
+        return staffInChat();
     }
 }
 
@@ -1062,11 +1066,11 @@ let staffInChat = () => {
             return `Check out these cool twitch staff in the chat! ${staff.join(', ')}`
           }
           else
-            return `I don't see any staff in the chat... but I could be wrong!`
+            return ``
         }
         catch(err){
           console.log(err)
-          return `Viewer List is currently unavailable...`
+          return ``
         }
       })
 }

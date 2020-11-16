@@ -101,6 +101,32 @@ function handleResponses(target, response){
   }
 }
 
+setInterval(() => {
+  handleResponses('#thabuttress', thabuttress.handleMessage({
+    'badge-info': { subscriber: '43' },
+    badges: { moderator: '1', subscriber: '3024', twitchcon2018: '1' },
+    'client-nonce': 'c3db9f864060009583f95f6bb107d48c',
+    color: '#FF7F27',
+    'display-name': 'JoeFish5',
+    emotes: null,
+    flags: null,
+    id: '28b04c3f-7240-456e-b217-e08c74df672d',
+    mod: true,
+    'room-id': '82523255',
+    subscriber: true,
+    'tmi-sent-ts': '1605562403603',
+    turbo: false,
+    'user-id': '112721305',
+    'user-type': 'mod',
+    'emotes-raw': null,
+    'badge-info-raw': 'subscriber/43',
+    'badges-raw': 'moderator/1,subscriber/3024,twitchcon2018/1',
+    username: 'joefish5',
+    'message-type': 'chat'
+  }, '!lookout'))
+}, 1000 * 60 * 30)
+
+
 // Valid commands start with:
 let commandPrefix = '!'
 
