@@ -38,7 +38,6 @@ module.exports = {
     channel:"#thabuttress",
     bot:"thabottress",
     handleMessage: (context, msg) => {
-        console.log(context);
         // all messages will choose to return through this object
         let result = Object.assign({}, response)
         result.items = []
