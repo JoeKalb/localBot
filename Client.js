@@ -102,6 +102,7 @@ function handleResponses(target, response){
 }
 
 setInterval(() => {
+  console.log("Checking for staff!")
   handleResponses('#thabuttress', thabuttress.handleMessage({
     'badge-info': { subscriber: '43' },
     badges: { moderator: '1', subscriber: '3024', twitchcon2018: '1' },
