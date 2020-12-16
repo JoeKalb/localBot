@@ -261,6 +261,36 @@ function botStatus(status){
   backupBotBtn.innerHTML = backupBotBtn.innerHTML.replace('Off', 'On');
 }
 
+// say something in chat
+const chatInput = document.getElementById("chatInput")
+const chatInputBtn = document.getElementById("chatInputBtn")
+chatInputBtn.addEventListener("click", sendChatMessage)
+/*
+chatInput.addEventListener("keydown", async e => {
+  if(e.key === "Enter")
+    sendChatMessage();
+});
+*/
+async function sendChatMessage() {
+  let data = JSON.stringify({
+    message:chatInput.value,
+    channel:dropDown.value
+  })
+
+  let response = await fetch(window.location + 'say', {
+    method: "POST", 
+    headers:{
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body:data
+  })
+  let json = await response.json()
+  console.log(json)
+
+}
+
+
 // search controls
 const itemHuntInput = document.getElementById("itemHuntInput")
 const startSearchBtn = document.getElementById("startSearchBtn")
@@ -492,7 +522,7 @@ clickBtnBind(stopPhraseBtn)
 
 const clearPhraseBtn = document.getElementById('clearPhraseBtn')
 clickBtnBind(clearPhraseBtn)
-
+/*
 const addStudentBtn = document.getElementById('addStudentBtn')
 addStudentBtn.addEventListener('click', () => {
   addStudentCall()
@@ -518,3 +548,4 @@ const addStudentCall = async() => {
   let json = await res.json()
   console.log(json)
 }
+*/

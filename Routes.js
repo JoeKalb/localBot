@@ -344,6 +344,14 @@ router.get('/students', (req, res) => {
   res.status(200).json(houses.students)
 })
 
+router.post('/say', (req, res) => {
+  client.say(`#${req.body.channel}`, req.body.message)
+  res.status(200).json({
+    channel:req.body.channel,
+    message:req.body.message
+  })
+})
+
 // search command routes
 router.get('/search/:channel', (req, res) => {
   search.start(req.params.channel)
