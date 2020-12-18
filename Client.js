@@ -100,7 +100,7 @@ function handleResponses(target, response){
     }
   }
 }
-
+/*
 setInterval(() => {
   console.log("Checking for staff!")
   handleResponses('#thabuttress', thabuttress.handleMessage({
@@ -126,7 +126,7 @@ setInterval(() => {
     'message-type': 'chat'
   }, '!lookout'))
 }, 1000 * 60 * 30)
-
+*/
 
 // Valid commands start with:
 let commandPrefix = '!'
