@@ -324,6 +324,32 @@ const clearSearchBtn = document.getElementById("clearSearchBtn")
 clickBtnBind(clearSearchBtn)
 
 // giveaway controls
+const giveawayKeywordInput = document.getElementById("giveawayKeywordInput")
+giveawayKeywordInput.addEventListener('keypress', e => { 
+  if(e.keyCode === 13 || e.which === 13)
+    keywordGiveaway()
+})
+
+async function keywordGiveaway(){
+  let keyword = giveawayKeywordInput.value.trim()
+  let data = JSON.stringify({
+    "keyword": keyword,
+    "channel": dropDown.value
+  })
+
+  let response = await fetch(window.location + 'keywordGiveaway',{
+    method: "POST",
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: data
+  })
+
+  let json = await response.json()
+  console.log(json);
+}
+
 const giveStartBtn = document.getElementById("giveawayStartBtn")
 clickBtnBindChannel(giveStartBtn)
 

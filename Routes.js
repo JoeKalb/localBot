@@ -108,6 +108,20 @@ router.get('/hangman/clear', (req, res) => {
   res.status(200).json("hangman reset")
 })
 
+//keyword giveaway
+router.post('/keywordGiveaway', (req, res) => {
+  try{
+    const { keyword, channel } = req.body
+    console.log(keyword, channel)
+    res.status(200).send({
+      keyword, channel
+    })
+  }
+  catch(err){
+    res.status(404).send(err)
+  }
+})
+
 //giveaway
 router.get('/giveaway/:channel', (req, res) => {
   if(req.params.channel == 'thabuttress'){

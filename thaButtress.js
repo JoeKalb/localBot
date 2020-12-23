@@ -1,5 +1,6 @@
 let hangman = new require('./Hangman')
 let giveaway = new require('./Giveaway')
+let keywordGiveaway = new require('./KeywordGiveaway')
 let puptimeGame = new require('./puptimeGame')
 let randNum = new require('./RandNumber')
 let quidditch = new require('./Quidditch')
@@ -172,6 +173,9 @@ module.exports = {
         // giveaway logic
         if(giveaway.allowEntries)
             giveaway.isNewName(context['display-name'])
+
+        if(keywordGiveaway.allowEntries && keywordGiveaway.hasKeyword(msg))
+            keywordGiveaway.isNewName(context['display-name'])
 
         // all commands go under here
         if(msg.substr(0,1) !== commandPrefix)
