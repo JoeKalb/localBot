@@ -16,7 +16,8 @@ module.exports = {
         return this.keyword
     },
     hasKeyword: function(word){
-        return word.contains(this.keyword)
+        let regex = RegExp(this.keyword, 'g')
+        return regex.test(word)
     },
     isNewName: function(name){
       if(!this.users.has(name)){
@@ -41,7 +42,8 @@ module.exports = {
     clear:function(){
       this.users.clear()
       this.channel = ""
-      this.allowEntries = false;
+      this.allowEntries = false
       this.keyword = ""
+      this.count = 0
     }
 }

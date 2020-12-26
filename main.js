@@ -323,7 +323,7 @@ clickBtnBind(continueSearchBtn)
 const clearSearchBtn = document.getElementById("clearSearchBtn")
 clickBtnBind(clearSearchBtn)
 
-// giveaway controls
+// keyword giveaway controls
 const giveawayKeywordInput = document.getElementById("giveawayKeywordInput")
 giveawayKeywordInput.addEventListener('keypress', e => { 
   if(e.keyCode === 13 || e.which === 13)
@@ -350,6 +350,21 @@ async function keywordGiveaway(){
   console.log(json);
 }
 
+const keywordGiveawayStartBtn = document.getElementById("keywordGiveawayStartBtn")
+keywordGiveawayStartBtn.addEventListener("click", () => {
+  keywordGiveaway()
+})
+
+const keywordGiveawayStopBtn = document.getElementById("keywordGiveawayStopBtn")
+clickBtnBindChannel(keywordGiveawayStopBtn)
+
+const keywordGiveawayDrawBtn = document.getElementById("keywordGiveawayDrawBtn")
+clickBtnBindChannel(keywordGiveawayDrawBtn)
+
+const keywordGiveawayClearBtn = document.getElementById("keywordGiveawayClearBtn")
+clickBtnBindChannel(keywordGiveawayClearBtn)
+
+// giveaway control
 const giveStartBtn = document.getElementById("giveawayStartBtn")
 clickBtnBindChannel(giveStartBtn)
 

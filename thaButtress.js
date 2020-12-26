@@ -798,6 +798,21 @@ module.exports = {
     clearGiveaway:() => {
         giveaway.clear();
     },
+    startKeywordGiveaway:(channel, keyword) => {
+        keywordGiveaway.start(channel, keyword)
+    },
+    stopKeywordEntries:() => {
+        keywordGiveaway.stopEntries()
+    },
+    drawKeywordWinner:() => {
+        return keywordGiveaway.drawWinner()
+    },
+    getKeywordGiveawayCount:() => {
+        return keywordGiveaway.count
+    },
+    clearKeywordGiveaway:() => {
+        keywordGiveaway.clear()
+    },
     startPuptime:() => {
         puptimeGame.start('thabuttress')
     },

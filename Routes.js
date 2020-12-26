@@ -113,6 +113,11 @@ router.post('/keywordGiveaway', (req, res) => {
   try{
     const { keyword, channel } = req.body
     console.log(keyword, channel)
+    if(channel === 'thabuttress'){
+      thabuttress.startKeywordGiveaway(channel, keyword)
+      client.say(channel, `A Giveaway has started! To join type: ${keyword}`)
+    }
+
     res.status(200).send({
       keyword, channel
     })
@@ -120,6 +125,38 @@ router.post('/keywordGiveaway', (req, res) => {
   catch(err){
     res.status(404).send(err)
   }
+})
+
+router.get("/keywordGiveaway/stop/:channel", (req, res) => {
+  if(req.params.channel === 'thabuttress'){
+    thabuttress.stopKeywordEntries()
+    client.say(req.params.channel, "The giveaway is closed.")
+    res.status(200).json({"message":`Giveaway is now closed in channel: ${req.params.channel}`})
+  }
+  else
+    res.status(200).json({"message":"Channel not setup for keyword giveaway"})
+})
+
+router.get("/keywordGiveaway/draw/:channel", (req, res) => {
+  if(req.params.channel === 'thabuttress'){
+    const winner = thabuttress.drawKeywordWinner()
+    client.say(req.params.channel, `Congradulations ${winner}! You've won!`)
+    res.status(200).json({
+      "channel":req.params.channel,
+      winner
+    })
+  }
+  else
+    res.status(200).json({"message":"Channel not setup for keyword giveaway"})
+})
+
+router.get("/keywordGiveaway/clear/:channel", (req, res) => {
+  if(req.params.channel === 'thabuttress'){
+    thabuttress.clearKeywordGiveaway()
+    res.status(200).json({"messsage":`Giveaway is now cleared in channel: ${req.params.channel}`})
+  }
+  else
+    res.status(200).json({"message":"Channel not setup for keyword giveaway"})
 })
 
 //giveaway
