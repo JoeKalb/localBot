@@ -19,6 +19,9 @@ let luna = require('./luna')
 let today = new Date();
 let fileName = `logs/${today.getUTCMonth()+1}-${today.getUTCDate()}.txt`;
 
+// creating new years cron jobs
+const CronJob = require('cron').CronJob;
+
 function recordPayouts(message){
   fs.appendFile(fileName, `\n${message}`, (err) => {
     if(err) throw err;
@@ -63,7 +66,7 @@ function handleResponses(target, response){
     if(response.timedMessage && response.timedMessage > 0){
       for(let i = 0; i < len; ++i){
         setTimeout(() => {
-          client.say(target, response.items[i])
+          client.say(target, response.items[i]).catch(err => {console.log(err)})
         }, 1000*response.timedMessage*i)
       }
     }
@@ -127,6 +130,12 @@ setInterval(() => {
   }, '!lookout'))
 }, 1000 * 60 * 30)
 */
+
+// new years times messages
+/* const newYearsMessages = new CronJob('49 59 * * * *', () => {
+  newYearsCountdown('#thabuttress')
+}, null, true, 'America/Los_Angeles')
+newYearsMessages.start() */
 
 // Valid commands start with:
 let commandPrefix = '!'
@@ -764,6 +773,22 @@ function onRaidingHandler(channel, username, viewers){
       handleResponses(channel, taylien.raidedHandler(channel, username, viewers))
     })
   }
+}
+
+function newYearsCountdown(channel){
+  const newYearsMessages = {
+    ban:false,
+    banName:"",
+    hasMessage:true,
+    hasDelay:false,
+    hasPayout:false,
+    hasMultiPayout:false,
+    isAction:false,
+    hasPromise:false,
+    timedMessage:1,
+    items:["10", "9", "8", "7", "6", "5", "4", "3", "2", "1", "HAPPY NEW YEAR!!!!"]
+  }
+  handleResponses(channel, newYearsMessages)
 }
 
 function onConnectedHandler (addr, port) {
