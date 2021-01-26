@@ -149,7 +149,7 @@ let opts = {
    channels: [
     'thabuttress',
     'joefish5',
-    'taylien',
+    //'taylien',
     'lunalyrik',
     'thethingssheplays',
     //'hairofthedogpodcast'
