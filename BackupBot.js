@@ -56,27 +56,31 @@ module.exports = {
         case 'nerds':
           return "You're all such nerds!!!"
         case 'gundam':
-          return `Want to build your own gundam?? thaButtress gets all her model kits and buttHella tools here at Gundam Planet buttDab Use this link to receive 10% off all regular priced items! http://bit.ly/GP_thaButtress`
+          return `Want to build your own gundam?? thaButtress gets all her model kits and buttHella tools here at Gundam Planet gundamplanet.com buttDab Use code "thabuttress" at checkout to get 10% off all regular priced items!`
         case 'gundams':
-          return `Want to build your own gundam?? thaButtress gets all her model kits and buttHella tools here at Gundam Planet buttDab Use this link to receive 10% off all regular priced items! http://bit.ly/GP_thaButtress`
+          return `Want to build your own gundam?? thaButtress gets all her model kits and buttHella tools here at Gundam Planet gundamplanet.com buttDab Use code "thabuttress" at checkout to get 10% off all regular priced items!`
         case 'imgur':
           return `Look at all these cool gundams that thaButtress has built and customized! https://imgur.com/user/thabuttress buttOMG`
         case 'built':
-          return `Check out Butt's built list and backlog!!! https://goo.gl/7DxzVX buttHype`
+          return `Click here for a list of all tha gundams that thaButtress has built as well as her backlog! https://goo.gl/YWZGde`
         case 'tats':
           return `Here are all of butt's tattoos! https://imgur.com/a/Vd1iAMF`
         case 'subnight':
           return `IF YOU ARE A SUB...Subnights will be held ever other Friday! Make sure to join the !discord buttSmug https://clips.twitch.tv/AbstemiousDeterminedSageFunRun`
         case 'anime':
-          return `Anime nights are back!!! Every other Friday T2 and above subs are welcome to jion`
+          return `ANIME NIGHTS ARE BACK! buttOMG Every week on Thursdays T2+ subs will be watching an anime show or movie together in Discord! We're going to start a new show this week! Don't forget to join the !discord`
         case 'twitter':
           return `Butt's twitter: https://twitter.com/thaButtress`
-        case 'socials':
-          return `Twitter: https://twitter.com/thaButtress | Insta: https://instagram.com/thabuttress/ | YouTube: https://goo.gl/uIL66O | SnapChat: @thabuttress`
+        case 'morebuttress':
+          return `Instagram https://goo.gl/Jf4v7U | Twitter https://goo.gl/y3gpVu | Patreon https://goo.gl/iDRnBW | Snapchat: thaButtress | tiktok: https://www.tiktok.com/@thabuttress/`
         case 'insta':
           return `Butt's Instagram: https://instagram.com/thabuttress/`
         case 'define':
           return `Buttress (noun) - a projecting support of stone or brick built against a wall`
+        case 'name':
+          return `Buttress was given her name as a joke, which inevitably stuck....but it works! thaButtress "buttresses" thaButtCrew!! (plus butts are great, yeah!?)`
+        case 'home':
+          return `thaButtress is moving back home to KC!! Personal letters will be going out to those that donate $50 or more before the end of Feb!`
         case 'snap':
           return `You can follow @thabuttress on snapchat but she only does add backs for T2 subs and above.`
         case 'dad':
@@ -90,7 +94,7 @@ module.exports = {
         case 'work':
           return `Butt doesn't discuss job specifics during stream.`
         case 'schedule':
-          return `Tuesday evenings with possible streams on the weekend and Sub/Anime night on Friday in the !discord buttHype (schedule subject to change)`
+          return `Monday, Friday, and Sunday evenings with Sub/Anime nights on Friday in the !discord buttHype (schedule subject to change)`
         case 'glue':
           return `Butt uses Tamiya Extra Thin Cement Glue https://amzn.to/2YdgxYw`
         case 'lurk':
@@ -109,6 +113,94 @@ module.exports = {
           return `No links in chat, but you're welcome to post them in the discord! https://discord.gg/YbdqmZG`
         case 'discord':
           return `Join our offline Discord chat! Subs: Link your discord to your twitch account for bonus channels! https://discord.gg/YbdqmZG`
+        case 'breathe':
+          return `Let the Brain Goblins' Energy Drinks wear off--Take a Deep Breath and feel the calm.`
+        case 'buttcoins':
+          return `Since thaBottress is down I can't get your current buttcoins.`
+        case 'buttsnips':
+          return `Here are the Tamiya Nippers that Butt uses for her builds! buttLurk https://amzn.to/393uoF2`
+        case 'coop':
+          return `buttNo buttNo buttNo BIRTHDAY buttNo buttNo buttNo BIRTHDAY buttNo buttNo buttNo BIRTHDAY buttNo buttNo buttNo BIRTHDAY buttNo buttNo buttNo BIRTHDAY buttNo buttNo buttNo BIRTHDAY buttNo buttNo buttNo`
+        case 'count':
+          return `Kits complete in 2021: 9 buttDab`
+        case 'dad':
+          return `buttDad buttDad buttDad buttDad buttDad buttDad buttDad buttDad buttDad buttDad buttDad buttDad buttDad buttDad buttDad buttDad buttDad buttDad buttDad`
+        case 'drop':
+          return `Buttress flips her Mega Size Gundam: https://clips.twitch.tv/ArtisticDirtySamosaOpieOP`
+        case 'fall':
+          return `thaButtFall: https://clips.twitch.tv/UglyDistinctPanKreygasm`
+        case 'flex':
+          return `https://clips.twitch.tv/IncredulousTolerantTrollTebowing`
+        case 'gc':
+          return `buttOMG Guilty is Butt's friend and a fellow streamer! You can follow her here: https://www.twitch.tv/guiltycosplay`
+        case 'globe':
+          return `Check out Butt's latest custom Snowglobe Strike Freedom buttDab http://bit.ly/SDSnowFreedom`
+        case 'glue':
+          return `https://clips.twitch.tv/RenownedTameCakeKeyboardCat`
+        case 'hallo':
+          return `buttReggie https://twitter.com/ThaButtress/status/1031661395459407872`
+        case 'horse':
+          return `https://www.twitch.tv/thabuttress/clip/TalentedLittleSalamanderKappa`
+        case 'hydrate':
+          return `Drink Water!`
+        case 'KC':
+          return `Back to KC again!!!`
+        case 'lego':
+          return `Butt's built this 6020 piece Hogwarts Lego Set! https://amzn.to/2LEy7uE buttHouse https://clips.twitch.tv/AltruisticBreakableToadDuDudu`
+        case 'link':
+          return `Sorry, thaBottress likes to delete comments that have a period followed immediately by a letter. She thinks it's a link! Try again!`
+        case 'luna':
+          return `She's my best friend and also a twitch partner broadcaster!!!! Make sure to follow LunaLyrik <3 www.twitch.tv/LunaLyrik`
+        case 'merch':
+          return `buttSmug Butt has a new merch shop! Check it out! https://streamlabs.com/thabuttress/merch`
+        case 'mobilesub':
+          return `Want to sub on mobile! CLICK HERE: https://www.twitch.tv/products/thabuttress`
+        case 'monty':
+          return `Monty is 50% chihuahua and 50% batdog(mixed breeds)! https://clips.twitch.tv/ClearConfidentMosquitoChefFrank`
+        case 'nippers':
+          return `Gundam Planet just got their custom side cutters back in stock buttOMG http://bit.ly/GP_Nippers`
+        case 'paint':
+          return `Butt uses Vallejo Game Air Paints! https://amzn.to/2kfvOFt`
+        case 'panelwashing':
+          return `This is the current panel washing pledge: https://www.walmart.com/ip/Pledge-Floor-Gloss-Original-27-Fluid-Ounces/15136693`
+        case 'patreon':
+          return `Want to support thaButtress & tha buttButt buttCrew ?? Check out the patreon! (There's perks!) https://www.patreon.com/thabuttress`
+        case 'pg':
+          return `https://clips.twitch.tv/BeautifulImpartialLobsterKAPOW`
+        case 'plastics':
+          return `These are all the plastic sheets that Butt uses: https://www.twitch.tv/videos/292777912`
+        case 'popi':
+          return `https://soundcloud.com/sloppypopi/sets/the-life-of-popi`
+        case 'puppy':
+          return `https://clips.twitch.tv/FrigidAcceptableLyrebirdLeeroyJenkins`
+        case 'reggie':
+          return `Reggie is 25% Border Collie and a whole lot of other things! https://clips.twitch.tv/BlazingSourChipmunkPJSalt`
+        case 'sauce':
+          return `What does Butt do in her spare time? Check out her latest video with Billy the Fridge! https://youtu.be/E8U0ZRtL6N8`
+        case 'sauron':
+          return `Check out Butt's HG Grimgerde - Sauron Custom: https://imgur.com/gallery/weQL4B5`
+        case 'specs':
+          return `Butt just built a new PC with an Intel i7-8700, GTX 1060 6GB, and 16GB DDR4-3000 buttOMG Here's the full parts list: https://pcpartpicker.com/list/LFHYfH`
+        case 'spawn':
+          return `Check out this dope Spawn kit that Butt built!!! buttOMG https://twitter.com/thaButtress/status/1237121514178142209?s=20`
+        case 'sub':
+          return `buttLurk Perks? buttOMG Perks?? buttWut Perks??? Get yourself a monty emote buttMonty & buttHella perks listed here! Sub before the 1st to get the following month's rewards! https://bit.ly/2Fu2q6o`
+        case 'tats':
+          return `Here are all of Butt's tatttoos buttButt buttRess https://imgur.com/a/Vd1iAMF`
+        case 'tiktok':
+          return `Go Follow! https://www.tiktok.com/@thabuttress/`
+        case 'treatstream':
+          return `buttSmug ya wanna buy a girl some wings?!? http://treatstream.com/t/treat/thabuttress`
+        case 'vampire':
+          return `https://clips.twitch.tv/KnottyThirstySoymilkSeemsGood`
+        case 'watermelon':
+          return `WATERMELON! http://www.twitch.tv/thabuttress/v/12129711`
+        case 'youtube':
+          return `Subscribe to ThaButtress on YouTube for highlights! https://goo.gl/uIL66O`
+        case 'ytreggie':
+          return `Reggie's been chillin with Butt for an entire year buttReggie Check out all these clips of her on stream https://youtu.be/ATxcNacbt_Q`
+        case 'zaku':
+          return ` Look at this sweet gundam clothing! http://zakuaurelius.storenvy.com/`
         case 'followage':
           return co(function*(){
             try{
