@@ -4,6 +4,7 @@ const commandPrefix = '!';
 module.exports = {
     channel:'#taylien',
     handleMessage: (context, msg) => {
+        let result = Object.assign({}, response)
         if(context.username === 'joefish5'){
             if(msg.substr(0,1) !== commandPrefix)
                 return {hasMessage:false}; // not a command
@@ -11,16 +12,21 @@ module.exports = {
             const parse = msg.slice(1).split(' ')
             const commandName = parse[0]
 
+            
             switch(commandName){
-                case 'timer':{
-
+                case 'swim':{
+                    result.hasMessage = true
+                    result.items = [
+                        `Botfish is happily swimming along. ` 
+                    ]
+                    return result
                 }
                 default:
-                    return {
-                        hasMessage:false
-                    }
+                    return result
             }
         }
+        else
+            return result
     },
     hostingHandler: (channel, target, viewers) => {
         let result = Object.assign({}, response)

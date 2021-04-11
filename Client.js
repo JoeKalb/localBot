@@ -149,7 +149,7 @@ let opts = {
    channels: [
     'thabuttress',
     'joefish5',
-    //'taylien',
+    'taylien',
     'lunalyrik',
     'thethingssheplays',
     //'hairofthedogpodcast'
@@ -206,6 +206,9 @@ function onMessageHandler (target, context, msg, self) {
   }
   else if(target == luna.channel){
     handleResponses(target, luna.handleMessage(context, msg))
+  }
+  else if (target == taylien.channel){
+    handleResponses(target, taylien.handleMessage(context, msg))
   }
   
   // wizard duel logic
