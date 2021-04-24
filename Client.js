@@ -617,11 +617,11 @@ function onMessageHandler (target, context, msg, self) {
     }
     default:
       // this shows unknows commands
-      //console.log(`* Unknown command ${commandName}`)
+      console.log(`* Unknown command ${commandName}`)
   }
 }
 
-let ticketPrice = 100;
+let ticketPrice = 500;
 let tickets = require('./gameFiles/thabuttress/Tickets.json')
 let winners = require('./gameFiles/thabuttress/Winners.json')
 let tempCheckAmounts = {}
