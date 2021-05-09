@@ -35,6 +35,7 @@ const standardPayout = 100;
 const channelName = 'thabuttress';
 const userID = '82523255';
 
+
 module.exports = {
     channel:"#thabuttress",
     bot:"thabottress",

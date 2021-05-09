@@ -149,7 +149,7 @@ let opts = {
    channels: [
     'thabuttress',
     'joefish5',
-    'taylien',
+    //'taylien',
     'lunalyrik',
     'thethingssheplays',
     //'hairofthedogpodcast'
@@ -553,7 +553,7 @@ function onMessageHandler (target, context, msg, self) {
         }, 30000)
       }
       break;
-    case 'ticket':{
+    /* case 'ticket':{
       if(target === '#thabuttress'){
         if(parse.length === 1){
           //console.log(tickets[context.username])
@@ -576,8 +576,8 @@ function onMessageHandler (target, context, msg, self) {
           }
         }
       }
-      break;
-    }
+      break; 
+    }*/
     case 'pick':{
       if(target === "#thabuttress" && (context.mod || context.username === 'thabuttress')){
         let tempWinnerList = []
@@ -615,9 +615,21 @@ function onMessageHandler (target, context, msg, self) {
       client.say(target,`There are currently ${tempTickets} tickets in the drawing. ${tempTopUser} currently has the most tickets with ${tempTopTickets}.`)
       break;
     }
+    case 'lastHit':{
+      if(target === "#thabuttress" && (context.mod || context.username === 'thabuttress')){
+        let winner = parse[1].toLowerCase()
+
+        if(tickets.hasOwnProperty(winner)) tickets[winner] += 5
+        else tickets[winner] = 5
+
+        fs.writeFileSync("gameFiles/thabuttress/Tickets.json", JSON.stringify(tickets));
+
+        client.say(target, `${winner} got the last hit on the stream boss and now has ${tickets[winner]} entries into the giveaway!`)
+      }
+    }
     default:
       // this shows unknows commands
-      console.log(`* Unknown command ${commandName}`)
+      //console.log(`* Unknown command ${commandName}`)
   }
 }
 
