@@ -60,26 +60,24 @@ module.exports = {
 
         return result
     },
-    subHandler: (username, method, messsage, userstate) => {
+    subHandler: (username, method, message, userstate) => {
         let result = Object.assign({}, response)
-
         result.hasMessage = true
         result.items = [
             (userstate['msg-param-sub-plan'] === 'Prime')
-            ? `Hey Taylien! ${username} just Prime subbed!`
-            :`Hey Taylien! ${username} just T${parseInt(method.plan) / 1000} subbed!`
+            ? `Hey Taylien! ${username} just Prime subbed!${(message === null) ? "" : ` "${message}"`}`
+            :`Hey Taylien! ${username} just T${parseInt(method.plan) / 1000} subbed!${(message === null) ? "" : ` "${message}"`}`
         ]
 
         return result
     },
     resubHandler: (username, methods, message, userstate) => {
         let result = Object.assign({}, response)
-
         result.hasMessage = true
         result.items = [
             (userstate['msg-param-sub-plan'] === 'Prime')
-            ? `Hey Taylien! ${username} just Prime subbed for ${userstate['msg-param-cumulative-months']} months!`
-            :`Hey Taylien! ${username} just T${parseInt(methods.plan) / 1000} subbed for ${userstate['msg-param-cumulative-months']} months!`
+            ? `Hey Taylien! ${username} just Prime subbed for ${userstate['msg-param-cumulative-months']} months!${(message === null) ? "" : ` "${message}"`}`
+            :`Hey Taylien! ${username} just T${parseInt(methods.plan) / 1000} subbed for ${userstate['msg-param-cumulative-months']} months!${(message === null) ? "" : ` "${message}"`}`
         ]
 
         return result
