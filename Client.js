@@ -184,6 +184,22 @@ client.on('resub', onResubHandler)
 client.on('hosting', onHostingHandler)
 client.on('raiding', onRaidingHandler)
 
+//working with sub upgrades
+client.on("anongiftpaidupgrade", (channel, username, userstate) => {
+  console.log("anongiftpaidupgrade")
+  console.log(channel)
+  console.log(username)
+  console.log(userstate)
+})
+
+client.on("giftpaidupgrade", (channel, username, sender, userstate) => {
+  console.log("giftpaidupgrade")
+  console.log(channel)
+  console.log(username)
+  console.log(sender)
+  console.log(userstate)
+})
+
 // Connect to Twitch:
 client.connect()
 
