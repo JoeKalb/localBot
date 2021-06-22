@@ -55,7 +55,7 @@ module.exports = {
 
         result.hasMessage = true
         result.items = [
-            `Hey Taylien! ${userstate['display-name']} just cheered with ${userstate.bits} bits!`
+            `Hey Taylien! ${userstate['display-name']} just cheered with ${userstate.bits} bits! "${message}"`
         ]
 
         return result
