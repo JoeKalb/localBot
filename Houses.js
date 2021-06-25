@@ -5,6 +5,7 @@ const mongoose = require('mongoose')
 const studentModel = require('./models/student')
 const dotenv = require('dotenv').config();
 
+/* disabling mongoose
 mongoose.connect(`mongodb+srv://${process.env.MONGO_NAME}:${process.env.MONGO_PASS}@cluster0-sxqxp.mongodb.net/test?retryWrites=true&w=majority`, {
   useNewUrlParser:true,
   useUnifiedTopology: true
@@ -151,3 +152,4 @@ module.exports = {
     })
   }
 }
+*/

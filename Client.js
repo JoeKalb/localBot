@@ -6,7 +6,7 @@ let quidditch = require('./Quidditch')
 let wizardDuel = require('./WizardDuel')
 let search = require('./Search')
 const fs = require('fs');
-const houses = require('./Houses')
+//const houses = require('./Houses')
 const dotenv = require('dotenv').config();
 
 let thabuttress = require('./thaButtress')
