@@ -237,8 +237,8 @@ function onMessageHandler (target, context, msg, self) {
   }
 
   // save displayNames into houses from the chat
-  if(target == '#thabuttress' || target == '#joefish5')
-    houses.setDisplayName(context.username, context['display-name'])
+  //if(target == '#thabuttress' || target == '#joefish5')
+  //  houses.setDisplayName(context.username, context['display-name'])
 
   // all commands go under here!
   if (msg.substr(0, 1) !== commandPrefix) {
