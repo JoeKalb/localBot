@@ -149,7 +149,7 @@ let opts = {
    channels: [
     'thabuttress',
     'joefish5',
-    //'taylien',
+    'taylien',
     'lunalyrik',
     'thethingssheplays',
     //'hairofthedogpodcast'
@@ -791,18 +791,18 @@ function onSubMysteryGiftHandler(channel, username, numbOfSubs, methods, usersta
 }
 
 function onHostingHandler(channel, target, viewers){
-  if(channel === taylien.channel){
+  if(channel == taylien.channel){
     setTimeout(() => {
       handleResponses(channel, taylien.hostingHandler(channel, target, viewers))
-    })
+    }, 3000)
   }
 }
 
 function onRaidingHandler(channel, username, viewers){
-  if(channel === taylien.channel){
+  if(channel == taylien.channel){
     setTimeout(() => {
       handleResponses(channel, taylien.raidedHandler(channel, username, viewers))
-    })
+    }, 3000)
   }
 }
 
