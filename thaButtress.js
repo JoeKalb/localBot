@@ -713,8 +713,7 @@ module.exports = {
     },
     subGiftHandler: (username, methods, userstate) => {
         let result = Object.assign({}, response)
-        //console.log(userstate)
-        //console.log(methods)
+        console.log(userstate, methods)
         if(mysterySubGifters.hasOwnProperty(username)){
             //console.log(mysterySubGifters[username]);
             (mysterySubGifters[username] < 1) ?
@@ -724,7 +723,7 @@ module.exports = {
             if(mysterySubGifters[username] === 0) delete mysterySubGifters[username]
         }
         else{
-            result.hasMessage = true;
+            result.hasMessage = true; //swap to true when ready
             result.hasPayout = true;
 
             result.items = [
@@ -736,6 +735,7 @@ module.exports = {
         return result
     },
     subMysteryGiftHandler: (username, numbOfSubs, methods, userstate) => {
+        console.log(username, numbOfSubs, methods);
         (mysterySubGifters.hasOwnProperty(username))?
             mysterySubGifters[username] += numbOfSubs :
             mysterySubGifters[username] = numbOfSubs
