@@ -712,7 +712,7 @@ module.exports = {
         return result;
     },
     subGiftHandler: (username, methods, userstate) => {
-        let result = Object.assign({}, response)
+        /* let result = Object.assign({}, response)
         console.log(userstate, methods)
         if(mysterySubGifters.hasOwnProperty(username)){
             //console.log(mysterySubGifters[username]);
@@ -732,13 +732,13 @@ module.exports = {
             ]
         } 
 
-        return result
+        return result */
     },
     subMysteryGiftHandler: (username, numbOfSubs, methods, userstate) => {
-        console.log(username, numbOfSubs, methods);
+        /* console.log(username, numbOfSubs, methods);
         (mysterySubGifters.hasOwnProperty(username))?
             mysterySubGifters[username] += numbOfSubs :
-            mysterySubGifters[username] = numbOfSubs
+            mysterySubGifters[username] = numbOfSubs */
 
         let result = Object.assign({}, response)
         result.hasMessage = true;
