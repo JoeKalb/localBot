@@ -57,11 +57,11 @@ function delaySayMessage(target, msg, seconds){
 
 // handle messages
 function handleResponses(target, response){
-  if(response.ban){
-    client.ban(target, response.banName, response.items[0])
-  }
+  /* if(response.ban){
+    //console.log(client.ban(target, response.banName, response.items[0]))
+  } */
 
-  else if(response.hasMessage){
+  if(response.hasMessage){
     let len = response.items.length
     if(response.timedMessage && response.timedMessage > 0){
       for(let i = 0; i < len; ++i){
