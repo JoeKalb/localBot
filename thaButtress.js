@@ -712,7 +712,8 @@ module.exports = {
         return result;
     },
     subGiftHandler: (username, methods, userstate) => {
-        /* let result = Object.assign({}, response)
+        let result = Object.assign({}, response)
+        /*
         console.log(userstate, methods)
         if(mysterySubGifters.hasOwnProperty(username)){
             //console.log(mysterySubGifters[username]);
@@ -731,8 +732,8 @@ module.exports = {
                 singleGiftPayout(username, methods)
             ]
         } 
-
-        return result */
+        */
+        return result
     },
     subMysteryGiftHandler: (username, numbOfSubs, methods, userstate) => {
         /* console.log(username, numbOfSubs, methods);
