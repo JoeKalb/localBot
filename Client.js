@@ -150,7 +150,7 @@ let opts = {
     'thabuttress',
     'joefish5',
     //'taylien',
-    'lunalyrik',
+    //'lunalyrik',
     'thethingssheplays',
     //'hairofthedogpodcast'
    ]
